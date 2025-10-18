@@ -1,6 +1,7 @@
 using Nomina.API.Filters;
 using Nomina.API.Middleware;
 using Nomina.Application.Services;
+using Nomina.Domain.Interfaces;
 using Nomina.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Inyección de dependencias
-builder.Services.AddScoped(_ => new TrabajadorRepository(connectionString));
-builder.Services.AddScoped(_ => new NominaRepository(connectionString));
+builder.Services.AddScoped<iTrabajadorRepository>(sp => new TrabajadorRepository(connectionString));
+builder.Services.AddScoped<INominaRepository>(sp => new NominaRepository(connectionString));
+
 builder.Services.AddScoped<TrabajadorService>();
 builder.Services.AddScoped<NominaService>();
 

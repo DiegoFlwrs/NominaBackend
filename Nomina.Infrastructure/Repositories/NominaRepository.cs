@@ -1,5 +1,4 @@
-﻿using Nomina.Domain.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
@@ -7,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nomina.API.Exceptions;
+using Nomina.Domain.Interfaces;
 
 namespace Nomina.Infrastructure.Repositories
 {
-    public class NominaRepository
+    public class NominaRepository : INominaRepository
     {
         private readonly string _connectionString;
 
@@ -19,7 +19,7 @@ namespace Nomina.Infrastructure.Repositories
             _connectionString = connectionString;
         }
 
-        public async Task<bool> ProcesarNominaPorPeriodoAsync(ProcesarNominaRequest request)
+        public async Task<bool> ProcesarNominaPorPeriodoAsync(int idPeriodo, DateTime fechaProceso, int usuarioId)
         {
             try
             {
@@ -29,9 +29,9 @@ namespace Nomina.Infrastructure.Repositories
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@IdPeriodo", request.IdPeriodo);
-                        cmd.Parameters.AddWithValue("@FechaProceso", request.FechaProceso);
-                        cmd.Parameters.AddWithValue("@UsuarioId", request.UsuarioId);
+                        cmd.Parameters.AddWithValue("@IdPeriodo", idPeriodo);
+                        cmd.Parameters.AddWithValue("@FechaProceso", fechaProceso);
+                        cmd.Parameters.AddWithValue("@UsuarioId", usuarioId);
 
                         await con.OpenAsync();
                         await cmd.ExecuteNonQueryAsync();
@@ -41,7 +41,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                //throw new Exception("DB_ERROR: " + ex.Message);
+
                 throw new DatabaseException($"Error en la base de datos: {ex.Message}");
             }
             catch (Exception ex)

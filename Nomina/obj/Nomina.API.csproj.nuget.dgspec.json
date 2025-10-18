@@ -35,9 +35,6 @@
             "projectReferences": {
               "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Domain\\Nomina.Domain.csproj": {
                 "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Domain\\Nomina.Domain.csproj"
-              },
-              "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj"
               }
             }
           }
@@ -72,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -137,7 +134,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -212,7 +209,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -247,6 +244,12 @@
             "projectReferences": {
               "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Application\\Nomina.Application.csproj": {
                 "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Application\\Nomina.Application.csproj"
+              },
+              "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Domain\\Nomina.Domain.csproj": {
+                "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Domain\\Nomina.Domain.csproj"
+              },
+              "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj"
               }
             }
           }
@@ -290,7 +293,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

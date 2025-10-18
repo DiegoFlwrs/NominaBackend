@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Nomina.Domain.DTOs;
+using Nomina.Application.DTOs;
 using System.Text.Json;
 
 namespace Nomina.API.Filters

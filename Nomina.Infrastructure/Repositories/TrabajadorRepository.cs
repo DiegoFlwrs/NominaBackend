@@ -1,4 +1,5 @@
 ﻿using Nomina.Domain.Entities;
+using Nomina.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Nomina.Infrastructure.Repositories
 {
-    public class TrabajadorRepository
+    public class TrabajadorRepository : iTrabajadorRepository
     {
         private readonly string _connectionString;
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nomina.Domain.DTOs
+namespace Nomina.Application.DTOs
 {
     public class ProcesarNominaRequest
     {

@@ -1,5 +1,4 @@
 ﻿using Nomina.API.Exceptions;
-using Nomina.Domain.DTOs;
 using System.Net;
 using System.Text.Json;
 

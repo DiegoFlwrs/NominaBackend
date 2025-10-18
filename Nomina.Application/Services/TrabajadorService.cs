@@ -1,6 +1,6 @@
-﻿using Nomina.Domain.DTOs;
+﻿using Nomina.Application.DTOs;
 using Nomina.Domain.Entities;
-using Nomina.Infrastructure.Repositories;
+using Nomina.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace Nomina.Application.Services
 {
     public class TrabajadorService
     {
-        private readonly TrabajadorRepository _repository;
+        private readonly iTrabajadorRepository _repository;
 
-        public TrabajadorService(TrabajadorRepository repository)
+        public TrabajadorService(iTrabajadorRepository repository)
         {
             _repository = repository;
         }

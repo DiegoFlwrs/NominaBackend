@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nomina.Application.DTOs;
 using Nomina.Application.Services;
-using Nomina.Domain.DTOs;
 
 namespace Nomina.API.Controllers
 {
