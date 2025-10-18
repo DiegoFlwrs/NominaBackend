@@ -1,5 +1,6 @@
 ﻿using Nomina.API.Exceptions;
 using Nomina.Application.DTOs;
+using Nomina.Application.interfaces;
 using Nomina.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Nomina.Application.Services
 {
-    public class NominaService
+    public class NominaService : INominaService
     {
         private readonly INominaRepository _repository;
 

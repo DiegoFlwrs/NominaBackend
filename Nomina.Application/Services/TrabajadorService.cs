@@ -1,4 +1,5 @@
 ﻿using Nomina.Application.DTOs;
+using Nomina.Application.interfaces;
 using Nomina.Domain.Entities;
 using Nomina.Domain.Interfaces;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Nomina.Application.Services
 {
-    public class TrabajadorService
+    public class TrabajadorService : ITrabajadorService
     {
         private readonly iTrabajadorRepository _repository;
 
