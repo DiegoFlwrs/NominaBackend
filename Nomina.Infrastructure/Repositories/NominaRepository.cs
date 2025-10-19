@@ -7,36 +7,47 @@ using System.Text;
 using System.Threading.Tasks;
 using Nomina.API.Exceptions;
 using Nomina.Domain.Interfaces;
+using Nomina.Domain.ReadModels;
+using Dapper;
+using Microsoft.EntityFrameworkCore;
+using Nomina.Domain.Entities;
+using Nomina.Infrastructure.Persistence;
 
 namespace Nomina.Infrastructure.Repositories
 {
     public class NominaRepository : INominaRepository
     {
         private readonly string _connectionString;
+        private readonly AppDbContext _context;
 
-        public NominaRepository(string connectionString)
+        public NominaRepository(AppDbContext context, string connectionString)
         {
             _connectionString = connectionString;
+            _context = context;
         }
 
-        public async Task<bool> ProcesarNominaPorPeriodoAsync(int idPeriodo, DateTime fechaProceso, int usuarioId)
+        public async Task<IEnumerable<NominaView>> ConsultarNominasAsync(int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
+            string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize)
         {
             try
             {
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("sp_ProcesarNominaPorPeriodo", con))
+                    var parameters = new
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
+                        PeriodoAnio = periodoAnio,
+                        PeriodoMes = periodoMes,
+                        NominaEstado = nominaEstado,
+                        EmpleadoNombre = empleadoNombre,
+                        EmpleadoApellido = empleadoApellido,
+                        DepartamentoCodigo = departamentoCodigo,
+                        PageNumber = pageNumber,
+                        PageSize = pageSize
+                    };
 
-                        cmd.Parameters.AddWithValue("@IdPeriodo", idPeriodo);
-                        cmd.Parameters.AddWithValue("@FechaProceso", fechaProceso);
-                        cmd.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                    var result = await con.QueryAsync<NominaView>("ConsultarNominas", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
-                        await con.OpenAsync();
-                        await cmd.ExecuteNonQueryAsync();
-                        return true;
-                    }
+                    return result;
                 }
             }
             catch (SqlException ex)
@@ -46,8 +57,24 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: "+ ex.Message);
+                throw new Exception("APP_ERROR: " + ex.Message);
             }
         }
+
+        public async Task<IEnumerable<PeriodosNomina>> ObtenerPeriodosAsync()
+        {
+            try
+            {
+                return await _context.PeriodosNomina
+                .OrderByDescending(p => p.PeriodoAnio)
+                .ThenByDescending(p => p.PeriodoMes)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Nomina.API.Exceptions;
 using Nomina.Application.DTOs;
+using Nomina.Application.DTOs.NominaPeriodo;
 using Nomina.Application.interfaces;
+using Nomina.Domain.Entities;
 using Nomina.Domain.Interfaces;
+using Nomina.Domain.ReadModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +22,51 @@ namespace Nomina.Application.Services
             _repository = repository;
         }
 
-        public async Task ProcesarNominaAsync(ProcesarNominaRequest request)
+        public async Task<IEnumerable<NominaView>> ProcesarNominaAsync(NominaFiltroRequest request)
         {
-            if (request.FechaProceso > DateTime.Now)
-                throw new BusinessException("No se puede procesar una nómina con fecha futura.");
+            if (request.PageSize <= 0) request.PageSize = 10;
+            if (request.PageNumber <= 0) request.PageNumber = 1;
 
-            bool resultado = await _repository.ProcesarNominaPorPeriodoAsync(
-                request.IdPeriodo,
-                request.FechaProceso,
-                request.UsuarioId
-                );
+            var nominas = await _repository.ConsultarNominasAsync(
+                request.PeriodoAnio,
+                request.PeriodoMes,
+                request.NominaEstado,
+                request.EmpleadoNombre,
+                request.EmpleadoApellido,
+                request.DepartamentoCodigo,
+                request.PageNumber,
+                request.PageSize
+            );
 
-            if (!resultado)
-                throw new NotFoundException("No se pudo procesar la nómina. Verifique los datos o el periodo.");
+            if (nominas == null || !nominas.Any())
+            {
+                throw new NotFoundException("No se encontraron nóminas para los filtros indicados.");
+            }
+            return nominas;
+        }
+
+        public async Task<IEnumerable<int>> ObtenerAniosAsync()
+        {
+            var periodos = await _repository.ObtenerPeriodosAsync();
+            var aniosDistintos = periodos
+                .Select(p => p.PeriodoAnio)
+                .Distinct()
+                .OrderByDescending(a => a)
+                .ToList();
+
+            return aniosDistintos;
+        }
+
+        public async Task<IEnumerable<int>> ObtenerMesesAsync()
+        {
+            var periodos = await _repository.ObtenerPeriodosAsync();
+            var mesesDistintos = periodos
+                .Select(p => p.PeriodoMes)
+                .Distinct()
+                .OrderByDescending(m => m)
+                .ToList();
+
+            return mesesDistintos;
         }
     }
 }
