@@ -15,5 +15,6 @@ namespace Nomina.Domain.Interfaces
             string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize);
 
         Task<IEnumerable<PeriodosNomina>> ObtenerPeriodosAsync();
+        Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync();
     }
 }

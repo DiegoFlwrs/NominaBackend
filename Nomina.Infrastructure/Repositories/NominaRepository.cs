@@ -76,5 +76,17 @@ namespace Nomina.Infrastructure.Repositories
             }
         }
 
+        public async Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync()
+        {
+            try
+            {
+                return await _context.Departamentos.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
     }
 }

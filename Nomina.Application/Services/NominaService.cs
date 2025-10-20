@@ -68,5 +68,12 @@ namespace Nomina.Application.Services
 
             return mesesDistintos;
         }
+
+        public async Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync()
+        {
+            var departamentos = await _repository.ObtenerDepartamentosAsync();
+
+            return departamentos;
+        }
     }
 }

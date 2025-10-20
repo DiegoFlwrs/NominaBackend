@@ -12,6 +12,7 @@ namespace Nomina.Infrastructure.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<PeriodosNomina> PeriodosNomina { get; set; }
+        public DbSet<Departamentos> Departamentos { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +25,10 @@ namespace Nomina.Infrastructure.Persistence
                 entity.Property(e => e.PeriodoCodigo).HasMaxLength(10).IsRequired();
                 entity.Property(e => e.PeriodoTipo).HasMaxLength(20);
                 entity.Property(e => e.PeriodoEstado).HasMaxLength(1);
+            });
+
+            modelBuilder.Entity<Departamentos>(entity => {
+                entity.HasKey(e => e.DepartamentoCodigo);
             });
 
         }

@@ -37,5 +37,12 @@ namespace Nomina.API.Controllers
             var meses = await _service.ObtenerMesesAsync();
             return Ok(meses);
         }
+
+        [HttpGet("departamentos")]
+        public async Task<IActionResult> ListarDepartamentos()
+        {
+            var departamentos = await _service.ObtenerDepartamentosAsync();
+            return Ok(departamentos);
+        }
     }
 }
