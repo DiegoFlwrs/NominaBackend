@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Nomina.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07435c600ed0a3cc4c5ecf4b231294d114acf102")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd9a0371eb3356838d59a8ab0dbcbe8bad90ecf5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Nomina.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nomina.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

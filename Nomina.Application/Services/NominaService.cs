@@ -38,10 +38,10 @@ namespace Nomina.Application.Services
                 request.PageSize
             );
 
-            if (nominas == null || !nominas.Any())
-            {
-                throw new NotFoundException("No se encontraron nóminas para los filtros indicados.");
-            }
+            //if (nominas == null || !nominas.Any())
+            //{
+            //    throw new NotFoundException("No se encontraron nóminas para los filtros indicados.");
+            //}
             return nominas;
         }
 
