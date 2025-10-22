@@ -11,7 +11,7 @@ namespace Nomina.Domain.Interfaces
     public interface INominaRepository
     {
         //Task<bool> ProcesarNominaPorPeriodoAsync(int idPeriodo, DateTime fechaProceso, int usuarioId);
-        Task<IEnumerable<NominaView>> ConsultarNominasAsync( int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
+        Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ConsultarNominasAsync( int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
             string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize);
 
         Task<IEnumerable<PeriodosNomina>> ObtenerPeriodosAsync();

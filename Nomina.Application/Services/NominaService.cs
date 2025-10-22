@@ -22,12 +22,12 @@ namespace Nomina.Application.Services
             _repository = repository;
         }
 
-        public async Task<IEnumerable<NominaView>> ProcesarNominaAsync(NominaFiltroRequest request)
+        public async Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ProcesarNominaAsync(NominaFiltroRequest request)
         {
             if (request.PageSize <= 0) request.PageSize = 10;
             if (request.PageNumber <= 0) request.PageNumber = 1;
 
-            var nominas = await _repository.ConsultarNominasAsync(
+            var (nominas, totalRows) = await _repository.ConsultarNominasAsync(
                 request.PeriodoAnio,
                 request.PeriodoMes,
                 request.NominaEstado,
@@ -38,11 +38,7 @@ namespace Nomina.Application.Services
                 request.PageSize
             );
 
-            //if (nominas == null || !nominas.Any())
-            //{
-            //    throw new NotFoundException("No se encontraron nóminas para los filtros indicados.");
-            //}
-            return nominas;
+            return (nominas, totalRows);
         }
 
         public async Task<IEnumerable<int>> ObtenerAniosAsync()

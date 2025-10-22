@@ -20,8 +20,15 @@ namespace Nomina.API.Controllers
         [HttpPost("procesar")]
         public async Task<IActionResult> ProcesarNomina([FromBody] NominaFiltroRequest request)
         {
-             var nominas = await _service.ProcesarNominaAsync(request);
-            return Ok(nominas);
+            var (nominas, totalRows) = await _service.ProcesarNominaAsync(request);
+
+            var response = new
+            {
+                data = nominas,
+                totalRows
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("periodo/anios")]

@@ -26,7 +26,7 @@ namespace Nomina.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<NominaView>> ConsultarNominasAsync(int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
+        public async Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ConsultarNominasAsync(int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
             string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize)
         {
             try
@@ -45,9 +45,12 @@ namespace Nomina.Infrastructure.Repositories
                         PageSize = pageSize
                     };
 
-                    var result = await con.QueryAsync<NominaView>("ConsultarNominas", parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    using var multi = await con.QueryMultipleAsync("ConsultarNominas", parameters, commandType: System.Data.CommandType.StoredProcedure);
 
-                    return result;
+                    var nominas = await multi.ReadAsync<NominaView>();
+                    var totalRows = await multi.ReadFirstAsync<int>();
+
+                    return (nominas, totalRows);
                 }
             }
             catch (SqlException ex)

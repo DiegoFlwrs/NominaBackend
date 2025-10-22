@@ -19,18 +19,20 @@ namespace Nomina.API.Filters
 
                 string message = "Operación exitosa";
                 object data = objectResult.Value;
+                int TotalRows = 0;
 
                 if (data is not null)
                 {
                     var tipo = data.GetType();
-                    var messageProp = tipo.GetProperty("message", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-
-                    if (messageProp != null)
+                    var totalRowsProp = tipo.GetProperty("totalRows", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                    if (totalRowsProp != null)
                     {
-                        message = messageProp.GetValue(data)?.ToString() ?? message;
-
-                        if (tipo.GetProperties().Length == 1)
-                            data = null;
+                        TotalRows = (int)(totalRowsProp.GetValue(data) ?? 0);
+                        var dataProp = tipo.GetProperty("data", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                        if (dataProp != null)
+                        {
+                            data = dataProp.GetValue(data);
+                        }
                     }
                 }
 
@@ -49,7 +51,10 @@ namespace Nomina.API.Filters
                 };
 
                 if (data is not null)
+                { 
                     responseDict["data"] = data;
+                    responseDict["TotalRows"] = TotalRows;
+                }
 
                 context.Result = new ContentResult
                 {
