@@ -6,30 +6,36 @@ using Nomina.Application.Services;
 using Nomina.Domain.Interfaces;
 using Nomina.Infrastructure.Persistence;
 using Nomina.Infrastructure.Repositories;
+using QuestPDF.Infrastructure; // <-- Nuevo using
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ** CONFIGURACIÓN DE QUESTPDF (Soluciona el error de "Welcome to QuestPDF") **
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")  // Permite solicitudes de cualquier origen
+        policy.WithOrigins("http://localhost:3000")
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
 });
 
-// Add services to the container.
 
-// Configurar cadena de conexión
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException("La cadena de conexión 'DefaultConnection' no está configurada.");
+}
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Inyección de dependencias
 builder.Services.AddScoped<iTrabajadorRepository>(sp => new TrabajadorRepository(connectionString));
+builder.Services.AddScoped<IReporteNominaRepository, ReporteNominaRepository>(provider =>
+    new ReporteNominaRepository(connectionString));
 builder.Services.AddScoped<INominaRepository>(sp =>
 {
     var context = sp.GetRequiredService<AppDbContext>();
@@ -39,6 +45,7 @@ builder.Services.AddScoped<INominaRepository>(sp =>
 builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();
 builder.Services.AddScoped<INominaService, NominaService>();
 
+builder.Services.AddScoped<IReporteNominaService, ReporteNominaService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -52,7 +59,7 @@ builder.Services.AddControllers(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -61,7 +68,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAnyOrigin");
 
-//app.UseExceptionHandler("/error");
+app.UseExceptionHandler("/error");
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

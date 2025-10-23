@@ -9,6 +9,7 @@
       "Nomina.Infrastructure/1.0.0": {
         "dependencies": {
           "Dapper": "2.1.66",
+          "Microsoft.Data.SqlClient": "5.1.6",
           "Microsoft.EntityFrameworkCore": "8.0.21",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.21",
           "Nomina.Domain": "1.0.0",
@@ -641,7 +642,7 @@
       "Nomina.Domain/1.0.0": {
         "runtime": {
           "Nomina.Domain.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }

@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "0PCqp1Bbad92UN90TbQkcULGSD928uKe0+NSwqLTV9c=",
+  "Hash": "JzXWkXDevwbR4FWWmB29ddH+U/eb9WOV6oUk9RyILvU=",
   "Source": "Nomina.API",
   "BasePath": "_content/Nomina.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

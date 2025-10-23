@@ -2918,6 +2918,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Dapper >= 2.1.66",
+      "Microsoft.Data.SqlClient >= 5.1.6",
       "Microsoft.EntityFrameworkCore >= 8.0.21",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.21",
       "Nomina.Domain >= 1.0.0",
@@ -2925,23 +2926,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\SMITH\\.nuget\\packages\\": {},
+    "C:\\Users\\usuario\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\usuario\\Source\\Repos\\NominaBackend\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj",
       "projectName": "Nomina.Infrastructure",
-      "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\SMITH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Infrastructure\\obj\\",
+      "projectPath": "C:\\Users\\usuario\\Source\\Repos\\NominaBackend\\Nomina.Infrastructure\\Nomina.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\usuario\\Source\\Repos\\NominaBackend\\Nomina.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\SMITH\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2950,15 +2951,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Domain\\Nomina.Domain.csproj": {
-              "projectPath": "C:\\Users\\SMITH\\Desktop\\Producto Calidad de Software\\Nomina\\Nomina.Domain\\Nomina.Domain.csproj"
+            "C:\\Users\\usuario\\Source\\Repos\\NominaBackend\\Nomina.Domain\\Nomina.Domain.csproj": {
+              "projectPath": "C:\\Users\\usuario\\Source\\Repos\\NominaBackend\\Nomina.Domain\\Nomina.Domain.csproj"
             }
           }
         }
@@ -2972,7 +2972,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -2981,6 +2982,10 @@
           "Dapper": {
             "target": "Package",
             "version": "[2.1.66, )"
+          },
+          "Microsoft.Data.SqlClient": {
+            "target": "Package",
+            "version": "[5.1.6, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
@@ -3011,7 +3016,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.415/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -14,3 +14,38 @@ C:\Users\SMITH\Desktop\Producto Calidad de Software\Nomina\Nomina.Application\ob
 C:\Users\SMITH\Desktop\Producto Calidad de Software\Nomina\Nomina.Application\obj\Debug\net8.0\Nomina.Application.pdb
 C:\Users\SMITH\Desktop\Producto Calidad de Software\Nomina\Nomina.Application\obj\Debug\net8.0\ref\Nomina.Application.dll
 C:\Users\SMITH\Desktop\Producto Calidad de Software\Nomina\Nomina.Application\obj\Debug\net8.0\Nomina.Application.sourcelink.json
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\Nomina.Application.deps.json
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\Nomina.Application.dll
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\Nomina.Application.pdb
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\Nomina.Domain.dll
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\Nomina.Domain.pdb
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.csproj.AssemblyReference.cache
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.AssemblyInfoInputs.cache
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.AssemblyInfo.cs
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.csproj.CoreCompileInputs.cache
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.sourcelink.json
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.A.07B29191.Up2Date
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.dll
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\refint\Nomina.Application.dll
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\Nomina.Application.pdb
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\obj\Debug\net8.0\ref\Nomina.Application.dll
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Black.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-BlackItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Bold.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-BoldItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-ExtraBold.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-ExtraLight.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-ExtraLightItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Italic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Light.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-LightItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Medium.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-MediumItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Regular.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-SemiBold.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-SemiBoldItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-Thin.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\Lato-ThinItalic.ttf
+C:\Users\usuario\Source\Repos\NominaBackend\Nomina.Application\bin\Debug\net8.0\LatoFont\OFL.txt
