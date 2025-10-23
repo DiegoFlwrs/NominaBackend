@@ -1,0 +1,14 @@
+# Archivos y carpetas de compilación
+bin/
+obj/
+
+# Archivos de depuración y build temporales
+*.user
+*.suo
+*.cache
+*.pdb
+*.log
+
+# Configuración específica del IDE (Visual Studio, Rider, etc.)
+.vs/
+.idea/
