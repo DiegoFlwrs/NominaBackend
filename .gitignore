@@ -1,14 +1,20 @@
-# Archivos y carpetas de compilación
+# Archivos de compilación
 bin/
 obj/
+[Bb]in/
+[Oo]bj/
 
-# Archivos de depuración y build temporales
+# Configuración local de VS
+.vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos de build temporales
 *.cache
 *.pdb
 *.log
 
-# Configuración específica del IDE (Visual Studio, Rider, etc.)
-.vs/
-.idea/
+# Carpetas de publicación
+publish/
