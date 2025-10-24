@@ -10,11 +10,17 @@ namespace Nomina.Domain.Interfaces
 {
     public interface INominaRepository
     {
-        //Task<bool> ProcesarNominaPorPeriodoAsync(int idPeriodo, DateTime fechaProceso, int usuarioId);
         Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ConsultarNominasAsync( int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
             string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize);
 
-        Task<IEnumerable<PeriodosNomina>> ObtenerPeriodosAsync();
-        Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync();
+        Task<IEnumerable<PeriodoNomina>> ObtenerPeriodosAsync();
+        Task<IEnumerable<Departamento>> ObtenerDepartamentosAsync();
+        Task<IEnumerable<ContratoLaboral>> ObtenerContratoAsync();
+
+        Task InsertarNominaAsync(string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
+            decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
+        Task<ContratoLaboral?> ObtenerContratoConEmpleadoAsync(string contratoCodigo);
+        Task ActualizarNominaAsync(string nominaCodigo, int nominaHorasExtras, decimal nominaBonificacion, decimal nominaDescuentos, decimal nominaTotalIngresos,
+        decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
     }
 }

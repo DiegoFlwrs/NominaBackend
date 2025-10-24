@@ -14,6 +14,7 @@ namespace Nomina.Domain.ReadModels
         public int PeriodoMes { get; set; }
         public DateTime PeriodoInicio { get; set; }
         public DateTime PeriodoFin { get; set; }
+        public string ContratoCodigo { get; set; }
         public string EmpleadoCodigo { get; set; }
         public string EmpleadoApellido { get; set; }
         public string EmpleadoNombre { get; set; }
@@ -22,7 +23,6 @@ namespace Nomina.Domain.ReadModels
         public string TipoContratoDescripcion { get; set; }
         public decimal ContratoSalario { get; set; }
 
-        // 🔽 Campos adicionales del SP (agregados para evitar errores de mapeo)
         public decimal? NominaHorasExtras { get; set; }
         public decimal? NominaBonificacion { get; set; }
         public decimal? NominaDescuentos { get; set; }
@@ -32,7 +32,6 @@ namespace Nomina.Domain.ReadModels
         public DateTime? NominaFechaProcesamiento { get; set; }
         public string NominaEstado { get; set; }
 
-        // 🔽 Campo calculado (CASE del SP)
         public string EstadoNominaNombre { get; set; }
     }
 }

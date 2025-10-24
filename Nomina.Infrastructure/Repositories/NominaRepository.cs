@@ -64,7 +64,7 @@ namespace Nomina.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<PeriodosNomina>> ObtenerPeriodosAsync()
+        public async Task<IEnumerable<PeriodoNomina>> ObtenerPeriodosAsync()
         {
             try
             {
@@ -79,11 +79,115 @@ namespace Nomina.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync()
+        public async Task<IEnumerable<Departamento>> ObtenerDepartamentosAsync()
         {
             try
             {
                 return await _context.Departamentos.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ContratoLaboral>> ObtenerContratoAsync()
+        {
+            try
+            {
+                return await _context.ContratosLaborales
+                    .Include(c => c.Empleado).
+                    ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+
+        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
+            decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    var parameters = new
+                    {
+                        NominaCodigo = nominaCodigo,
+                        PeriodoCodigo = periodoCodigo,
+                        ContratoCodigo = contratoCodigo,
+                        NominaHorasExtras = nominaHorasExtras,
+                        NominaBonificacion = nominaBonificacion,
+                        NominaDescuentos = nominaDescuentos,
+                        NominaTotalIngresos = nominaTotalIngresos,
+                        NominaTotalDescuentos = nominaTotalDescuentos,
+                        NominaSueldoNeto = nominaSueldoNeto,
+                        NominaEstado = nominaEstado
+                    };
+
+                    await con.ExecuteAsync(
+                        "InsertarNomina",
+                        parameters,
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DatabaseException($"Error en la base de datos: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task ActualizarNominaAsync( string nominaCodigo, int nominaHorasExtras, decimal nominaBonificacion, decimal nominaDescuentos, decimal nominaTotalIngresos,
+        decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    var parameters = new
+                    {
+                        NominaCodigo = nominaCodigo,
+                        NominaHorasExtras = nominaHorasExtras,
+                        NominaBonificacion = nominaBonificacion,
+                        NominaDescuentos = nominaDescuentos,
+                        NominaTotalIngresos = nominaTotalIngresos,
+                        NominaTotalDescuentos = nominaTotalDescuentos,
+                        NominaSueldoNeto = nominaSueldoNeto,
+                        NominaEstado = nominaEstado
+                    };
+
+                    await con.ExecuteAsync(
+                        "ModificarNomina",
+                        parameters,
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DatabaseException($"Error en la base de datos: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+
+        public async Task<ContratoLaboral?> ObtenerContratoConEmpleadoAsync(string contratoCodigo)
+        {
+            try
+            {
+                return await _context.ContratosLaborales
+                    .Include(c => c.Empleado)
+                    .FirstOrDefaultAsync(c => c.ContratoCodigo == contratoCodigo && c.ContratoEstado == "A");
             }
             catch (Exception ex)
             {

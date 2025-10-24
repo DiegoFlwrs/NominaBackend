@@ -17,7 +17,7 @@ namespace Nomina.API.Controllers
             _service = service;
         }
 
-        [HttpPost("procesar")]
+        [HttpPost("listar")]
         public async Task<IActionResult> ProcesarNomina([FromBody] NominaFiltroRequest request)
         {
             var (nominas, totalRows) = await _service.ProcesarNominaAsync(request);
@@ -45,11 +45,41 @@ namespace Nomina.API.Controllers
             return Ok(meses);
         }
 
-        [HttpGet("departamentos")]
+
+        [HttpGet("periodos")]
         public async Task<IActionResult> ListarDepartamentos()
+        {
+            var periodos = await _service.ObtenerPeriodoAsync();
+            return Ok(periodos);
+        }
+
+        [HttpGet("contratos")]
+        public async Task<IActionResult> ListarContratos()
+        {
+            var empleados = await _service.ObtenerContratoAsync();
+            return Ok(empleados);
+        }
+
+        [HttpGet("departamentos")]
+        public async Task<IActionResult> ListarPeriodos()
         {
             var departamentos = await _service.ObtenerDepartamentosAsync();
             return Ok(departamentos);
         }
+
+        [HttpPost("procesar")]
+        public async Task<IActionResult> CrearNomina([FromBody] NominaRequest request)
+        {
+            await _service.CrearNominaAsync(request);
+            return Ok("La nómina fue insertada correctamente");
+        }
+
+        [HttpPut("actualizar")]
+        public async Task<IActionResult> ActualizarNomina([FromBody] NominaRequest request)
+        {
+            await _service.ActualizarNominaAsync(request);
+            return Ok("La nómina fue actualizada correctamente");
+        }
+
     }
 }

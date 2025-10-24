@@ -15,7 +15,11 @@ namespace Nomina.Application.interfaces
         Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ProcesarNominaAsync(NominaFiltroRequest request);
         Task<IEnumerable<int>> ObtenerAniosAsync();
         Task<IEnumerable<int>> ObtenerMesesAsync();
+        Task<IEnumerable<PeriodoDTO>> ObtenerPeriodoAsync();
+        Task<IEnumerable<DepartamentoDTO>> ObtenerDepartamentosAsync();
+        Task<IEnumerable<ContratoDTO>> ObtenerContratoAsync();
+        Task CrearNominaAsync(NominaRequest request);
 
-        Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync();
+        Task ActualizarNominaAsync(NominaRequest request);
     }
 }

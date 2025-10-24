@@ -1,10 +1,12 @@
 ﻿using Nomina.API.Exceptions;
 using Nomina.Application.DTOs;
 using Nomina.Application.DTOs.NominaPeriodo;
+using Nomina.Application.Helpers;
 using Nomina.Application.interfaces;
 using Nomina.Domain.Entities;
 using Nomina.Domain.Interfaces;
 using Nomina.Domain.ReadModels;
+using Nomina.Domain.rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace Nomina.Application.Services
     public class NominaService : INominaService
     {
         private readonly INominaRepository _repository;
+        public Helper helper = new Helper();
 
         public NominaService(INominaRepository repository)
         {
@@ -49,7 +52,7 @@ namespace Nomina.Application.Services
                 .Distinct()
                 .OrderByDescending(a => a)
                 .ToList();
-
+        
             return aniosDistintos;
         }
 
@@ -65,11 +68,110 @@ namespace Nomina.Application.Services
             return mesesDistintos;
         }
 
-        public async Task<IEnumerable<Departamentos>> ObtenerDepartamentosAsync()
+        public async Task<IEnumerable<DepartamentoDTO>> ObtenerDepartamentosAsync()
         {
             var departamentos = await _repository.ObtenerDepartamentosAsync();
 
-            return departamentos;
+            var resultado = departamentos.Select(t => new DepartamentoDTO
+            {
+                DepartamentoCodigo = t.DepartamentoCodigo,
+                DepartamentoNombre = t.DepartamentoNombre
+            });
+
+            return resultado;
         }
+
+        public async Task<IEnumerable<PeriodoDTO>> ObtenerPeriodoAsync()
+        {
+            var periodos = await _repository.ObtenerPeriodosAsync();
+
+            var resultado = periodos.Select(t => new PeriodoDTO
+            {
+                PeriodoCodigo = t.PeriodoCodigo.Trim(),
+                PeriodoDescripcion = t.PeriodoAnio + " - "+ helper.ObtenerNombreMes(t.PeriodoMes)
+            });
+
+            return resultado;
+        }
+
+        public async Task<IEnumerable<ContratoDTO>> ObtenerContratoAsync()
+        {
+            var contratos = await _repository.ObtenerContratoAsync();
+
+            var resultado = contratos.Select(t => new ContratoDTO
+            {
+                ContratoCodigo = t.ContratoCodigo.Trim(),
+                EmpleadoDescripcion = t.ContratoCodigo.Trim() + " - " + t.Empleado.EmpleadoNombre + " " +t.Empleado.EmpleadoApellido
+            });
+
+            return resultado;
+        }
+
+        public async Task CrearNominaAsync(NominaRequest request)
+        {
+            var contratoEmpleado = await _repository.ObtenerContratoConEmpleadoAsync(request.ContratoCodigo);
+            if (contratoEmpleado == null) 
+            {
+                throw new BusinessException("Empleado no encontrado.");
+            }
+
+            var totalIngresos = ReglasNomina.CalcularTotalIngresos(
+                contratoEmpleado.ContratoSalario,
+                request.NominaHorasExtras,
+                request.NominaBonificacion
+            );
+
+            var totalDescuentos = ReglasNomina.CalcularDescuentos(
+                contratoEmpleado.Empleado.EmpleadoTipoPension,
+                contratoEmpleado.Empleado.EmpleadoAFP,
+                totalIngresos
+            );
+
+            var sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+
+            await _repository.InsertarNominaAsync(
+                request.NominaCodigo,
+                request.PeriodoCodigo,
+                request.ContratoCodigo,
+                request.NominaHorasExtras,
+                request.NominaBonificacion,
+                totalDescuentos,
+                totalIngresos,
+                totalDescuentos,
+                sueldoNeto
+            );
+        }
+
+        public async Task ActualizarNominaAsync(NominaRequest request)
+        {
+            var contratoEmpleado = await _repository.ObtenerContratoConEmpleadoAsync(request.ContratoCodigo);
+            if (contratoEmpleado == null)
+                throw new BusinessException("Empleado no encontrado.");
+
+            var totalIngresos = ReglasNomina.CalcularTotalIngresos(
+                contratoEmpleado.ContratoSalario,
+                request.NominaHorasExtras,
+                request.NominaBonificacion
+            );
+
+            var totalDescuentos = ReglasNomina.CalcularDescuentos(
+                contratoEmpleado.Empleado.EmpleadoTipoPension,
+                contratoEmpleado.Empleado.EmpleadoAFP,
+                totalIngresos
+            );
+
+            var sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+
+            await _repository.ActualizarNominaAsync(
+                request.NominaCodigo,
+                request.NominaHorasExtras,
+                request.NominaBonificacion,
+                request.NominaDescuentos,
+                totalIngresos,
+                totalDescuentos,
+                sueldoNeto
+            );
+        }
+
     }
 }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Nomina.Domain.Entities
 {
-    public class Departamentos
+    public class Departamento
     {
         public string DepartamentoCodigo { set; get; }
         public string DepartamentoNombre { set; get; }
+        // Relaciones
+        public ICollection<Empleado>? Empleados { get; set; }
     }
 }

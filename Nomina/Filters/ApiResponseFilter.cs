@@ -14,20 +14,26 @@ namespace Nomina.API.Filters
             if (context.Result is ObjectResult objectResult &&
                 objectResult.StatusCode >= 200 && objectResult.StatusCode < 300)
             {
+                // Evitar procesar respuestas ya formateadas
                 if (objectResult.Value is ApiResponse<object>)
                     return;
 
-                string message = "Operación exitosa";
-                object data = objectResult.Value;
-                int TotalRows = 0;
+                object? data = objectResult.Value;
+                int totalRows = 0;
 
-                if (data is not null)
+                // Determinar el mensaje base
+                string message = data is string strMessage
+                    ? strMessage
+                    : "Operación exitosa";
+
+                // Si el objeto tiene propiedades tipo "data" y "totalRows"
+                if (data is not null && data.GetType() != typeof(string))
                 {
                     var tipo = data.GetType();
                     var totalRowsProp = tipo.GetProperty("totalRows", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
                     if (totalRowsProp != null)
                     {
-                        TotalRows = (int)(totalRowsProp.GetValue(data) ?? 0);
+                        totalRows = (int)(totalRowsProp.GetValue(data) ?? 0);
                         var dataProp = tipo.GetProperty("data", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
                         if (dataProp != null)
                         {
@@ -36,13 +42,7 @@ namespace Nomina.API.Filters
                     }
                 }
 
-                var apiResponse = new
-                {
-                    statusCode = objectResult.StatusCode ?? 200,
-                    success = true,
-                    message = message,
-                };
-
+                // Construir la respuesta base
                 var responseDict = new Dictionary<string, object?>
                 {
                     ["statusCode"] = objectResult.StatusCode ?? 200,
@@ -50,12 +50,14 @@ namespace Nomina.API.Filters
                     ["message"] = message
                 };
 
-                if (data is not null)
-                { 
+                // Agregar data solo si no es texto
+                if (data is not null && data.GetType() != typeof(string))
+                {
                     responseDict["data"] = data;
-                    responseDict["TotalRows"] = TotalRows;
+                    responseDict["TotalRows"] = totalRows;
                 }
 
+                // Devolver el resultado final formateado
                 context.Result = new ContentResult
                 {
                     StatusCode = objectResult.StatusCode,
