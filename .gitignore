@@ -1,2 +1,29 @@
-git rm -r --cached **/bin/
-git rm -r --cached **/obj/
+# Compilación
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.pdb
+*.cache
+*.log
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Publicación
+publish/
+[Tt]est[Rr]esult*/
+*.Publish.xml
+
+# Archivos temporales
+*.tmp
+*.temp
+*.dbmdl
+*.bak
+
+# Archivos generados por herramientas
+project.lock.json
+artifacts/
