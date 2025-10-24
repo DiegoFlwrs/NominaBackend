@@ -35,7 +35,7 @@ namespace Nomina.Application.Services
             });
         }
 
-            public async Task RegistrarContrato(ContratoLaboralDTO dto)
+        public async Task RegistrarContrato(ContratoLaboralDTO dto)
         {
             if (string.IsNullOrWhiteSpace(dto.EmpleadoCodigo) ||
                 string.IsNullOrWhiteSpace(dto.TipoContratoCodigo) ||
@@ -46,13 +46,13 @@ namespace Nomina.Application.Services
             if (dto.ContratoSalario < ValidacionesContrato.SALARIO_MINIMO)
                 throw new BusinessException($"El salario no puede ser menor al mínimo legal ({ValidacionesContrato.SALARIO_MINIMO}).");
             bool empleadoExiste = await _contratoRepository.ExisteEmpleadoActivo(dto.EmpleadoCodigo);
-                    if (!empleadoExiste)
-                        throw new NotFoundException("El empleado no existe o ha sido eliminado del sistema.");
-        
-        
-        bool existeVigente = await _contratoRepository.ExisteContratoVigente(dto.EmpleadoCodigo);
+            if (!empleadoExiste)
+                throw new NotFoundException("El empleado no existe o ha sido eliminado del sistema.");
+
+
+            bool existeVigente = await _contratoRepository.ExisteContratoVigente(dto.EmpleadoCodigo);
             if (existeVigente)
-            throw new BusinessException("Exitoso");
+                throw new BusinessException("Exitoso");
             var contrato = new ContratoLaboral
             {
                 ContratoCodigo = dto.ContratoCodigo,
@@ -71,27 +71,23 @@ namespace Nomina.Application.Services
 
             await _contratoRepository.InsertarContrato(contrato);
         }
-   public async Task ModificarContrato(ContratoLaboralDTO dto)
+        public async Task ModificarContrato(ContratoLaboralDTO dto)
         {
-            var contratoActual = await _contratoRepository.ObtenerContrato(dto.ContratoCodigo);
-            if (contratoActual == null)
+            var contrato = await _contratoRepository.ObtenerContrato(dto.ContratoCodigo);
+            if (contrato == null)
                 throw new NotFoundException("Contrato no encontrado.");
+
             if (dto.ContratoSalario < ValidacionesContrato.SALARIO_MINIMO)
                 throw new BusinessException("El salario no puede ser menor al mínimo legal.");
 
-            bool cambioImportante = contratoActual.ContratoSalario != dto.ContratoSalario
-                || contratoActual.JornadaCodigo != dto.JornadaCodigo;
-
-            var contrato = new ContratoLaboral
-            {
-                ContratoCodigo = dto.ContratoCodigo,
-                ContratoFechaInicio = dto.ContratoFechaInicio,
-                ContratoFechaFin = dto.ContratoFechaFin,
-                ContratoSalario = dto.ContratoSalario,
-                ContratoBonificacion = dto.ContratoBonificacion,
-                ContratoDescuento = dto.ContratoDescuento,
-                ContratoEstado = dto.ContratoEstado
-            };
+            // Actualizar solo los campos editables
+            contrato.ContratoFechaInicio = dto.ContratoFechaInicio;
+            contrato.ContratoFechaFin = dto.ContratoFechaFin;
+            contrato.ContratoSalario = dto.ContratoSalario;
+            contrato.ContratoBonificacion = dto.ContratoBonificacion;
+            contrato.ContratoDescuento = dto.ContratoDescuento;
+            contrato.ContratoEstado = dto.ContratoEstado;
+            contrato.JornadaCodigo = dto.JornadaCodigo;
 
             await _contratoRepository.ModificarContrato(contrato);
         }

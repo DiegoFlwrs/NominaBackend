@@ -20,7 +20,7 @@ namespace Nomina.Infrastructure.Persistence
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<ContratoLaboral> ContratosLaborales { get; set; }
         public DbSet<EventoContrato> EventosContrato { get; set; }
-        //public DbSet<HistorialContrato> HistorialContratos { get; set; }
+        public DbSet<HistorialContrato> HistorialContratos { get; set; }
         public DbSet<PeriodoNomina> PeriodosNomina { get; set; }
         public DbSet<Nominas> Nominas { get; set; }
         public DbSet<DescuentoAdicional> DescuentosAdicionales { get; set; }
@@ -160,6 +160,13 @@ namespace Nomina.Infrastructure.Persistence
             {
                 entity.ToTable("ParametrosSistema", "dbo");
                 entity.HasKey(e => e.ParametroCodigo);
+            });
+
+            modelBuilder.Entity<HistorialContrato>(entity =>
+            {
+                entity.HasKey(e => e.HistorialCodigo);
+                entity.Property(e => e.HistorialCodigo).HasMaxLength(5);
+                entity.ToTable("HistorialContratos");
             });
         }
     }
