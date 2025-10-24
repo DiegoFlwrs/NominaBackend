@@ -6,11 +6,11 @@ using Nomina.Application.Services;
 using Nomina.Domain.Interfaces;
 using Nomina.Infrastructure.Persistence;
 using Nomina.Infrastructure.Repositories;
-using QuestPDF.Infrastructure; // <-- Nuevo using
+using QuestPDF.Infrastructure; 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ** CONFIGURACIÓN DE QUESTPDF (Soluciona el error de "Welcome to QuestPDF") **
+
 QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddCors(options =>
