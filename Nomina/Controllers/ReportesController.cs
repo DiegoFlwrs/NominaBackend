@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Nomina.Application.DTOs;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -17,13 +18,11 @@ public class ReportesController : ControllerBase
         _reporteService = reporteService;
     }
 
-  
     [HttpGet("nomina")]
     [ProducesResponseType(typeof(List<ReporteNominaView>), 200)]
     public async Task<IActionResult> GenerarReporteNomina(
         [FromQuery] DateTime fechaInicio,
         [FromQuery] DateTime fechaFin,
-        // opcional
         [FromQuery] string? departamentoCodigo,
         [FromQuery] string? cargoCodigo,
         [FromQuery] string? tipoContratoCodigo)
@@ -38,7 +37,7 @@ public class ReportesController : ControllerBase
                 tipoContratoCodigo
             );
 
-            return Ok(new { status = 200, success = true, message = "Operación exitosa", data = reporte });
+            return Ok(reporte);
         }
         catch (ArgumentException ex)
         {
@@ -50,15 +49,22 @@ public class ReportesController : ControllerBase
         }
     }
 
-    [HttpGet("nomina/pdf")]
+    [HttpPost("nomina/pdf")]
     [ProducesResponseType(typeof(FileResult), 200)]
     public async Task<IActionResult> GenerarReporteNominaPdf(
-        [FromQuery] DateTime fechaInicio,
-        [FromQuery] DateTime fechaFin,
-        [FromQuery] string? departamentoCodigo,
-        [FromQuery] string? cargoCodigo,
-        [FromQuery] string? tipoContratoCodigo)
+        [FromBody] ReporteNominaRequest request)
     {
+        var fechaInicio = request.FechaInicio;
+        var fechaFin = request.FechaFin;
+        var departamentoCodigo = request.DepartamentoCodigo;
+        var cargoCodigo = request.CargoCodigo;
+        var tipoContratoCodigo = request.TipoContratoCodigo;
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         try
         {
             byte[] pdfBytes = await _reporteService.GenerarReportePdfAsync(

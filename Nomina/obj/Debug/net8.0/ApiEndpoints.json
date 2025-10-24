@@ -49,34 +49,14 @@
     "ContainingType": "ReportesController",
     "Method": "GenerarReporteNominaPdf",
     "RelativePath": "api/Reportes/nomina/pdf",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "fechaInicio",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "fechaFin",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "departamentoCodigo",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "cargoCodigo",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "tipoContratoCodigo",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "Nomina.Application.DTOs.ReporteNominaRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
