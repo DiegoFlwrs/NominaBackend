@@ -100,5 +100,14 @@ namespace Nomina.Application.Services
         {
             await _contratoRepository.EliminarContrato(contratoCodigo);
         }
+        public async Task<ContratoLaboral> ObtenerContrato(string codigo)
+        {
+            var contrato = await _contratoRepository.ObtenerContrato(codigo);
+
+            if (contrato == null)
+                throw new NotFoundException("Contrato no encontrado.");
+
+            return contrato;
+        }
     }
 }

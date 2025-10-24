@@ -1,24 +1,24 @@
-using Dapper;
-using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Nomina.Domain.Entities;
 using Nomina.Domain.Interfaces;
-
+using Nomina.Infrastructure.Persistence;
 
 namespace Nomina.Infrastructure.Repositories
 {
     public class ContratoLaboralRepository : IContratoLaboralRepository
     {
-        private readonly string _connectionString;
+        private readonly AppDbContext _context;
 
-        public ContratoLaboralRepository(string connectionString)
+        public ContratoLaboralRepository(AppDbContext context)
         {
-            _connectionString = connectionString;
+            _context = context;
         }
 
         public async Task<IEnumerable<ContratoLaboral>> ConsultarContratos()
         {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryAsync<ContratoLaboral>("SELECT * FROM ContratosLaborales");
+            return await _context.ContratosLaborales
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task InsertarContrato(ContratoLaboral contrato)
@@ -28,71 +28,59 @@ namespace Nomina.Infrastructure.Repositories
                 contrato.ContratoCodigo = "C" + new Random().Next(100, 999).ToString();
             }
 
-            using var connection = new SqlConnection(_connectionString);
-
-            var sql = @"INSERT INTO ContratosLaborales 
-                        (ContratoCodigo, EmpleadoCodigo, TipoContratoCodigo, ModalidadCodigo, JornadaCodigo, UsuarioCodigo, 
-                        ContratoFechaInicio, ContratoFechaFin, ContratoSalario, ContratoBonificacion, ContratoDescuento, ContratoEstado)
-                        VALUES (@ContratoCodigo, @EmpleadoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo,
-                                @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario, @ContratoBonificacion, @ContratoDescuento, @ContratoEstado)";
-
-            await connection.ExecuteAsync(sql, contrato);
+            await _context.ContratosLaborales.AddAsync(contrato);
+            await _context.SaveChangesAsync();
         }
 
         public async Task ModificarContrato(ContratoLaboral contrato)
         {
-            using var connection = new SqlConnection(_connectionString);
-            var sql = @"UPDATE ContratosLaborales 
-                        SET ContratoFechaInicio=@ContratoFechaInicio, ContratoFechaFin=@ContratoFechaFin, 
-                            ContratoSalario=@ContratoSalario, ContratoBonificacion=@ContratoBonificacion, 
-                            ContratoDescuento=@ContratoDescuento, ContratoEstado=@ContratoEstado
-                        WHERE ContratoCodigo=@ContratoCodigo";
-            await connection.ExecuteAsync(sql, contrato);
+            _context.ContratosLaborales.Update(contrato);
+            await _context.SaveChangesAsync();
         }
 
         public async Task EliminarContrato(string contratoCodigo)
         {
-            using var connection = new SqlConnection(_connectionString);
-            await connection.ExecuteAsync("DELETE FROM ContratosLaborales WHERE ContratoCodigo=@ContratoCodigo", new { ContratoCodigo = contratoCodigo });
+            var contrato = await _context.ContratosLaborales
+                .FirstOrDefaultAsync(c => c.ContratoCodigo == contratoCodigo);
+
+            if (contrato != null)
+            {
+                _context.ContratosLaborales.Remove(contrato);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> ExisteContratoVigente(string empleadoCodigo)
         {
-            using var connection = new SqlConnection(_connectionString);
-            var query = "SELECT COUNT(*) FROM ContratosLaborales WHERE EmpleadoCodigo=@EmpleadoCodigo AND ContratoEstado='A'";
-            int count = await connection.ExecuteScalarAsync<int>(query, new { EmpleadoCodigo = empleadoCodigo });
-            return count > 0;
+            return await _context.ContratosLaborales
+                .AnyAsync(c => c.EmpleadoCodigo == empleadoCodigo && c.ContratoEstado == "A");
         }
 
         public async Task<bool> ExisteEmpleadoActivo(string empleadoCodigo)
         {
-            using var connection = new SqlConnection(_connectionString);
-            var query = "SELECT COUNT(*) FROM Empleados WHERE EmpleadoCodigo=@EmpleadoCodigo AND EmpleadoEstado='A'";
-            int count = await connection.ExecuteScalarAsync<int>(query, new { EmpleadoCodigo = empleadoCodigo });
-            return count > 0;
+            return await _context.Empleados
+                .AnyAsync(e => e.EmpleadoCodigo == empleadoCodigo && e.EmpleadoEstado == "A");
         }
 
         public async Task<ContratoLaboral?> ObtenerContrato(string contratoCodigo)
         {
-            using var connection = new SqlConnection(_connectionString);
-            return await connection.QueryFirstOrDefaultAsync<ContratoLaboral>(
-                "SELECT * FROM ContratosLaborales WHERE ContratoCodigo=@ContratoCodigo",
-                new { ContratoCodigo = contratoCodigo });
+            return await _context.ContratosLaborales
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.ContratoCodigo == contratoCodigo);
         }
 
         public async Task RegistrarHistorial(string contratoCodigo, string evento, string motivo)
         {
-            using var connection = new SqlConnection(_connectionString);
-            var historialCodigo = "H" + new Random().Next(100000, 999999).ToString();
-            
-            await connection.ExecuteAsync(
-                "INSERT INTO HistorialContratos (HistorialCodigo, ContratoCodigo, EventoCodigo, HistorialMotivo) VALUES (@HistorialCodigo, @ContratoCodigo, @Evento, @Motivo)",
-                new { 
-                    HistorialCodigo = historialCodigo,
-                    ContratoCodigo = contratoCodigo, 
-                    Evento = evento, 
-                    Motivo = motivo 
-                });
+            var historial = new HistorialContrato
+            {
+                HistorialCodigo = "H" + new Random().Next(100000, 999999).ToString(),
+                ContratoCodigo = contratoCodigo,
+                EventoCodigo = evento,
+                HistorialMotivo = motivo
+            };
+
+            await _context.HistorialContratos.AddAsync(historial);
+            await _context.SaveChangesAsync();
         }
     }
 }
