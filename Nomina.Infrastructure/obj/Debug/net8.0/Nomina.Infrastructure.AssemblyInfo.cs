@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Nomina.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e90ee6b868ca1c6c4097e33c9577691a363a2b1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+291362637ca48189d8e951aa33013404cf9c35a7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Nomina.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nomina.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
