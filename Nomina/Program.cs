@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Nomina.API.Filters;
 using Nomina.API.Middleware;
 using Nomina.Application.interfaces;
+using Nomina.Application.Interfaces;
 using Nomina.Application.Services;
 using Nomina.Domain.Interfaces;
 using Nomina.Infrastructure.Persistence;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 QuestPDF.Settings.License = LicenseType.Community;
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin", policy =>
@@ -23,11 +25,10 @@ builder.Services.AddCors(options =>
     });
 });
 
-
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrWhiteSpace(connectionString))
 {
-    throw new InvalidOperationException("La cadena de conexiÛn 'DefaultConnection' no est· configurada.");
+    throw new InvalidOperationException("La cadena de conexi√≥n 'DefaultConnection' no est√° configurada.");
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -42,24 +43,25 @@ builder.Services.AddScoped<INominaRepository>(sp =>
     return new NominaRepository(context, connectionString);
 });
 
+builder.Services.AddScoped<IContratoLaboralRepository, ContratoLaboralRepository>();
+builder.Services.AddScoped<IContratoLaboralService, ContratoLaboralService>(); 
+
 builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();
 builder.Services.AddScoped<INominaService, NominaService>();
-
 builder.Services.AddScoped<IReporteNominaService, ReporteNominaService>();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ApiResponseFilter>();
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-
+// Configuraci√≥n del pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -67,16 +69,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAnyOrigin");
-
 app.UseExceptionHandler("/error");
-
 app.UseMiddleware<ErrorHandlerMiddleware>();
-
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
