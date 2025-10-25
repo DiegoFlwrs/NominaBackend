@@ -52,7 +52,7 @@ namespace Nomina.Application.Services
                 .Distinct()
                 .OrderByDescending(a => a)
                 .ToList();
-        
+
             return aniosDistintos;
         }
 
@@ -88,7 +88,7 @@ namespace Nomina.Application.Services
             var resultado = periodos.Select(t => new PeriodoDTO
             {
                 PeriodoCodigo = t.PeriodoCodigo.Trim(),
-                PeriodoDescripcion = t.PeriodoAnio + " - "+ helper.ObtenerNombreMes(t.PeriodoMes)
+                PeriodoDescripcion = t.PeriodoAnio + " - " + helper.ObtenerNombreMes(t.PeriodoMes)
             });
 
             return resultado;
@@ -101,7 +101,7 @@ namespace Nomina.Application.Services
             var resultado = contratos.Select(t => new ContratoDTO
             {
                 ContratoCodigo = t.ContratoCodigo.Trim(),
-                EmpleadoDescripcion = t.ContratoCodigo.Trim() + " - " + t.Empleado.EmpleadoNombre + " " +t.Empleado.EmpleadoApellido
+                EmpleadoDescripcion = t.ContratoCodigo.Trim() + " - " + t.Empleado.EmpleadoNombre + " " + t.Empleado.EmpleadoApellido
             });
 
             return resultado;
@@ -110,24 +110,48 @@ namespace Nomina.Application.Services
         public async Task CrearNominaAsync(NominaRequest request)
         {
             var contratoEmpleado = await _repository.ObtenerContratoConEmpleadoAsync(request.ContratoCodigo);
-            if (contratoEmpleado == null) 
-            {
-                throw new BusinessException("Empleado no encontrado.");
-            }
+            if (contratoEmpleado == null)
+                throw new BusinessException("Empleado no encontrado o contrato inválido.");
 
-            var totalIngresos = ReglasNomina.CalcularTotalIngresos(
+            var empleado = contratoEmpleado.Empleado;
+
+            const decimal RMV = 1025m;
+            const decimal UIT = 5200m; 
+
+            decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(empleado.EmpleadoTieneHijos ?? false, RMV);
+
+            decimal pagoHorasExtras = ReglasNomina.CalcularPagoHorasExtras(
                 contratoEmpleado.ContratoSalario,
-                request.NominaHorasExtras,
+                request.NominaHorasExtras
+            );
+
+            decimal totalIngresos = ReglasNomina.CalcularTotalIngresos(
+                contratoEmpleado.ContratoSalario,
+                asignacionFamiliar,
+                pagoHorasExtras,
                 request.NominaBonificacion
             );
 
-            var totalDescuentos = ReglasNomina.CalcularDescuentos(
-                contratoEmpleado.Empleado.EmpleadoTipoPension,
-                contratoEmpleado.Empleado.EmpleadoAFP,
-                totalIngresos
+            decimal aporteEssalud = ReglasNomina.CalcularEssalud(totalIngresos);
+
+            decimal descuentoPension = ReglasNomina.CalcularDescuentoPension(
+                empleado.EmpleadoTipoPension ?? "",
+                totalIngresos,
+                empleado.EmpleadoAFP
             );
 
-            var sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+            decimal rentaQuinta = ReglasNomina.CalcularRentaQuinta(totalIngresos * 12, UIT);
+
+            decimal otrosDescuentos = ReglasNomina.CalcularTotalDescuentosAdicionales(
+                request.NominaDescuentos
+            );
+
+            decimal totalDescuentos = descuentoPension + rentaQuinta + otrosDescuentos;
+
+            decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+
+            if (!ReglasNomina.ValidarSueldoMinimo(sueldoNeto, RMV))
+                throw new BusinessException("El sueldo neto no puede ser menor a la RMV vigente.");
 
             await _repository.InsertarNominaAsync(
                 request.NominaCodigo,
@@ -146,21 +170,47 @@ namespace Nomina.Application.Services
         {
             var contratoEmpleado = await _repository.ObtenerContratoConEmpleadoAsync(request.ContratoCodigo);
             if (contratoEmpleado == null)
-                throw new BusinessException("Empleado no encontrado.");
+                throw new BusinessException("Empleado no encontrado o contrato inválido.");
 
-            var totalIngresos = ReglasNomina.CalcularTotalIngresos(
+            var empleado = contratoEmpleado.Empleado;
+
+            const decimal RMV = 1025m; 
+            const decimal UIT = 5200m; 
+
+            decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(empleado.EmpleadoTieneHijos ?? false, RMV);
+
+            decimal pagoHorasExtras = ReglasNomina.CalcularPagoHorasExtras(
                 contratoEmpleado.ContratoSalario,
-                request.NominaHorasExtras,
+                request.NominaHorasExtras
+            );
+
+            decimal totalIngresos = ReglasNomina.CalcularTotalIngresos(
+                contratoEmpleado.ContratoSalario,
+                asignacionFamiliar,
+                pagoHorasExtras,
                 request.NominaBonificacion
             );
 
-            var totalDescuentos = ReglasNomina.CalcularDescuentos(
-                contratoEmpleado.Empleado.EmpleadoTipoPension,
-                contratoEmpleado.Empleado.EmpleadoAFP,
-                totalIngresos
+            decimal aporteEssalud = ReglasNomina.CalcularEssalud(totalIngresos);
+
+            decimal descuentoPension = ReglasNomina.CalcularDescuentoPension(
+                empleado.EmpleadoTipoPension ?? "",
+                totalIngresos,
+                empleado.EmpleadoAFP
             );
 
-            var sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+            decimal rentaQuinta = ReglasNomina.CalcularRentaQuinta(totalIngresos * 12, UIT);
+
+            decimal otrosDescuentos = ReglasNomina.CalcularTotalDescuentosAdicionales(
+                request.NominaDescuentos
+            );
+
+            decimal totalDescuentos = descuentoPension + rentaQuinta + otrosDescuentos;
+
+            decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+
+            if (!ReglasNomina.ValidarSueldoMinimo(sueldoNeto, RMV))
+                throw new BusinessException("El sueldo neto no puede ser menor a la RMV vigente.");
 
             await _repository.ActualizarNominaAsync(
                 request.NominaCodigo,
