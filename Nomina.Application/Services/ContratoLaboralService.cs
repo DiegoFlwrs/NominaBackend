@@ -54,8 +54,6 @@ namespace Nomina.Application.Services
                 ContratoDescuento = dto.ContratoDescuento,
                 ContratoEstado = "A"
             };
-
-            // 🔹 Aplicar reglas de dominio
             ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
             var existeEmpleado = await _contratoRepository.ExisteEmpleadoActivo(dto.EmpleadoCodigo);
             if (!existeEmpleado)

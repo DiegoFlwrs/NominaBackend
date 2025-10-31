@@ -29,12 +29,6 @@ namespace Nomina.Domain.Rules
                 throw new ArgumentException("La fecha de fin es obligatoria.");
         }
 
-        public static void ValidarPrivilegios(string rol)
-        {
-            if (rol != "Administrador" && rol != "RRHH")
-                throw new UnauthorizedAccessException("No tiene privilegios para crear, editar o finalizar contratos.");
-        }
-
         public static bool ContratoProximoAVencer(ContratoLaboral contrato)
         {
             if (!contrato.ContratoFechaFin.HasValue) return false;
