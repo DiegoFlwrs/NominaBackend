@@ -18,16 +18,13 @@ namespace Nomina.Infrastructure.Repositories
 
         public async Task<IEnumerable<ContratoLaboral>> ConsultarContratos()
         {
-            return await _context.ContratosLaborales
-                .Include(c => c.Empleado)
-                .Include(c => c.TipoContrato)
-                .Include(c => c.Modalidad)
-                .Include(c => c.Jornada)
-                .Include(c => c.Usuario)
+            var contratos = await _context.ContratosLaborales
+                .FromSqlRaw("EXEC ConsultarContratosLaborales")
                 .AsNoTracking()
                 .ToListAsync();
-        }
 
+            return contratos;
+        }
 
         public async Task InsertarContrato(ContratoLaboral contrato)
         {
