@@ -23,7 +23,6 @@ namespace Nomina.Domain.Entities
         public DateTime? ContratoFechaRegistro { get; set; } = DateTime.Now;
         public DateTime? ContratoFechaModificacion { get; set; }
 
-        // Relaciones (propiedades de navegación)
          public Empleado Empleado { get; set; }
          public TipoContrato? TipoContrato { get; set; }
          public ModalidadPago? Modalidad { get; set; }
