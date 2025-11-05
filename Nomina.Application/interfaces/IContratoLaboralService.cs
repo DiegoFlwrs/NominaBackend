@@ -12,5 +12,9 @@ namespace Nomina.Application.Interfaces
         Task RegistrarContrato(ContratoLaboralDTO dto);
         Task ModificarContrato(ContratoLaboralDTO dto);
         Task EliminarContrato(string contratoCodigo);
+        Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo();
+        Task<IEnumerable<ContratoResumen>> ListarContratosPorModalidad();
+        Task<IEnumerable<ContratoResumen>> ListarContratosPorJornada();
+        Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado();
     }
 }

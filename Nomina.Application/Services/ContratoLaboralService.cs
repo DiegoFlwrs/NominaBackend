@@ -99,5 +99,17 @@ namespace Nomina.Application.Services
                 throw new NotFoundException("Contrato no encontrado.");
             return contrato;
         }
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo()
+            => await _contratoRepository.ListarContratosPorTipo();
+
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorModalidad()
+            => await _contratoRepository.ListarContratosPorModalidad();
+
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorJornada()
+            => await _contratoRepository.ListarContratosPorJornada();
+
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado()
+            => await _contratoRepository.ListarContratosPorEstado();
+
     }
 }

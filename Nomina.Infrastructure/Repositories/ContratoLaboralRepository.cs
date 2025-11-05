@@ -114,5 +114,32 @@ namespace Nomina.Infrastructure.Repositories
 
             await _context.Database.ExecuteSqlRawAsync("EXEC dbo.RegistrarHistorialContrato @ContratoCodigo, @EventoCodigo, @Motivo", parametros);
         }
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo()
+        {
+            return await _context.ContratosResumen
+                .FromSqlRaw("EXEC dbo.ListarContratosPorTipo")
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorModalidad()
+        {
+            return await _context.ContratosResumen
+                .FromSqlRaw("EXEC dbo.ListarContratosPorModalidad")
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorJornada()
+        {
+            return await _context.ContratosResumen
+                .FromSqlRaw("EXEC dbo.ListarContratosPorJornada")
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado()
+        {
+            return await _context.ContratosResumen
+                .FromSqlRaw("EXEC dbo.ListarContratosPorEstado")
+                .ToListAsync();
+        }
     }
 }

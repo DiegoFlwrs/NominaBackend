@@ -25,6 +25,8 @@ namespace Nomina.Infrastructure.Persistence
         public DbSet<Nominas> Nominas { get; set; }
         public DbSet<DescuentoAdicional> DescuentosAdicionales { get; set; }
         public DbSet<ParametroSistema> ParametrosSistema { get; set; }
+        public DbSet<ContratoResumen> ContratosResumen { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -168,6 +170,8 @@ namespace Nomina.Infrastructure.Persistence
                 entity.Property(e => e.HistorialCodigo).HasMaxLength(5);
                 entity.ToTable("HistorialContratos");
             });
+            modelBuilder.Entity<ContratoResumen>().HasNoKey();
         }
+
     }
 }

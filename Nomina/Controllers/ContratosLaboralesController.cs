@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Nomina.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ContratoLaboralController : ControllerBase
     {
         private readonly IContratoLaboralService _contratoService;
@@ -38,7 +38,7 @@ namespace Nomina.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        [HttpPut("{contratoCodigo}")]
+        [HttpPut]
         public async Task<IActionResult> PutContrato(string contratoCodigo, [FromBody] ContratoLaboralDTO dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(contratoCodigo))
@@ -55,7 +55,7 @@ namespace Nomina.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        [HttpDelete("{contratoCodigo}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteContrato(string contratoCodigo)
         {
             if (string.IsNullOrWhiteSpace(contratoCodigo))
@@ -70,6 +70,33 @@ namespace Nomina.API.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+        [HttpGet("TipoContrato")]
+        public async Task<IActionResult> ListadoPorTipo()
+        {
+            var data = await _contratoService.ListarContratosPorTipo();
+            return Ok(data);
+        }
+
+        [HttpGet("Modalidad")]
+        public async Task<IActionResult> ListadoPorModalidad()
+        {
+            var data = await _contratoService.ListarContratosPorModalidad();
+            return Ok(data);
+        }
+
+        [HttpGet("Jornada")]
+        public async Task<IActionResult> ListadoPorJornada()
+        {
+            var data = await _contratoService.ListarContratosPorJornada();
+            return Ok(data);
+        }
+
+        [HttpGet("Estado")]
+        public async Task<IActionResult> ListadoPorEstado()
+        {
+            var data = await _contratoService.ListarContratosPorEstado();
+            return Ok(data);
         }
     }
 }
