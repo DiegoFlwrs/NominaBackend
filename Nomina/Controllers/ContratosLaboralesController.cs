@@ -111,5 +111,11 @@ namespace Nomina.API.Controllers
             var result = await _contratoService.ListarHistorialDetalles();
             return Ok(result);
         }
+        [HttpGet("EmpleadoCodigo")]
+        public async Task<IActionResult> GetEmpleadosCodigo()
+        {
+            var result = await _contratoService.ListarEmpleadosCodigo();
+            return Ok(result);
+        }
     }
 }

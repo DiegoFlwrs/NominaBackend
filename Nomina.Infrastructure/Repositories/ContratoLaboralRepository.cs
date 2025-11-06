@@ -155,5 +155,11 @@ namespace Nomina.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo()
+        {
+            return await _context.Set<ResumenEmpleado>()
+                .FromSqlRaw("EXEC ListarEmpleadosCodigo")
+                .ToListAsync();
+        }
     }
 }

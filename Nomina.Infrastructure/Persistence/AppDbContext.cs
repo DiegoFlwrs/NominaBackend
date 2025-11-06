@@ -26,6 +26,8 @@ namespace Nomina.Infrastructure.Persistence
         public DbSet<DescuentoAdicional> DescuentosAdicionales { get; set; }
         public DbSet<ParametroSistema> ParametrosSistema { get; set; }
         public DbSet<ContratoResumen> ContratosResumen { get; set; }
+        public DbSet<ResumenEmpleado> ResumenEmpleados { get; set; } = null!;
+
 
 
 
@@ -173,6 +175,7 @@ namespace Nomina.Infrastructure.Persistence
             });
             modelBuilder.Entity<ContratoResumen>().HasNoKey();
             modelBuilder.Entity<HistorialDetalle>().HasNoKey();
+            modelBuilder.Entity<ResumenEmpleado>().HasNoKey();
         }
 
     }

@@ -119,5 +119,9 @@ namespace Nomina.Application.Services
         {
             return await _contratoRepository.ListarHistorialDetalles();
         }
+        public async Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo()
+        {
+            return await _contratoRepository.ListarEmpleadosCodigo();
+        }
     }
 }
