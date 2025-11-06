@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nomina.Application.DTOs;
 using Nomina.Application.Interfaces;
+using Nomina.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -16,13 +17,13 @@ namespace Nomina.API.Controllers
         {
             _contratoService = contratoService;
         }
-        [HttpGet]
+        [HttpGet("Mostrar")]
         public async Task<IActionResult> GetContratos()
         {
             var contratos = await _contratoService.ConsultarContratos();
             return Ok(contratos);
         }
-        [HttpPost]
+        [HttpPost("Registrar")]
         public async Task<IActionResult> PostContrato([FromBody] ContratoLaboralDTO dto)
         {
             if (dto == null)
@@ -38,7 +39,7 @@ namespace Nomina.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        [HttpPut]
+        [HttpPut("Actualizar")]
         public async Task<IActionResult> PutContrato(string contratoCodigo, [FromBody] ContratoLaboralDTO dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(contratoCodigo))
@@ -55,7 +56,7 @@ namespace Nomina.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        [HttpDelete]
+        [HttpDelete("Eliminar")]
         public async Task<IActionResult> DeleteContrato(string contratoCodigo)
         {
             if (string.IsNullOrWhiteSpace(contratoCodigo))
@@ -97,6 +98,18 @@ namespace Nomina.API.Controllers
         {
             var data = await _contratoService.ListarContratosPorEstado();
             return Ok(data);
+        }
+        [HttpPost("RegistrarHistorial")]
+        public async Task<IActionResult> RegistrarHistorial([FromBody] HistorialContrato historial)
+        {
+            await _contratoService.RegistrarHistorial(historial);
+            return Ok(new { Success = true, Message = "Historial registrado correctamente." });
+        }
+        [HttpGet("DetallesHistorial")]
+        public async Task<IActionResult> GetHistorialDetalles()
+        {
+            var result = await _contratoService.ListarHistorialDetalles();
+            return Ok(result);
         }
     }
 }

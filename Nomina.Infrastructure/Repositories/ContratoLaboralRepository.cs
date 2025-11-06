@@ -103,17 +103,24 @@ namespace Nomina.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task RegistrarHistorial(string contratoCodigo, string evento, string motivo)
+        public async Task RegistrarHistorial(HistorialContrato historial)
         {
             var parametros = new[]
             {
-                new SqlParameter("@ContratoCodigo", contratoCodigo),
-                new SqlParameter("@EventoCodigo", evento),
-                new SqlParameter("@Motivo", motivo)
+                new SqlParameter("@HistorialCodigo", historial.HistorialCodigo),
+                new SqlParameter("@ContratoCodigo", historial.ContratoCodigo),
+                new SqlParameter("@EventoCodigo", historial.EventoCodigo),
+                new SqlParameter("@HistorialMotivo", historial.HistorialMotivo ?? (object)DBNull.Value),
+                new SqlParameter("@HistorialDetalle", historial.HistorialDetalle ?? (object)DBNull.Value),
+                new SqlParameter("@HistorialFecha", historial.HistorialFecha)
             };
 
-            await _context.Database.ExecuteSqlRawAsync("EXEC dbo.RegistrarHistorialContrato @ContratoCodigo, @EventoCodigo, @Motivo", parametros);
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC dbo.RegistrarHistorialContrato @HistorialCodigo, @ContratoCodigo, @EventoCodigo, @HistorialMotivo, @HistorialDetalle, @HistorialFecha",
+                parametros
+            );
         }
+
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo()
         {
             return await _context.ContratosResumen
@@ -141,5 +148,12 @@ namespace Nomina.Infrastructure.Repositories
                 .FromSqlRaw("EXEC dbo.ListarContratosPorEstado")
                 .ToListAsync();
         }
+        public async Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles()
+        {
+            return await _context.Set<HistorialDetalle>()
+                .FromSqlRaw("EXEC dbo.ConsultarHistorialDetalle")
+                .ToListAsync();
+        }
+
     }
 }

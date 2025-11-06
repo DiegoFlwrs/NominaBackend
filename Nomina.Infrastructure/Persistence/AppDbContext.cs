@@ -28,6 +28,7 @@ namespace Nomina.Infrastructure.Persistence
         public DbSet<ContratoResumen> ContratosResumen { get; set; }
 
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -171,6 +172,7 @@ namespace Nomina.Infrastructure.Persistence
                 entity.ToTable("HistorialContratos");
             });
             modelBuilder.Entity<ContratoResumen>().HasNoKey();
+            modelBuilder.Entity<HistorialDetalle>().HasNoKey();
         }
 
     }

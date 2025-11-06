@@ -13,10 +13,11 @@ namespace Nomina.Domain.Interfaces
         Task<bool> ExisteContratoVigente(string empleadoCodigo);
         Task<bool> ExisteEmpleadoActivo(string empleadoCodigo);
         Task<ContratoLaboral?> ObtenerContrato(string contratoCodigo);
-        Task RegistrarHistorial(string contratoCodigo, string evento, string motivo);
+        Task RegistrarHistorial(HistorialContrato historial);
         Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo();
         Task<IEnumerable<ContratoResumen>> ListarContratosPorModalidad();
         Task<IEnumerable<ContratoResumen>> ListarContratosPorJornada();
         Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado();
+        Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles();
     }
 }

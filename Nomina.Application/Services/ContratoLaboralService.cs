@@ -111,5 +111,13 @@ namespace Nomina.Application.Services
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado()
             => await _contratoRepository.ListarContratosPorEstado();
 
+        public async Task RegistrarHistorial(HistorialContrato historial)
+        {
+            await _contratoRepository.RegistrarHistorial(historial);
+        }
+        public async Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles()
+        {
+            return await _contratoRepository.ListarHistorialDetalles();
+        }
     }
 }
