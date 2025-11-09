@@ -99,12 +99,6 @@ namespace Nomina.API.Controllers
             var data = await _contratoService.ListarContratosPorEstado();
             return Ok(data);
         }
-        [HttpPost("RegistrarHistorial")]
-        public async Task<IActionResult> RegistrarHistorial([FromBody] HistorialContrato historial)
-        {
-            await _contratoService.RegistrarHistorial(historial);
-            return Ok(new { Success = true, Message = "Historial registrado correctamente." });
-        }
         [HttpGet("DetallesHistorial")]
         public async Task<IActionResult> GetHistorialDetalles()
         {
@@ -116,6 +110,15 @@ namespace Nomina.API.Controllers
         {
             var result = await _contratoService.ListarEmpleadosCodigo();
             return Ok(result);
+        }
+        [HttpPut("cambiar-estado")]
+        public async Task<IActionResult> CambiarEstadoContrato(string codigo, [FromQuery] string nuevoEstado, [FromQuery] string motivo)
+        {
+            if (string.IsNullOrWhiteSpace(motivo))
+                return BadRequest("Debe ingresar un motivo para este cambio de estado.");
+
+            await _contratoService.SuspenderContrato(codigo, nuevoEstado, motivo);
+            return Ok(new { mensaje = $"Contrato {codigo} actualizado a estado {nuevoEstado}" });
         }
     }
 }
