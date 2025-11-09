@@ -111,7 +111,7 @@ namespace Nomina.API.Controllers
             var result = await _contratoService.ListarEmpleadosCodigo();
             return Ok(result);
         }
-        [HttpPut("cambiar-estado")]
+        [HttpPut("CambiarEstado")]
         public async Task<IActionResult> CambiarEstadoContrato(string codigo, [FromQuery] string nuevoEstado, [FromQuery] string motivo)
         {
             if (string.IsNullOrWhiteSpace(motivo))

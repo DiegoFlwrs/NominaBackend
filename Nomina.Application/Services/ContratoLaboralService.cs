@@ -123,5 +123,11 @@ namespace Nomina.Application.Services
         {
             return await _contratoRepository.ListarEmpleadosCodigo();
         }
+        public async Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo)
+        {
+            await _contratoRepository.SuspenderContrato(contratoCodigo, nuevoEstado, motivo);
+        }
+
+
     }
 }

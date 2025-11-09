@@ -10,6 +10,7 @@ namespace Nomina.Domain.Interfaces
         Task InsertarContrato(ContratoLaboral contrato);
         Task ModificarContrato(ContratoLaboral contrato);
         Task EliminarContrato(string contratoCodigo);
+        Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo);
         Task<bool> ExisteContratoVigente(string empleadoCodigo);
         Task<bool> ExisteEmpleadoActivo(string empleadoCodigo);
         Task<ContratoLaboral?> ObtenerContrato(string contratoCodigo);
