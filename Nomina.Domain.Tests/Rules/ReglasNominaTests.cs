@@ -6,120 +6,139 @@ namespace Nomina.Domain.Tests.Rules
     public class ReglasNominaTests
     {
         [Fact]
-        public void CalcularAsignacionFamiliar_ConHijos()
+        public void TestCalcularAsignacionFamiliarConHijos()
         {
-            decimal resultado = ReglasNomina.CalcularAsignacionFamiliar(true, 1025m);
-            Assert.Equal(102.5m, resultado);
+            decimal sueldoMinimo = 1025m;
+            decimal resultadoEsperado = 102.5m;
+            decimal resultado = ReglasNomina.CalcularAsignacionFamiliar(true, sueldoMinimo);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularAsignacionFamiliar_SinHijos()
+        public void TestCalcularAsignacionFamiliarSinHijos()
         {
-            decimal resultado = ReglasNomina.CalcularAsignacionFamiliar(false, 1025m);
-            Assert.Equal(0m, resultado);
+            decimal sueldoMinimo = 1025m;
+            decimal resultadoEsperado = 0m;
+            decimal resultado = ReglasNomina.CalcularAsignacionFamiliar(false, sueldoMinimo);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularPagoHorasExtras_SinHorasExtras()
+        public void TestCalcularPagoHorasExtrasDosHoras()
         {
-            decimal resultado = ReglasNomina.CalcularPagoHorasExtras(1200m, 0);
-            Assert.Equal(0m, resultado);
+            decimal salarioBase = 2400m;
+            decimal horasExtras = 2m;
+            decimal resultadoEsperado = (salarioBase / 240m) * horasExtras * 1.25m;
+            decimal resultado = ReglasNomina.CalcularPagoHorasExtras(salarioBase, horasExtras);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularPagoHorasExtras_ConHorasNormales()
+        public void TestCalcularPagoHorasExtrasCincoHoras()
         {
-            decimal resultado = ReglasNomina.CalcularPagoHorasExtras(1200m, 2);
-            decimal tarifaHora = 1200m / 240m;
-            decimal esperado = 2 * tarifaHora * 1.25m;
-            Assert.Equal(esperado, resultado);
+            decimal salarioBase = 2400m;
+            decimal horasExtras = 5m;
+            decimal tarifa = salarioBase / 240m;
+            decimal resultadoEsperado = (2m * tarifa * 1.25m) + (3m * tarifa * 1.35m);
+            decimal resultado = ReglasNomina.CalcularPagoHorasExtras(salarioBase, horasExtras);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularPagoHorasExtras_ConHorasAdicionales()
+        public void TestCalcularPagoHorasExtrasCeroHoras()
         {
-            decimal resultado = ReglasNomina.CalcularPagoHorasExtras(1200m, 4);
-            decimal tarifaHora = 1200m / 240m;
-            decimal esperado = (2 * tarifaHora * 1.25m) + (2 * tarifaHora * 1.35m);
-            Assert.Equal(esperado, resultado);
+            decimal salarioBase = 2400m;
+            decimal resultadoEsperado = 0m;
+            decimal resultado = ReglasNomina.CalcularPagoHorasExtras(salarioBase, 0m);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularTotalIngresos()
+        public void TestCalcularTotalIngresos()
         {
-            decimal resultado = ReglasNomina.CalcularTotalIngresos(1000m, 100m, 50m, 200m);
-            Assert.Equal(1350m, resultado);
+            decimal resultadoEsperado = 1850m;
+            decimal resultado = ReglasNomina.CalcularTotalIngresos(1500m, 100m, 200m, 50m);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularEssalud()
+        public void TestCalcularEssalud()
         {
+            decimal resultadoEsperado = 180m;
             decimal resultado = ReglasNomina.CalcularEssalud(2000m);
-            Assert.Equal(180m, resultado);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularDescuentoPension_ONP()
+        public void TestCalcularDescuentoPensionONP()
         {
+            decimal resultadoEsperado = 260m;
             decimal resultado = ReglasNomina.CalcularDescuentoPension("ONP", 2000m);
-            Assert.Equal(260m, resultado);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularDescuentoPension_AFP()
+        public void TestCalcularDescuentoPensionAFP()
         {
-            decimal resultado = ReglasNomina.CalcularDescuentoPension("AFP", 2000m);
-            decimal esperado = (2000m * 0.10m) + (2000m * 0.015m) + (2000m * 0.015m);
-            Assert.Equal(esperado, resultado);
+            decimal sueldoBruto = 2000m;
+            decimal resultadoEsperado = (sueldoBruto * 0.10m) + (sueldoBruto * 0.015m) + (sueldoBruto * 0.015m);
+            decimal resultado = ReglasNomina.CalcularDescuentoPension("AFP", sueldoBruto);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularDescuentoPension_OtroTipo()
+        public void TestCalcularDescuentoPensionTipoInvalido()
         {
+            decimal resultadoEsperado = 0m;
             decimal resultado = ReglasNomina.CalcularDescuentoPension("NINGUNO", 2000m);
-            Assert.Equal(0m, resultado);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularRentaQuinta_SueldoMenorADeduccion()
+        public void TestCalcularRentaQuintaSueldoBajo()
         {
-            decimal resultado = ReglasNomina.CalcularRentaQuinta(50000m, 5150m);
-            Assert.Equal(0m, resultado);
+            decimal resultadoEsperado = 0m;
+            decimal resultado = ReglasNomina.CalcularRentaQuinta(10000m, 4950m);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularRentaQuinta_SueldoMayorADeduccion()
+        public void TestCalcularRentaQuintaSueldoAlto()
         {
-            decimal resultado = ReglasNomina.CalcularRentaQuinta(150000m, 5150m);
+            decimal resultado = ReglasNomina.CalcularRentaQuinta(200000m, 4950m);
             Assert.True(resultado > 0);
         }
 
         [Fact]
-        public void CalcularTotalDescuentosAdicionales()
+        public void TestCalcularTotalDescuentosAdicionales()
         {
+            decimal resultadoEsperado = 175m;
             decimal resultado = ReglasNomina.CalcularTotalDescuentosAdicionales(100m, 50m, 25m);
-            Assert.Equal(175m, resultado);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void CalcularSueldoNeto()
+        public void TestCalcularSueldoNeto()
         {
-            decimal resultado = ReglasNomina.CalcularSueldoNeto(2000m, 300m);
-            Assert.Equal(1700m, resultado);
+            decimal resultadoEsperado = 2000m;
+            decimal resultado = ReglasNomina.CalcularSueldoNeto(2500m, 500m);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void ValidarSueldoMinimo_SueldoMayorIgual()
+        public void TestValidarSueldoMinimoMayorIgualRemuneracion()
         {
+            bool resultadoEsperado = true;
             bool resultado = ReglasNomina.ValidarSueldoMinimo(1200m, 1025m);
-            Assert.True(resultado);
+            Assert.Equal(resultadoEsperado, resultado);
         }
 
         [Fact]
-        public void ValidarSueldoMinimo_SueldoMenor()
+        public void TestValidarSueldoMinimoMenorRemuneracion()
         {
+            bool resultadoEsperado = false;
             bool resultado = ReglasNomina.ValidarSueldoMinimo(900m, 1025m);
-            Assert.False(resultado);
+            Assert.Equal(resultadoEsperado, resultado);
         }
     }
 }
