@@ -119,9 +119,8 @@ namespace Nomina.Infrastructure.Repositories
         public async Task<ContratoLaboral?> ObtenerContrato(string contratoCodigo)
         {
             return await _context.ContratosLaborales
-                .FromSqlRaw("SELECT * FROM dbo.ContratosLaborales WHERE ContratoCodigo = {0}", contratoCodigo)
                 .AsNoTracking()
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(c => c.ContratoCodigo.Trim() == contratoCodigo.Trim());
         }
 
         public async Task RegistrarHistorial(HistorialContrato historial)
@@ -145,44 +144,87 @@ namespace Nomina.Infrastructure.Repositories
 
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo()
         {
-            return await _context.ContratosResumen
-                .FromSqlRaw("EXEC dbo.ListarContratosPorTipo")
+            return await _context.TiposContrato
+                .Select(t => new ContratoResumen
+                {
+                    Codigo = (t.TipoContratoCodigo ?? string.Empty).Trim(),
+                    Descripcion = (t.TipoContratoDescripcion ?? string.Empty).Trim()
+                })
+                .OrderBy(cr => cr.Descripcion)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorModalidad()
         {
-            return await _context.ContratosResumen
-                .FromSqlRaw("EXEC dbo.ListarContratosPorModalidad")
+            return await _context.ContratosLaborales
+                .Where(c => c.ContratoEstado == "A")
+                .Join(_context.ModalidadesPago,
+                      c => c.ModalidadCodigo,
+                      m => m.ModalidadCodigo,
+                      (c, m) => new ContratoResumen
+                      {
+                          Codigo = (c.ModalidadCodigo ?? string.Empty).Trim(),
+                          Descripcion = (m.ModalidadDescripcion ?? string.Empty).Trim()
+                      })
+                .Distinct()
+                .OrderBy(cr => cr.Descripcion)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorJornada()
         {
-            return await _context.ContratosResumen
-                .FromSqlRaw("EXEC dbo.ListarContratosPorJornada")
+            return await _context.JornadasLaborales
+                .Select(j => new ContratoResumen
+                {
+                    Codigo = (j.JornadaCodigo ?? string.Empty).Trim(),
+                    Descripcion = (j.JornadaDescripcion ?? string.Empty).Trim()
+                })
+                .OrderBy(cr => cr.Descripcion)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado()
         {
-            return await _context.ContratosResumen
-                .FromSqlRaw("EXEC dbo.ListarContratosPorEstado")
+            return await _context.ContratosLaborales
+                .Select(c => new ContratoResumen
+                {
+                    Codigo = (c.ContratoEstado ?? string.Empty).Trim(),
+                    Descripcion =
+                        c.ContratoEstado == "A" ? "Activo" :
+                        c.ContratoEstado == "I" ? "Inactivo" :
+                        c.ContratoEstado == "S" ? "Suspendido" :
+                        "Finalizado"
+                })
+                .Distinct()
+                .OrderBy(cr => cr.Descripcion)
                 .ToListAsync();
         }
+
         public async Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles()
         {
-            return await _context.Set<HistorialDetalle>()
-                .FromSqlRaw("EXEC dbo.ConsultarHistorialDetalle")
+            return await _context.HistorialContratos
+                .OrderByDescending(h => h.HistorialFecha)
+                .Select(h => new HistorialDetalle
+                {
+                    HistorialCodigo = (h.HistorialCodigo ?? string.Empty).Trim(),
+                    ContratoCodigo = (h.ContratoCodigo ?? string.Empty).Trim(),
+                    Detalle = (h.HistorialMotivo ?? string.Empty).Trim(),
+                    HistorialFecha = h.HistorialFecha
+                })
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo()
         {
-            return await _context.Set<ResumenEmpleado>()
-                .FromSqlRaw("EXEC ListarEmpleadosCodigo")
+            return await _context.Empleados
+                .Select(e => new ResumenEmpleado
+                {
+                    Codigo = e.EmpleadoCodigo.Trim(),
+                    EmpleadoNombre = e.EmpleadoNombre + " " + e.EmpleadoApellido
+                })
                 .ToListAsync();
         }
+
         public async Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo)
         {
             var contrato = await _context.ContratosLaborales

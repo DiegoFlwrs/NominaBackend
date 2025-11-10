@@ -120,5 +120,6 @@ namespace Nomina.API.Controllers
             await _contratoService.SuspenderContrato(codigo, nuevoEstado, motivo);
             return Ok(new { mensaje = $"Contrato {codigo} actualizado a estado {nuevoEstado}" });
         }
+
     }
 }
