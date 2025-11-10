@@ -7,8 +7,6 @@ namespace Nomina.Domain.Tests.Rules
 {
     public class ContratoLaboralRulesTests
     {
-        // Casos en donde las pruebas emiten un mensaje de validacion
-
         [Fact]
         public void ValidarSalarioMinimo_SalarioInferior()
         {
@@ -111,8 +109,6 @@ namespace Nomina.Domain.Tests.Rules
             Assert.False(resultado);
         }
 
-        // Casos en donde las pruebas pasan correctamente
-
         [Fact]
         public void ValidarSalarioMinimo_SalarioValido()
         {
@@ -145,7 +141,6 @@ namespace Nomina.Domain.Tests.Rules
             };
             var ex = Record.Exception(() =>
                 ContratoLaboralRules.ValidarFechaInicio(contrato));
-
             Assert.Null(ex);
         }
 
