@@ -62,7 +62,10 @@ namespace Nomina.API.Filters
                 {
                     StatusCode = objectResult.StatusCode,
                     ContentType = "application/json",
-                    Content = JsonSerializer.Serialize(responseDict)
+                    Content = JsonSerializer.Serialize(responseDict, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    })
                 };
             }
         }

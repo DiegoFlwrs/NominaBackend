@@ -91,7 +91,7 @@ namespace Nomina.Domain.Rules
             ValidarCamposObligatorios(contrato);
             ValidarFechaInicio(contrato);
             ValidarFechas(contrato);
-            ValidarSalarioMinimo(contrato.ContratoSalario, 1025m);
+            ValidarSalarioMinimo(contrato.ContratoSalario, 1030m);
         }
     }
 }

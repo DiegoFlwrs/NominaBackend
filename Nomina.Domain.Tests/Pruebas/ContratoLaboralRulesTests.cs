@@ -3,7 +3,7 @@ using Nomina.Domain.Rules;
 using System;
 using Xunit;
 
-namespace Nomina.Domain.Tests.Rules
+namespace Nomina.Domain.Tests.Pruebas
 {
     public class ContratoLaboralRulesTests
     {
@@ -11,7 +11,7 @@ namespace Nomina.Domain.Tests.Rules
         public void TestValidarSalarioMinimo_SalarioInferior()
         {
             decimal salario = 900m;
-            decimal minimo = 1025m;
+            decimal minimo = 1030m;
             var ex = Assert.Throws<ArgumentException>(() => ContratoLaboralRules.ValidarSalarioMinimo(salario, minimo));
             Assert.Contains("El salario no puede ser inferior al salario mínimo legal vigente", ex.Message);
         }
@@ -101,7 +101,7 @@ namespace Nomina.Domain.Tests.Rules
         public void TestValidarSalarioMinimo_SalarioValido()
         {
             decimal salario = 1500m;
-            decimal minimo = 1025m;
+            decimal minimo = 1030m;
             var ex = Record.Exception(() => ContratoLaboralRules.ValidarSalarioMinimo(salario, minimo));
             Assert.Null(ex);
         }

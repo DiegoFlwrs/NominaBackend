@@ -1,7 +1,7 @@
 using Nomina.Domain.rules;
 using Xunit;
 
-namespace Nomina.Domain.Tests.Rules
+namespace Nomina.Domain.Tests.Pruebas
 {
     public class ReglasNominaTests
     {

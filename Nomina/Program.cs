@@ -7,7 +7,7 @@ using Nomina.Application.Services;
 using Nomina.Domain.Interfaces;
 using Nomina.Infrastructure.Persistence;
 using Nomina.Infrastructure.Repositories;
-using QuestPDF.Infrastructure; 
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +44,7 @@ builder.Services.AddScoped<INominaRepository>(sp =>
 });
 
 builder.Services.AddScoped<IContratoLaboralRepository, ContratoLaboralRepository>();
-builder.Services.AddScoped<IContratoLaboralService, ContratoLaboralService>(); 
+builder.Services.AddScoped<IContratoLaboralService, ContratoLaboralService>();
 
 builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();
 builder.Services.AddScoped<INominaService, NominaService>();
@@ -54,6 +54,10 @@ builder.Services.AddScoped<IReporteNominaService, ReporteNominaService>();
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ApiResponseFilter>();
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
 });
 
 builder.Services.AddEndpointsApiExplorer();
