@@ -20,7 +20,11 @@ namespace Nomina.Domain.Interfaces
         Task InsertarNominaAsync(string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
             decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
         Task<ContratoLaboral?> ObtenerContratoConEmpleadoAsync(string contratoCodigo);
-        Task ActualizarNominaAsync(string nominaCodigo, int nominaHorasExtras, decimal nominaBonificacion, decimal nominaDescuentos, decimal nominaTotalIngresos,
-        decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
+
+        Task<IEnumerable<ParametroSistema>> ObtenerParametrosSistemaAsync();
+        Task<string?> ObtenerUltimoCodigoNominaAsync();
+        Task<IEnumerable<ConceptoNomina>> ObtenerConceptosPorContratoYPeriodoAsync(string contratoCodigo, string periodoCodigo);
+        Task ActualizarPeriodoAsync(PeriodoNomina periodo);
+        Task SaveChangesAsync();
     }
 }

@@ -74,12 +74,5 @@ namespace Nomina.API.Controllers
             return Ok("La nómina fue insertada correctamente");
         }
 
-        [HttpPut("actualizar")]
-        public async Task<IActionResult> ActualizarNomina([FromBody] NominaRequest request)
-        {
-            await _service.ActualizarNominaAsync(request);
-            return Ok("La nómina fue actualizada correctamente");
-        }
-
     }
 }

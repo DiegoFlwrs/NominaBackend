@@ -19,7 +19,5 @@ namespace Nomina.Application.interfaces
         Task<IEnumerable<DepartamentoDTO>> ObtenerDepartamentosAsync();
         Task<IEnumerable<ContratoDTO>> ObtenerContratoAsync();
         Task CrearNominaAsync(NominaRequest request);
-
-        Task ActualizarNominaAsync(NominaRequest request);
     }
 }

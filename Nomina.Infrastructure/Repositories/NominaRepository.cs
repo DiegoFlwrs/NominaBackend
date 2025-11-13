@@ -144,42 +144,6 @@ namespace Nomina.Infrastructure.Repositories
             }
         }
 
-        public async Task ActualizarNominaAsync( string nominaCodigo, int nominaHorasExtras, decimal nominaBonificacion, decimal nominaDescuentos, decimal nominaTotalIngresos,
-        decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                {
-                    var parameters = new
-                    {
-                        NominaCodigo = nominaCodigo,
-                        NominaHorasExtras = nominaHorasExtras,
-                        NominaBonificacion = nominaBonificacion,
-                        NominaDescuentos = nominaDescuentos,
-                        NominaTotalIngresos = nominaTotalIngresos,
-                        NominaTotalDescuentos = nominaTotalDescuentos,
-                        NominaSueldoNeto = nominaSueldoNeto,
-                        NominaEstado = nominaEstado
-                    };
-
-                    await con.ExecuteAsync(
-                        "ModificarNomina",
-                        parameters,
-                        commandType: System.Data.CommandType.StoredProcedure
-                    );
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new DatabaseException($"Error en la base de datos: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("APP_ERROR: " + ex.Message);
-            }
-        }
-
 
         public async Task<ContratoLaboral?> ObtenerContratoConEmpleadoAsync(string contratoCodigo)
         {
@@ -193,6 +157,80 @@ namespace Nomina.Infrastructure.Repositories
             {
                 throw new Exception("APP_ERROR: " + ex.Message);
             }
+        }
+
+        public async Task<ContratoLaboral?> ObtenerContratosAsync()
+        {
+            try
+            {
+                var hoy = DateTime.Now.Date;
+
+                return await _context.ContratosLaborales
+                    .Include(c => c.Empleado)
+                    .FirstOrDefaultAsync(c => c.ContratoEstado == "A" &&
+                        c.ContratoFechaInicio <= hoy &&
+                        c.ContratoFechaFin >= hoy
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ParametroSistema>> ObtenerParametrosSistemaAsync()
+        {
+            try
+            {
+                return await _context.ParametrosSistema
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<string?> ObtenerUltimoCodigoNominaAsync()
+        {
+            try
+            {
+                var ultimo = await _context.Nominas
+                    .OrderByDescending(n => n.NominaCodigo)
+                    .Select(n => n.NominaCodigo)
+                    .FirstOrDefaultAsync();
+
+                return ultimo;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ConceptoNomina>> ObtenerConceptosPorContratoYPeriodoAsync(string contratoCodigo, string periodoCodigo)
+        {
+            try
+            {
+                return await _context.ConceptosNomina
+                    .Where(c => c.ContratoCodigo == contratoCodigo && c.PeriodoCodigo == periodoCodigo)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task ActualizarPeriodoAsync(PeriodoNomina periodo)
+        {
+            _context.PeriodosNomina.Update(periodo);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
     }

@@ -25,6 +25,8 @@ namespace Nomina.Infrastructure.Persistence
         public DbSet<Nominas> Nominas { get; set; }
         public DbSet<DescuentoAdicional> DescuentosAdicionales { get; set; }
         public DbSet<ParametroSistema> ParametrosSistema { get; set; }
+        public DbSet<ConceptoNomina> ConceptosNomina { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -167,6 +169,22 @@ namespace Nomina.Infrastructure.Persistence
                 entity.HasKey(e => e.HistorialCodigo);
                 entity.Property(e => e.HistorialCodigo).HasMaxLength(5);
                 entity.ToTable("HistorialContratos");
+            });
+
+            modelBuilder.Entity<ConceptoNomina>(entity =>
+            {
+                entity.HasOne(c => c.Contrato)
+                .WithMany()
+                .HasForeignKey(c => c.ContratoCodigo)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<ConceptoNomina>(entity =>
+            {
+                entity.HasOne(c => c.Periodo)
+                .WithMany()
+                .HasForeignKey(c => c.PeriodoCodigo)
+                .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

@@ -88,7 +88,9 @@ namespace Nomina.Application.Services
             var resultado = periodos.Select(t => new PeriodoDTO
             {
                 PeriodoCodigo = t.PeriodoCodigo.Trim(),
-                PeriodoDescripcion = t.PeriodoAnio + " - " + helper.ObtenerNombreMes(t.PeriodoMes)
+                PeriodoDescripcion = t.PeriodoAnio + " - " + helper.ObtenerNombreMes(t.PeriodoMes) + " (" + helper.ObtenerNombreEstado(t.PeriodoEstado)
+                //(t.PeriodoEstado == "A" ? "ACTIVO" : "CERRADO")
+                + ") "
             });
 
             return resultado;
@@ -107,120 +109,130 @@ namespace Nomina.Application.Services
             return resultado;
         }
 
+
         public async Task CrearNominaAsync(NominaRequest request)
         {
-            var contratoEmpleado = await _repository.ObtenerContratoConEmpleadoAsync(request.ContratoCodigo);
-            if (contratoEmpleado == null)
-                throw new BusinessException("Empleado no encontrado o contrato inválido.");
+            var periodos = await _repository.ObtenerPeriodosAsync();
+            var periodo = periodos.FirstOrDefault(p => p.PeriodoCodigo.Trim() == request.PeriodoCodigo);
+            var hoy = DateTime.Now.Date;
 
-            var empleado = contratoEmpleado.Empleado;
+            if (periodo == null)
+                throw new BusinessException("El periodo especificado no existe.");
 
-            const decimal RMV = 1025m;
-            const decimal UIT = 5200m; 
+            if (periodo.PeriodoEstado == "C")
+                throw new BusinessException("El periodo ya está cerrado.");
 
-            decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(empleado.EmpleadoTieneHijos ?? false, RMV);
+            if (hoy.Date < periodo.PeriodoInicio.Date || hoy.Date > periodo.PeriodoFin.Date)
+            {
+                throw new BusinessException("El periodo aun no se puede procesar.");
+            }
 
-            decimal pagoHorasExtras = ReglasNomina.CalcularPagoHorasExtras(
-                contratoEmpleado.ContratoSalario,
-                request.NominaHorasExtras
-            );
+            var parametrosSistema = await _repository.ObtenerParametrosSistemaAsync();
+            if (parametrosSistema == null)
+                throw new BusinessException("No se encontraron los parámetros del sistema.");
 
-            decimal totalIngresos = ReglasNomina.CalcularTotalIngresos(
-                contratoEmpleado.ContratoSalario,
-                asignacionFamiliar,
-                pagoHorasExtras,
-                request.NominaBonificacion
-            );
+            decimal RMV = parametrosSistema.FirstOrDefault(p => p.ParametroCodigo == "RMV25")?.ParametroValor ?? 0m;
+            decimal UIT = parametrosSistema.FirstOrDefault(p => p.ParametroCodigo == "UIT25")?.ParametroValor ?? 0m;
 
-            decimal aporteEssalud = ReglasNomina.CalcularEssalud(totalIngresos);
+            if (RMV <= 0 || UIT <= 0)
+                throw new BusinessException("Los parámetros RMV25 o UIT25 no están configurados correctamente.");
 
-            decimal descuentoPension = ReglasNomina.CalcularDescuentoPension(
-                empleado.EmpleadoTipoPension ?? "",
-                totalIngresos,
-                empleado.EmpleadoAFP
-            );
+            var contratos = await _repository.ObtenerContratoAsync();
 
-            decimal rentaQuinta = ReglasNomina.CalcularRentaQuinta(totalIngresos * 12, UIT);
+            var contratosVigentes = contratos.Where(c =>
+                c.ContratoEstado.Trim() == "A" &&
+                c.ContratoFechaInicio.HasValue &&
+                c.ContratoFechaFin.HasValue &&
+                c.ContratoFechaInicio.Value <= hoy &&
+                c.ContratoFechaFin.Value >= hoy
+            ).ToList();
 
-            decimal otrosDescuentos = ReglasNomina.CalcularTotalDescuentosAdicionales(
-                request.NominaDescuentos
-            );
+            if (!contratosVigentes.Any())
+                throw new BusinessException("No se encontraron contratos vigentes para generar la nómina.");
 
-            decimal totalDescuentos = descuentoPension + rentaQuinta + otrosDescuentos;
+            var nominasGeneradas = new List<nuevaNominadto>(); 
 
-            decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+            foreach (var contrato in contratosVigentes)
+            {
+                var empleado = contrato.Empleado;
 
-            if (!ReglasNomina.ValidarSueldoMinimo(sueldoNeto, RMV))
-                throw new BusinessException("El sueldo neto no puede ser menor a la RMV vigente.");
+                decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(
+                    empleado.EmpleadoTieneHijos ?? false, RMV);
 
-            await _repository.InsertarNominaAsync(
-                request.NominaCodigo,
-                request.PeriodoCodigo,
-                request.ContratoCodigo,
-                request.NominaHorasExtras,
-                request.NominaBonificacion,
-                totalDescuentos,
-                totalIngresos,
-                totalDescuentos,
-                sueldoNeto
-            );
-        }
+                var conceptos = await _repository.ObtenerConceptosPorContratoYPeriodoAsync(
+                    contrato.ContratoCodigo, request.PeriodoCodigo);
 
-        public async Task ActualizarNominaAsync(NominaRequest request)
-        {
-            var contratoEmpleado = await _repository.ObtenerContratoConEmpleadoAsync(request.ContratoCodigo);
-            if (contratoEmpleado == null)
-                throw new BusinessException("Empleado no encontrado o contrato inválido.");
+                int horasExtras = conceptos
+                    .Where(c => c.TipoConcepto == "HorasExtras")
+                    .Sum(c => c.HorasExtras ?? 0);
 
-            var empleado = contratoEmpleado.Empleado;
+                decimal bonificaciones = conceptos
+                    .Where(c => c.TipoConcepto == "Bonificacion")
+                    .Sum(c => c.Monto ?? 0);
 
-            const decimal RMV = 1025m; 
-            const decimal UIT = 5200m; 
+                decimal descuentosAdicionales = conceptos
+                    .Where(c => c.TipoConcepto == "Descuento")
+                    .Sum(c => c.Monto ?? 0);
 
-            decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(empleado.EmpleadoTieneHijos ?? false, RMV);
+                decimal pagoHorasExtras = ReglasNomina.CalcularPagoHorasExtras(
+                    contrato.ContratoSalario, horasExtras);
 
-            decimal pagoHorasExtras = ReglasNomina.CalcularPagoHorasExtras(
-                contratoEmpleado.ContratoSalario,
-                request.NominaHorasExtras
-            );
+                decimal totalIngresos = ReglasNomina.CalcularTotalIngresos(
+                    contrato.ContratoSalario, asignacionFamiliar, pagoHorasExtras, bonificaciones);
 
-            decimal totalIngresos = ReglasNomina.CalcularTotalIngresos(
-                contratoEmpleado.ContratoSalario,
-                asignacionFamiliar,
-                pagoHorasExtras,
-                request.NominaBonificacion
-            );
+                decimal descuentoPension = ReglasNomina.CalcularDescuentoPension(
+                    empleado.EmpleadoTipoPension ?? "", totalIngresos, empleado.EmpleadoAFP);
 
-            decimal aporteEssalud = ReglasNomina.CalcularEssalud(totalIngresos);
+                decimal rentaQuinta = ReglasNomina.CalcularRentaQuinta(totalIngresos * 12, UIT);
+                decimal otrosDescuentos = ReglasNomina.CalcularTotalDescuentosAdicionales(descuentosAdicionales);
 
-            decimal descuentoPension = ReglasNomina.CalcularDescuentoPension(
-                empleado.EmpleadoTipoPension ?? "",
-                totalIngresos,
-                empleado.EmpleadoAFP
-            );
+                decimal totalDescuentos = descuentoPension + rentaQuinta + otrosDescuentos;
+                decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
 
-            decimal rentaQuinta = ReglasNomina.CalcularRentaQuinta(totalIngresos * 12, UIT);
+                if (!ReglasNomina.ValidarSueldoMinimo(sueldoNeto, RMV))
+                {
+                    throw new BusinessException(
+                        $"El sueldo neto de {empleado.EmpleadoNombre} es menor a la RMV vigente.");
+                }
 
-            decimal otrosDescuentos = ReglasNomina.CalcularTotalDescuentosAdicionales(
-                request.NominaDescuentos
-            );
+                nominasGeneradas.Add(new nuevaNominadto
+                {
+                    ContratoCodigo = contrato.ContratoCodigo,
+                    PeriodoCodigo = request.PeriodoCodigo,
+                    HorasExtras = horasExtras,
+                    Bonificaciones = bonificaciones,
+                    TotalIngresos = totalIngresos,
+                    TotalDescuentos = totalDescuentos,
+                    SueldoNeto = sueldoNeto
+                });
+            }
 
-            decimal totalDescuentos = descuentoPension + rentaQuinta + otrosDescuentos;
+            var ultimoCodigo = await _repository.ObtenerUltimoCodigoNominaAsync();
+            int numero = string.IsNullOrEmpty(ultimoCodigo) ? 0 : int.Parse(ultimoCodigo.Substring(3));
 
-            decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
+            foreach (var nomina in nominasGeneradas)
+            {
+                numero++;
+                string nuevoCodigo = $"NOM{numero.ToString("D3")}";
 
-            if (!ReglasNomina.ValidarSueldoMinimo(sueldoNeto, RMV))
-                throw new BusinessException("El sueldo neto no puede ser menor a la RMV vigente.");
+                await _repository.InsertarNominaAsync(
+                    nominaCodigo: nuevoCodigo,
+                    periodoCodigo: nomina.PeriodoCodigo,
+                    contratoCodigo: nomina.ContratoCodigo,
+                    nominaHorasExtras: nomina.HorasExtras,
+                    nominaBonificacion: nomina.Bonificaciones,
+                    nominaDescuentos: nomina.TotalDescuentos,
+                    nominaTotalIngresos: nomina.TotalIngresos,
+                    nominaTotalDescuentos: nomina.TotalDescuentos,
+                    nominaSueldoNeto: nomina.SueldoNeto
+                );
+            }
 
-            await _repository.ActualizarNominaAsync(
-                request.NominaCodigo,
-                request.NominaHorasExtras,
-                request.NominaBonificacion,
-                request.NominaDescuentos,
-                totalIngresos,
-                totalDescuentos,
-                sueldoNeto
-            );
+            periodo.PeriodoEstado = "C";
+            await _repository.ActualizarPeriodoAsync(periodo);
+
+            await _repository.SaveChangesAsync();
+
         }
 
     }
