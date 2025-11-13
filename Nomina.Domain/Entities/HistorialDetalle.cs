@@ -9,6 +9,6 @@ namespace Nomina.Domain.Entities
         public string? Detalle { get; set; }
         [JsonIgnore]
         public DateTime HistorialFecha { get; set; }
-        public string HistorialFechaTexto => HistorialFecha.ToString("dd/MM/yyyy HH:mm:ss");
+        public string HistorialFechaF => HistorialFecha.ToString("dd/MM/yyyy HH:mm:ss");
     }
 }
