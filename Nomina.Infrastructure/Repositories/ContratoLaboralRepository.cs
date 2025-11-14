@@ -1,7 +1,10 @@
+using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Nomina.API.Exceptions;
 using Nomina.Domain.Entities;
 using Nomina.Domain.Interfaces;
+using Nomina.Domain.ReadModels;
 using Nomina.Domain.Rules;
 using Nomina.Infrastructure.Persistence;
 using System.Data;
@@ -11,38 +14,35 @@ namespace Nomina.Infrastructure.Repositories
     public class ContratoLaboralRepository : IContratoLaboralRepository
     {
         private readonly AppDbContext _context;
+        private readonly string _connectionString;
 
-        public ContratoLaboralRepository(AppDbContext context)
+        public ContratoLaboralRepository(AppDbContext context, string connectionString)
         {
             _context = context;
+            _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<ContratoLaboral>> ConsultarContratos()
+        public async Task<IEnumerable<ContratoView>> ConsultarContratosAsync()
         {
-            var contratos = await _context.ContratosLaborales
-                .FromSqlRaw("EXEC ConsultarContratosLaborales")
-                .AsNoTracking()
-                .ToListAsync();
-
-            var Mostrar = contratos.Select(c => new ContratoLaboral
+            try
             {
-                ContratoCodigo = c.ContratoCodigo.Trim(),
-                EmpleadoCodigo = c.EmpleadoCodigo.Trim(),
-                TipoContratoCodigo = c.TipoContratoCodigo?.Trim(),
-                ModalidadCodigo = c.ModalidadCodigo?.Trim(),
-                JornadaCodigo = c.JornadaCodigo?.Trim(),
-                UsuarioCodigo = c.UsuarioCodigo?.Trim(),
-                ContratoFechaInicio = c.ContratoFechaInicio,
-                ContratoFechaFin = c.ContratoFechaFin,
-                ContratoSalario = c.ContratoSalario,
-                ContratoBonificacion = c.ContratoBonificacion,
-                ContratoDescuento = c.ContratoDescuento,
-                ContratoEstado = c.ContratoEstado.Trim(),
-                ContratoFechaRegistro = c.ContratoFechaRegistro,
-                ContratoFechaModificacion = c.ContratoFechaModificacion
-            }).ToList();
+                using var con = new SqlConnection(_connectionString);
 
-            return Mostrar;
+                var contratos = await con.QueryAsync<ContratoView>(
+                    "ConsultarContratosLaborales",
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+
+                return contratos;
+            }
+            catch (SqlException ex)
+            {
+                throw new DatabaseException($"Error en la base de datos: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
         }
 
         public async Task InsertarContrato(ContratoLaboral contrato)

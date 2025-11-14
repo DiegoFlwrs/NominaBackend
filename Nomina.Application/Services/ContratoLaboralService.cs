@@ -5,6 +5,8 @@ using Nomina.Domain.Interfaces;
 using Nomina.Domain.Rules;
 using Nomina.API.Exceptions;
 using Nomina.Domain.Constants;
+using Nomina.Application.DTOs.NominaPeriodo;
+using Nomina.Domain.ReadModels;
 
 namespace Nomina.Application.Services
 {
@@ -17,24 +19,10 @@ namespace Nomina.Application.Services
             _contratoRepository = contratoRepository;
         }
 
-        public async Task<IEnumerable<ContratoLaboralDTO>> ConsultarContratos()
+        public async Task<IEnumerable<ContratoView>> ConsultarContratos()
         {
-            var contratos = await _contratoRepository.ConsultarContratos();
-            return contratos.Select(c => new ContratoLaboralDTO
-            {
-                ContratoCodigo = c.ContratoCodigo,
-                EmpleadoCodigo = c.EmpleadoCodigo,
-                TipoContratoCodigo = c.TipoContratoCodigo ?? string.Empty,
-                ModalidadCodigo = c.ModalidadCodigo ?? string.Empty,
-                JornadaCodigo = c.JornadaCodigo ?? string.Empty,
-                UsuarioCodigo = c.UsuarioCodigo ?? string.Empty,
-                ContratoFechaInicio = c.ContratoFechaInicio,
-                ContratoFechaFin = c.ContratoFechaFin,
-                ContratoSalario = c.ContratoSalario,
-                ContratoBonificacion = c.ContratoBonificacion,
-                ContratoDescuento = c.ContratoDescuento,
-                ContratoEstado = c.ContratoEstado
-            });
+            var contrato = await _contratoRepository.ConsultarContratosAsync();
+            return contrato;
         }
 
         public async Task RegistrarContrato(ContratoLaboralDTO dto)

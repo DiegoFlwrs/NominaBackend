@@ -43,7 +43,13 @@ builder.Services.AddScoped<INominaRepository>(sp =>
     return new NominaRepository(context, connectionString);
 });
 
-builder.Services.AddScoped<IContratoLaboralRepository, ContratoLaboralRepository>();
+builder.Services.AddScoped<IContratoLaboralRepository>(sp =>
+{
+    var context = sp.GetRequiredService<AppDbContext>();
+    return new ContratoLaboralRepository(context, connectionString);
+});
+
+//builder.Services.AddScoped<IContratoLaboralRepository, ContratoLaboralRepository>();
 builder.Services.AddScoped<IContratoLaboralService, ContratoLaboralService>(); 
 
 builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();

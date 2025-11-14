@@ -1,4 +1,5 @@
 using Nomina.Domain.Entities;
+using Nomina.Domain.ReadModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,7 +7,7 @@ namespace Nomina.Domain.Interfaces
 {
     public interface IContratoLaboralRepository
     {
-        Task<IEnumerable<ContratoLaboral>> ConsultarContratos();
+        //Task<IEnumerable<ContratoLaboral>> ConsultarContratos();
         Task InsertarContrato(ContratoLaboral contrato);
         Task ModificarContrato(ContratoLaboral contrato);
         Task EliminarContrato(string contratoCodigo);
@@ -21,5 +22,6 @@ namespace Nomina.Domain.Interfaces
         Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado();
         Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles();
         Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo();
+        Task<IEnumerable<ContratoView>> ConsultarContratosAsync();
     }
 }
