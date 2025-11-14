@@ -10,16 +10,14 @@ namespace Nomina.Application.interfaces
     public interface IReporteNominaService
     {
     Task<List<ReporteNominaView>> GenerarReporteAsync(
-        DateTime fechaInicio,
-        DateTime fechaFin,
+        string? PeriodoCodigo,
         string? departamentoCodigo,
         string? cargoCodigo,
         string? tipoContratoCodigo
     );
 
     Task<byte[]> GenerarReportePdfAsync(
-        DateTime fechaInicio,
-        DateTime fechaFin,
+        string? PeriodoCodigo,
         string? departamentoCodigo,
         string? cargoCodigo,
         string? tipoContratoCodigo
