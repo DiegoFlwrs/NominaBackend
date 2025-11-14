@@ -1,5 +1,6 @@
 using Nomina.Domain.Entities;
 using System;
+using Nomina.API.Exceptions;
 
 namespace Nomina.Domain.Rules
 {
@@ -8,25 +9,25 @@ namespace Nomina.Domain.Rules
         public static void ValidarCamposObligatorios(ContratoLaboral contrato)
         {
             if (string.IsNullOrWhiteSpace(contrato.EmpleadoCodigo))
-                throw new ArgumentException("El empleado es obligatorio.");
+                throw new BusinessException("El empleado es obligatorio.");
 
             if (string.IsNullOrWhiteSpace(contrato.TipoContratoCodigo))
-                throw new ArgumentException("El tipo de contrato es obligatorio.");
+                throw new BusinessException("El tipo de contrato es obligatorio.");
 
             if (string.IsNullOrWhiteSpace(contrato.ModalidadCodigo))
-                throw new ArgumentException("La modalidad de pago es obligatoria.");
+                throw new BusinessException("La modalidad de pago es obligatoria.");
 
             if (string.IsNullOrWhiteSpace(contrato.JornadaCodigo))
-                throw new ArgumentException("La jornada laboral es obligatoria.");
+                throw new BusinessException("La jornada laboral es obligatoria.");
 
             if (string.IsNullOrWhiteSpace(contrato.UsuarioCodigo))
-                throw new ArgumentException("El usuario responsable es obligatorio.");
+                throw new BusinessException("El usuario responsable es obligatorio.");
 
             if (!contrato.ContratoFechaInicio.HasValue)
-                throw new ArgumentException("La fecha de inicio es obligatoria.");
+                throw new BusinessException("La fecha de inicio es obligatoria.");
 
             if (!contrato.ContratoFechaFin.HasValue)
-                throw new ArgumentException("La fecha de fin es obligatoria.");
+                throw new BusinessException("La fecha de fin es obligatoria.");
         }
 
         public static bool ContratoProximoAVencer(ContratoLaboral contrato)
@@ -34,30 +35,30 @@ namespace Nomina.Domain.Rules
             if (!contrato.ContratoFechaFin.HasValue) return false;
             var diasRestantes = (contrato.ContratoFechaFin.Value - DateTime.Today).TotalDays;
             return diasRestantes <= 15 && diasRestantes >= 0;
-            throw new InvalidOperationException("El contrato del empleado esta proximo a vencer (menos de 15 dias)");
+            throw new BusinessException("El contrato del empleado esta proximo a vencer (menos de 15 dias)");
         }
 
         public static void ValidarContratoDuplicado(bool existeContratoVigente)
         {
             if (existeContratoVigente)
-                throw new InvalidOperationException("El empleado ya posee un contrato vigente.");
+                throw new BusinessException("El empleado ya posee un contrato vigente.");
         }
         public static void ValidarMotivoHistorial(string motivo)
         {
             if (string.IsNullOrWhiteSpace(motivo))
-                throw new ArgumentException("Debe ingresar un motivo para la modificación o suspensión.");
+                throw new BusinessException("Debe ingresar un motivo para la modificación o suspensión.");
         }
         public static void ValidarFechaInicio(ContratoLaboral contrato)
         {
             if (contrato.ContratoFechaInicio.HasValue && contrato.ContratoFechaInicio.Value.Date < DateTime.Today)
-                throw new ArgumentException("La fecha de inicio del contrato no puede ser anterior a la fecha actual.");
+                throw new BusinessException("La fecha de inicio del contrato no puede ser anterior a la fecha actual.");
             if (contrato.ContratoFechaFin.HasValue && contrato.ContratoFechaFin.Value < DateTime.Today)
-                throw new ArgumentException("No se puede modificar un contrato ya finalizado.");
+                throw new BusinessException("No se puede modificar un contrato ya finalizado.");
         }
         public static void ValidarEdicionPorEstado(string estado)
         {
             if (estado == null || estado.Trim() != "A")
-                throw new InvalidOperationException("Solo se pueden editar contratos vigentes.");
+                throw new BusinessException("Solo se pueden editar contratos vigentes.");
         }
 
         public static void ValidarReactivacion(string? estadoActual, string? nuevoEstado)
@@ -68,13 +69,13 @@ namespace Nomina.Domain.Rules
                 return;
             if (estadoActual == "A" && nuevoEstado == "S")
                 return;
-            throw new InvalidOperationException("Cambio de estado no permitido.");
+            throw new BusinessException("Cambio de estado no permitido.");
         }
 
         public static void ValidarSalarioMinimo(decimal salario, decimal salarioMinimoLegal)
         {
             if (salario < salarioMinimoLegal)
-                throw new ArgumentException($"El salario no puede ser inferior al salario mínimo legal vigente ({salarioMinimoLegal:C}).");
+                throw new BusinessException($"El salario no puede ser inferior al salario mínimo legal vigente ({salarioMinimoLegal:C}).");
         }
 
         public static void ValidarFechas(ContratoLaboral contrato)
@@ -82,7 +83,7 @@ namespace Nomina.Domain.Rules
             if (contrato.ContratoFechaInicio.HasValue && contrato.ContratoFechaFin.HasValue)
             {
                 if (contrato.ContratoFechaFin <= contrato.ContratoFechaInicio)
-                    throw new ArgumentException("La fecha de fin debe ser mayor que la fecha de inicio.");
+                    throw new BusinessException("La fecha de fin debe ser mayor que la fecha de inicio.");
             }
         }
 
@@ -91,7 +92,7 @@ namespace Nomina.Domain.Rules
             ValidarCamposObligatorios(contrato);
             ValidarFechaInicio(contrato);
             ValidarFechas(contrato);
-            ValidarSalarioMinimo(contrato.ContratoSalario, 1030m);
+            ValidarSalarioMinimo(contrato.ContratoSalario, 1130m);
         }
     }
 }
