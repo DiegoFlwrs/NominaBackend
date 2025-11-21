@@ -87,11 +87,31 @@ namespace Nomina.Domain.Rules
             }
         }
 
+        private const int Minimo = 3;
+
+        public static void ValidarPlazoMinimoContrato(ContratoLaboral contrato)
+        {
+            if (contrato.ContratoFechaInicio.HasValue && contrato.ContratoFechaFin.HasValue)
+            {
+                var fechaInicio = contrato.ContratoFechaInicio.Value.Date;
+                var fechaFin = contrato.ContratoFechaFin.Value.Date;
+                var fechaMinimaFin = fechaInicio.AddMonths(Minimo);
+                if (fechaFin < fechaMinimaFin)
+                {
+                    throw new BusinessException(
+                        $"El contrato debe tener un plazo mínimo de {Minimo} meses. " +
+                        $"La fecha de fin mínima requerida es {fechaMinimaFin.ToShortDateString()}."
+                    );
+                }
+            }
+        }
+
         public static void ValidarCoherenciaGeneral(ContratoLaboral contrato)
         {
             ValidarCamposObligatorios(contrato);
             ValidarFechaInicio(contrato);
             ValidarFechas(contrato);
+            ValidarPlazoMinimoContrato(contrato);
             ValidarSalarioMinimo(contrato.ContratoSalario, 1130m);
         }
     }

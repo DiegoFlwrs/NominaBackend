@@ -38,18 +38,18 @@ namespace Nomina.Application.Services
                 ContratoFechaInicio = dto.ContratoFechaInicio,
                 ContratoFechaFin = dto.ContratoFechaFin,
                 ContratoSalario = dto.ContratoSalario,
-                ContratoBonificacion = dto.ContratoBonificacion,
-                ContratoDescuento = dto.ContratoDescuento,
+                ContratoBonificacion = 0,
+                ContratoDescuento = 0,
                 ContratoEstado = "A"
             };
             ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
+            ContratoLaboralRules.ValidarSalarioMinimo(dto.ContratoSalario, ValidacionesContrato.SALARIO_MINIMO);
             var existeEmpleado = await _contratoRepository.ExisteEmpleadoActivo(dto.EmpleadoCodigo);
             if (!existeEmpleado)
                 throw new NotFoundException("El empleado no existe o está inactivo.");
 
             var vigente = await _contratoRepository.ExisteContratoVigente(dto.EmpleadoCodigo);
             ContratoLaboralRules.ValidarContratoDuplicado(vigente);
-
             await _contratoRepository.InsertarContrato(contrato);
         }
 
@@ -60,7 +60,6 @@ namespace Nomina.Application.Services
                 throw new NotFoundException("Contrato no encontrado.");
 
             ContratoLaboralRules.ValidarEdicionPorEstado(contrato.ContratoEstado);
-            ContratoLaboralRules.ValidarSalarioMinimo(dto.ContratoSalario, ValidacionesContrato.SALARIO_MINIMO);
 
             contrato.TipoContratoCodigo = dto.TipoContratoCodigo;
             contrato.ModalidadCodigo = dto.ModalidadCodigo;
@@ -69,9 +68,10 @@ namespace Nomina.Application.Services
             contrato.ContratoFechaInicio = dto.ContratoFechaInicio;
             contrato.ContratoFechaFin = dto.ContratoFechaFin;
             contrato.ContratoSalario = dto.ContratoSalario;
-            contrato.ContratoBonificacion = dto.ContratoBonificacion;
-            contrato.ContratoDescuento = dto.ContratoDescuento;
-
+            //contrato.ContratoBonificacion = dto.ContratoBonificacion;
+            //contrato.ContratoDescuento = dto.ContratoDescuento;
+            ContratoLaboralRules.ValidarSalarioMinimo(dto.ContratoSalario, ValidacionesContrato.SALARIO_MINIMO);
+            ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
             await _contratoRepository.ModificarContrato(contrato);
         }
 

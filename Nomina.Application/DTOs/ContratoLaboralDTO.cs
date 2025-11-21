@@ -14,8 +14,8 @@ namespace Nomina.Application.DTOs
         public DateTime? ContratoFechaInicio { get; set; }
         public DateTime? ContratoFechaFin { get; set; }
         public decimal ContratoSalario { get; set; }
-        public decimal? ContratoBonificacion { get; set; }
-        public decimal? ContratoDescuento { get; set; }
+        //public decimal? ContratoBonificacion { get; set; }
+        //public decimal? ContratoDescuento { get; set; }
         public string ContratoEstado { get; set; } = "A";
     }
 }
