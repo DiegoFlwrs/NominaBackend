@@ -109,7 +109,6 @@ namespace Nomina.Domain.Rules
         public static void ValidarCoherenciaGeneral(ContratoLaboral contrato)
         {
             ValidarCamposObligatorios(contrato);
-            ValidarFechaInicio(contrato);
             ValidarFechas(contrato);
             ValidarPlazoMinimoContrato(contrato);
             ValidarSalarioMinimo(contrato.ContratoSalario, 1130m);

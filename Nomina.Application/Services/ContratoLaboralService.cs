@@ -25,11 +25,10 @@ namespace Nomina.Application.Services
             return contrato;
         }
 
-        public async Task RegistrarContrato(ContratoLaboralDTO dto)
+        public async Task<string> RegistrarContrato(registroContratoDTO dto)
         {
             var contrato = new ContratoLaboral
             {
-                ContratoCodigo = dto.ContratoCodigo,
                 EmpleadoCodigo = dto.EmpleadoCodigo,
                 TipoContratoCodigo = dto.TipoContratoCodigo,
                 ModalidadCodigo = dto.ModalidadCodigo,
@@ -38,11 +37,10 @@ namespace Nomina.Application.Services
                 ContratoFechaInicio = dto.ContratoFechaInicio,
                 ContratoFechaFin = dto.ContratoFechaFin,
                 ContratoSalario = dto.ContratoSalario,
-                ContratoBonificacion = 0,
-                ContratoDescuento = 0,
                 ContratoEstado = "A"
             };
             ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
+            ContratoLaboralRules.ValidarFechaInicio(contrato);
             ContratoLaboralRules.ValidarSalarioMinimo(dto.ContratoSalario, ValidacionesContrato.SALARIO_MINIMO);
             var existeEmpleado = await _contratoRepository.ExisteEmpleadoActivo(dto.EmpleadoCodigo);
             if (!existeEmpleado)
@@ -51,6 +49,7 @@ namespace Nomina.Application.Services
             var vigente = await _contratoRepository.ExisteContratoVigente(dto.EmpleadoCodigo);
             ContratoLaboralRules.ValidarContratoDuplicado(vigente);
             await _contratoRepository.InsertarContrato(contrato);
+            return "Contrato registrado exitosamente.";
         }
 
         public async Task ModificarContrato(ContratoLaboralDTO dto)
@@ -68,11 +67,9 @@ namespace Nomina.Application.Services
             contrato.ContratoFechaInicio = dto.ContratoFechaInicio;
             contrato.ContratoFechaFin = dto.ContratoFechaFin;
             contrato.ContratoSalario = dto.ContratoSalario;
-            //contrato.ContratoBonificacion = dto.ContratoBonificacion;
-            //contrato.ContratoDescuento = dto.ContratoDescuento;
             ContratoLaboralRules.ValidarSalarioMinimo(dto.ContratoSalario, ValidacionesContrato.SALARIO_MINIMO);
             ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
-            await _contratoRepository.ModificarContrato(contrato);
+            await _contratoRepository.ModificarContrato(contrato, dto.Motivo);
         }
 
         public async Task EliminarContrato(string contratoCodigo)
@@ -107,15 +104,13 @@ namespace Nomina.Application.Services
         {
             return await _contratoRepository.ListarHistorialDetalles();
         }
-        public async Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo()
-        {
-            return await _contratoRepository.ListarEmpleadosCodigo();
-        }
         public async Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo)
         {
             await _contratoRepository.SuspenderContrato(contratoCodigo, nuevoEstado, motivo);
         }
-
-
+         public async Task<IEnumerable<string>> ListarEmpleadosSinContrato()
+        {
+            return await _contratoRepository.ListarEmpleadosSinContrato();
+        }
     }
 }

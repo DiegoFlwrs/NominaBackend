@@ -44,43 +44,105 @@ namespace Nomina.Infrastructure.Repositories
                 throw new Exception("APP_ERROR: " + ex.Message);
             }
         }
-
         public async Task InsertarContrato(ContratoLaboral contrato)
         {
-            contrato.ContratoFechaInicio ??= DateTime.Now;
-            contrato.ContratoBonificacion ??= 0;
-            contrato.ContratoDescuento ??= 0;
-            await _context.ContratosLaborales.AddAsync(contrato);
-            await _context.SaveChangesAsync();
-        }
+            try
+            {
+                contrato.ContratoCodigo = await GenerarCodigoContrato();
+                var parametros = new[]
+                {
+                    new SqlParameter("@ContratoCodigo", contrato.ContratoCodigo),
+                    new SqlParameter("@EmpleadoCodigo", contrato.EmpleadoCodigo),
+                    new SqlParameter("@TipoContratoCodigo", contrato.TipoContratoCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ModalidadCodigo", contrato.ModalidadCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@JornadaCodigo", contrato.JornadaCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@UsuarioCodigo", contrato.UsuarioCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoFechaInicio", contrato.ContratoFechaInicio ?? DateTime.Now),
+                    new SqlParameter("@ContratoFechaFin", contrato.ContratoFechaFin ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoSalario", contrato.ContratoSalario)
+                };
 
-        public async Task ModificarContrato(ContratoLaboral contrato)
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC dbo.InsertarContratoLaboral @ContratoCodigo, @EmpleadoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo, @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario",
+                    parametros
+                );
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al insertar el contrato laboral: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al insertar el contrato laboral: {ex.Message}", ex);
+            }
+        }
+        public async Task ModificarContrato(ContratoLaboral contrato, string motivo)
         {
-            var contratoBD = await _context.ContratosLaborales
-                .FirstOrDefaultAsync(c => c.ContratoCodigo == contrato.ContratoCodigo);
+            try
+            {
+                var parametros = new[]
+                {
+                    new SqlParameter("@ContratoCodigo", contrato.ContratoCodigo),
+                    new SqlParameter("@TipoContratoCodigo", contrato.TipoContratoCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ModalidadCodigo", contrato.ModalidadCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@JornadaCodigo", contrato.JornadaCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@UsuarioCodigo", contrato.UsuarioCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoFechaInicio", contrato.ContratoFechaInicio ?? DateTime.Now),
+                    new SqlParameter("@ContratoFechaFin", contrato.ContratoFechaFin ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoSalario", contrato.ContratoSalario),
+                    new SqlParameter("@ContratoEstado", contrato.ContratoEstado ?? (object)DBNull.Value)
+                };
 
-            if (contratoBD == null)
-                throw new Exception("El contrato no existe.");
-            contratoBD.TipoContratoCodigo = contrato.TipoContratoCodigo;
-            contratoBD.ModalidadCodigo = contrato.ModalidadCodigo;
-            contratoBD.JornadaCodigo = contrato.JornadaCodigo;
-            contratoBD.UsuarioCodigo = contrato.UsuarioCodigo;
-            contratoBD.ContratoFechaInicio = contrato.ContratoFechaInicio ?? contratoBD.ContratoFechaInicio;
-            contratoBD.ContratoFechaFin = contrato.ContratoFechaFin;
-            contratoBD.ContratoSalario = contrato.ContratoSalario;
-            contratoBD.ContratoBonificacion = contrato.ContratoBonificacion ?? 0;
-            contratoBD.ContratoDescuento = contrato.ContratoDescuento ?? 0;
-            contratoBD.ContratoEstado = contrato.ContratoEstado; 
-            await _context.SaveChangesAsync();
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC dbo.ModificarContratoLaboral @ContratoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo, @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario, @ContratoEstado",
+                    parametros);
+
+                var ultimoHistorial = await _context.Set<HistorialContrato>()
+                    .OrderByDescending(h => h.HistorialCodigo)
+                    .FirstOrDefaultAsync();
+                int nuevoNumero = 1;
+                if (ultimoHistorial != null && int.TryParse(ultimoHistorial.HistorialCodigo, out int ultimoNumero))
+                    nuevoNumero = ultimoNumero + 1;
+                string nuevoHistorialCodigo = nuevoNumero.ToString("D5");
+
+                var historial = new HistorialContrato
+                {
+                    HistorialCodigo = nuevoHistorialCodigo,
+                    ContratoCodigo = contrato.ContratoCodigo,
+                    EventoCodigo = "0004", 
+                    HistorialMotivo = motivo,
+                    HistorialDetalle = "Contrato modificado por usuario",
+                    HistorialFecha = DateTime.Now
+                };
+
+                await RegistrarHistorial(historial);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al modificar el contrato laboral: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al modificar el contrato laboral: {ex.Message}", ex);
+            }
         }
-
 
         public async Task EliminarContrato(string contratoCodigo)
         {
-            var parametro = new SqlParameter("@ContratoCodigo", contratoCodigo);
-            await _context.Database.ExecuteSqlRawAsync("EXEC dbo.EliminarContratoLaboral @ContratoCodigo", parametro);
+            try
+            {
+                var parametro = new SqlParameter("@ContratoCodigo", contratoCodigo);
+                await _context.Database.ExecuteSqlRawAsync("EXEC dbo.EliminarContratoLaboral @ContratoCodigo", parametro);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al eliminar el contrato laboral: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al eliminar el contrato laboral: {ex.Message}", ex);
+            }
         }
-
         public async Task<bool> ExisteContratoVigente(string empleadoCodigo)
         {
             return await _context.ContratosLaborales
@@ -118,7 +180,26 @@ namespace Nomina.Infrastructure.Repositories
                 parametros
             );
         }
+        public async Task<string> GenerarCodigoContrato()
+        {
+            var ultimoCodigo = await _context.ContratosLaborales
+                .Where(c => c.ContratoCodigo.StartsWith("CON"))
+                .OrderByDescending(c => c.ContratoCodigo)
+                .Select(c => c.ContratoCodigo)
+                .FirstOrDefaultAsync();
 
+            if (string.IsNullOrEmpty(ultimoCodigo))
+            {
+                return "CON01";
+            }
+            else
+            {
+                string numeroStr = ultimoCodigo.Substring(3, 2);
+                int numeroActual = int.Parse(numeroStr);
+                numeroActual++;
+                return $"CON{numeroActual:D2}";
+            }
+        }
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo()
         {
             return await _context.TiposContrato
@@ -191,17 +272,6 @@ namespace Nomina.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo()
-        {
-            return await _context.Empleados
-                .Select(e => new ResumenEmpleado
-                {
-                    Codigo = e.EmpleadoCodigo.Trim(),
-                    EmpleadoNombre = e.EmpleadoNombre + " " + e.EmpleadoApellido
-                })
-                .ToListAsync();
-        }
-
         public async Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo)
         {
             var contrato = await _context.ContratosLaborales
@@ -251,6 +321,20 @@ namespace Nomina.Infrastructure.Repositories
                 "EXEC SuspenderContratoLaboral @ContratoCodigo, @NuevoEstado",
                 parameters
             );
+        }
+        public async Task<IEnumerable<string>> ListarEmpleadosSinContrato()
+        {
+            var empleados = await _context.Empleados
+                .Where(e =>
+                    e.EmpleadoEstado == "I" ||
+                    !_context.ContratosLaborales.Any(c =>
+                        c.EmpleadoCodigo == e.EmpleadoCodigo &&
+                        c.ContratoEstado == "A")
+                )
+                .Select(e => (e.EmpleadoNombre + " " + e.EmpleadoApellido).Trim())
+                .ToListAsync();
+
+            return empleados;
         }
     }
 }

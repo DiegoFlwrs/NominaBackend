@@ -17,18 +17,15 @@ namespace Nomina.Domain.Entities
         public DateTime? ContratoFechaInicio { get; set; }
         public DateTime? ContratoFechaFin { get; set; }
         public decimal ContratoSalario { get; set; }
-        public decimal? ContratoBonificacion { get; set; } = 0;
-        public decimal? ContratoDescuento { get; set; } = 0;
         public string ContratoEstado { get; set; } = "A";
         public DateTime? ContratoFechaRegistro { get; set; } = DateTime.Now;
         public DateTime? ContratoFechaModificacion { get; set; }
 
-         public Empleado? Empleado { get; set; }
-         public TipoContrato? TipoContrato { get; set; }
-         public ModalidadPago? Modalidad { get; set; }
-         public JornadaLaboral? Jornada { get; set; }
-         public Usuario? Usuario { get; set; }
+        public Empleado? Empleado { get; set; }
+        public TipoContrato? TipoContrato { get; set; }
+        public ModalidadPago? Modalidad { get; set; }
+        public JornadaLaboral? Jornada { get; set; }
+        public Usuario? Usuario { get; set; }
         public ICollection<Nominas> Nominas { get; set; }
-
     }
 }

@@ -24,20 +24,10 @@ namespace Nomina.API.Controllers
             return Ok(contratos);
         }
         [HttpPost("Registrar")]
-        public async Task<IActionResult> PostContrato([FromBody] ContratoLaboralDTO dto)
+        public async Task<IActionResult> Registrar([FromBody] registroContratoDTO request)
         {
-            if (dto == null)
-                return BadRequest("Los datos del contrato son obligatorios.");
-
-            try
-            {
-                await _contratoService.RegistrarContrato(dto);
-                return Ok("Contrato registrado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            var resultado = await _contratoService.RegistrarContrato(request);
+            return Ok(resultado);
         }
         [HttpPut("Actualizar")]
         public async Task<IActionResult> PutContrato(string contratoCodigo, [FromBody] ContratoLaboralDTO dto)
@@ -105,10 +95,10 @@ namespace Nomina.API.Controllers
             var result = await _contratoService.ListarHistorialDetalles();
             return Ok(result);
         }
-        [HttpGet("ListarPorEmpleadoCodigo")]
-        public async Task<IActionResult> GetEmpleadosCodigo()
+        [HttpGet("EmpleadosSinContrato")]
+        public async Task<IActionResult> GetEmpleadosSinContrato()
         {
-            var result = await _contratoService.ListarEmpleadosCodigo();
+            var result = await _contratoService.ListarEmpleadosSinContrato();
             return Ok(result);
         }
         [HttpPut("CambiarEstado")]
@@ -120,6 +110,5 @@ namespace Nomina.API.Controllers
             await _contratoService.SuspenderContrato(codigo, nuevoEstado, motivo);
             return Ok(new { mensaje = $"Contrato {codigo} actualizado a estado {nuevoEstado}" });
         }
-
     }
 }

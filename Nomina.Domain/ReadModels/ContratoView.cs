@@ -22,8 +22,6 @@ namespace Nomina.Domain.ReadModels
         public DateTime ContratoFechaInicio { get; set; }
         public DateTime? ContratoFechaFin { get; set; } 
         public decimal ContratoSalario { get; set; }
-        public decimal? ContratoBonificacion { get; set; }
-        public decimal? ContratoDescuento { get; set; }
         public string? ContratoEstado { get; set; }
         public DateTime ContratoFechaRegistro { get; set; }
         public DateTime? ContratoFechaModificacion { get; set; }
