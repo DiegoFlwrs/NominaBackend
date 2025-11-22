@@ -20,8 +20,7 @@ namespace Nomina.Infrastructure.Repositories
         }
 
         public async Task<List<ReporteNominaView>> ObtenerReporteNominaAsync(
-            DateTime fechaInicio,
-            DateTime fechaFin,
+            string? PeriodoCodigo = null,
             string? departamentoCodigo = null,
             string? cargoCodigo = null,
             string? tipoContratoCodigo = null
@@ -31,8 +30,7 @@ namespace Nomina.Infrastructure.Repositories
 
             var parameters = new DynamicParameters();
 
-            parameters.Add("@FechaInicio", fechaInicio.Date);
-            parameters.Add("@FechaFin", fechaFin.Date);
+            parameters.Add("@PeriodoCodigo", PeriodoCodigo);
             parameters.Add("@DepartamentoCodigo", (object)departamentoCodigo ?? DBNull.Value, DbType.String, size: 10);
             parameters.Add("@CargoCodigo", (object)cargoCodigo ?? DBNull.Value, DbType.String, size: 10);
             parameters.Add("@TipoContratoCodigo", (object)tipoContratoCodigo ?? DBNull.Value, DbType.String, size: 10);

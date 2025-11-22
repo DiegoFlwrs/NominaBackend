@@ -21,8 +21,7 @@ public class ReportesController : ControllerBase
     [HttpGet("nomina")]
     [ProducesResponseType(typeof(List<ReporteNominaView>), 200)]
     public async Task<IActionResult> GenerarReporteNomina(
-        [FromQuery] DateTime fechaInicio,
-        [FromQuery] DateTime fechaFin,
+        [FromQuery] string? PeriodoCodigo,
         [FromQuery] string? departamentoCodigo,
         [FromQuery] string? cargoCodigo,
         [FromQuery] string? tipoContratoCodigo)
@@ -30,8 +29,7 @@ public class ReportesController : ControllerBase
         try
         {
             var reporte = await _reporteService.GenerarReporteAsync(
-                fechaInicio,
-                fechaFin,
+                PeriodoCodigo,
                 departamentoCodigo,
                 cargoCodigo,
                 tipoContratoCodigo
@@ -54,8 +52,7 @@ public class ReportesController : ControllerBase
     public async Task<IActionResult> GenerarReporteNominaPdf(
         [FromBody] ReporteNominaRequest request)
     {
-        var fechaInicio = request.FechaInicio;
-        var fechaFin = request.FechaFin;
+        var PeriodoCodigo = request.PeriodoCodigo;
         var departamentoCodigo = request.DepartamentoCodigo;
         var cargoCodigo = request.CargoCodigo;
         var tipoContratoCodigo = request.TipoContratoCodigo;
@@ -68,13 +65,14 @@ public class ReportesController : ControllerBase
         try
         {
             byte[] pdfBytes = await _reporteService.GenerarReportePdfAsync(
-                fechaInicio,
-                fechaFin,
+                PeriodoCodigo,
                 departamentoCodigo,
                 cargoCodigo,
                 tipoContratoCodigo
             );
-            string nombreArchivo = $"Reporte Nomina {fechaInicio:dd-MM-yy}_{fechaFin:dd-MM-yy}.pdf";
+
+            //string nombreArchivo = $"Reporte Nomina {fechaInicio:dd-MM-yy}_{fechaFin:dd-MM-yy}.pdf";
+            string nombreArchivo = $"Reporte Nomina {DateTime.Now:dd-MM-yy}.pdf";
 
             return File(pdfBytes, "application/pdf", nombreArchivo);
         }

@@ -11,8 +11,7 @@ namespace Nomina.Domain.Interfaces
     {
         
         Task<List<ReporteNominaView>> ObtenerReporteNominaAsync(
-            DateTime fechaInicio,
-            DateTime fechaFin,
+            string? PeriodoCodigo = null,
             string departamentoCodigo = null, 
             string cargoCodigo = null,       
             string tipoContratoCodigo = null 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nomina.Application.Helpers;
+using Nomina.API.Exceptions;
 
 namespace Nomina.Application.Services
 {
@@ -19,20 +20,14 @@ namespace Nomina.Application.Services
         }
 
         public async Task<List<ReporteNominaView>> GenerarReporteAsync(
-            DateTime fechaInicio,
-            DateTime fechaFin,
+            string? PeriodoCodigo,
             string? departamentoCodigo,
             string? cargoCodigo,
             string? tipoContratoCodigo)
         {
-            if (fechaInicio > fechaFin)
-            {
-                throw new ArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
-            }
 
             var reporte = await _reporteRepository.ObtenerReporteNominaAsync(
-                fechaInicio,
-                fechaFin,
+                PeriodoCodigo,
                 departamentoCodigo,
                 cargoCodigo,
                 tipoContratoCodigo
@@ -42,26 +37,27 @@ namespace Nomina.Application.Services
         }
 
         public async Task<byte[]> GenerarReportePdfAsync(
-            DateTime fechaInicio,
-            DateTime fechaFin,
+            string? PeriodoCodigo,
             string? departamentoCodigo,
             string? cargoCodigo,
             string? tipoContratoCodigo)
         {
-         
-            if (fechaInicio > fechaFin)
-            {
-                throw new ArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
-            }
 
             var reporteData = await _reporteRepository.ObtenerReporteNominaAsync(
-                fechaInicio, fechaFin, departamentoCodigo, cargoCodigo, tipoContratoCodigo
+                PeriodoCodigo, departamentoCodigo, cargoCodigo, tipoContratoCodigo
             );
+
 
             if (reporteData == null || !reporteData.Any())
             {
-                throw new InvalidOperationException("No hay datos disponibles para generar el reporte PDF en el rango seleccionado.");
+                throw new BusinessException("No hay datos disponibles para generar el reporte PDF en el rango seleccionado.");
             }
+
+            var fechas = reporteData.FirstOrDefault();
+
+            var fechaInicio = DateTime.ParseExact(fechas.PeriodoInicio, "dd/MM/yyyy", null);
+            var fechaFin = DateTime.ParseExact(fechas.PeriodoFin, "dd/MM/yyyy", null);
+
 
             return PdfGeneratorHelper.GenerarNominaPdf(reporteData.ToList(), fechaInicio, fechaFin);
         }
