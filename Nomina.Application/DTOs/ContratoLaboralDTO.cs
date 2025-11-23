@@ -6,7 +6,7 @@ namespace Nomina.Application.DTOs
     {
         public string ContratoCodigo { get; set; } = string.Empty;
         public string EmpleadoCodigo { get; set; } = string.Empty;
-        public string Empleado{ get; set; } = string.Empty;
+        //public string Empleado{ get; set; } = string.Empty;
         public string TipoContratoCodigo { get; set; } = string.Empty;
         public string ModalidadCodigo { get; set; } = string.Empty;
         public string JornadaCodigo { get; set; } = string.Empty;
