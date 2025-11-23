@@ -109,7 +109,7 @@ namespace Nomina.Infrastructure.Repositories
                 {
                     HistorialCodigo = nuevoHistorialCodigo,
                     ContratoCodigo = contrato.ContratoCodigo,
-                    EventoCodigo = "0004", 
+                    EventoCodigo = "0004",
                     HistorialMotivo = motivo,
                     HistorialDetalle = "Contrato modificado por usuario",
                     HistorialFecha = DateTime.Now
@@ -325,17 +325,20 @@ namespace Nomina.Infrastructure.Repositories
         public async Task<IEnumerable<object>> ListarEmpleadosSinContrato()
         {
             var empleados = await _context.Empleados
+                .AsNoTracking()
                 .Where(e =>
-                    e.EmpleadoEstado == "I" ||
-                    !_context.ContratosLaborales.Any(c =>
-                        c.EmpleadoCodigo == e.EmpleadoCodigo &&
-                        c.ContratoEstado == "A")
+                    !_context.ContratosLaborales
+                        .AsNoTracking()
+                        .Any(c =>
+                            c.EmpleadoCodigo.Trim() == e.EmpleadoCodigo.Trim() &&
+                            (c.ContratoEstado.Trim() == "A" || c.ContratoEstado.Trim() == "S")) 
                 )
-                .Select(e => new {
-            EmpleadoCodigo = e.EmpleadoCodigo.Trim(),
-            EmpleadoNombre = (e.EmpleadoNombre + " " + e.EmpleadoApellido).Trim()
-        })
-        .ToListAsync();
+                .Select(e => new
+                {
+                    EmpleadoCodigo = e.EmpleadoCodigo.Trim(),
+                    EmpleadoNombre = (e.EmpleadoNombre + " " + e.EmpleadoApellido).Trim()
+                })
+                .ToListAsync();
 
             return empleados;
         }
