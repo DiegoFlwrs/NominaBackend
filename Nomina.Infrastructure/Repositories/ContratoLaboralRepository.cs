@@ -322,7 +322,7 @@ namespace Nomina.Infrastructure.Repositories
                 parameters
             );
         }
-        public async Task<IEnumerable<string>> ListarEmpleadosSinContrato()
+        public async Task<IEnumerable<object>> ListarEmpleadosSinContrato()
         {
             var empleados = await _context.Empleados
                 .Where(e =>
@@ -331,8 +331,11 @@ namespace Nomina.Infrastructure.Repositories
                         c.EmpleadoCodigo == e.EmpleadoCodigo &&
                         c.ContratoEstado == "A")
                 )
-                .Select(e => (e.EmpleadoNombre + " " + e.EmpleadoApellido).Trim())
-                .ToListAsync();
+                .Select(e => new {
+            EmpleadoCodigo = e.EmpleadoCodigo.Trim(),
+            EmpleadoNombre = (e.EmpleadoNombre + " " + e.EmpleadoApellido).Trim()
+        })
+        .ToListAsync();
 
             return empleados;
         }

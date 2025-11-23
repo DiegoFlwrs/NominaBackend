@@ -20,6 +20,6 @@ namespace Nomina.Application.Interfaces
         Task<IEnumerable<ContratoResumen>> ListarContratosPorJornada();
         Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado();
         Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles();
-        Task<IEnumerable<string>> ListarEmpleadosSinContrato();
+        Task<IEnumerable<object>> ListarEmpleadosSinContrato();
     }
 }

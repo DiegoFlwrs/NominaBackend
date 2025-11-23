@@ -108,7 +108,7 @@ namespace Nomina.Application.Services
         {
             await _contratoRepository.SuspenderContrato(contratoCodigo, nuevoEstado, motivo);
         }
-         public async Task<IEnumerable<string>> ListarEmpleadosSinContrato()
+         public async Task<IEnumerable<object>> ListarEmpleadosSinContrato()
         {
             return await _contratoRepository.ListarEmpleadosSinContrato();
         }

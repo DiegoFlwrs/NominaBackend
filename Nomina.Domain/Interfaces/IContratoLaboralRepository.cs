@@ -21,6 +21,6 @@ namespace Nomina.Domain.Interfaces
         Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado();
         Task<IEnumerable<HistorialDetalle>> ListarHistorialDetalles();
         Task<IEnumerable<ContratoView>> ConsultarContratosAsync();
-        Task<IEnumerable<string>> ListarEmpleadosSinContrato();
+        Task<IEnumerable<object>> ListarEmpleadosSinContrato();
     }
 }
