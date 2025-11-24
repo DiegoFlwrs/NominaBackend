@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomina.Domain.Entities;
 using Nomina.Domain.Rules;
+using Nomina.API.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace Nomina.Test.Pruebas
         public void TestValidarSalarioMinimo_SalarioInferior()
         {
             decimal salario = 900m;
-            decimal minimo = 1030m;
+            decimal minimo = 1130m;
 
-            var ex = Assert.ThrowsException<ArgumentException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarSalarioMinimo(salario, minimo));
 
             StringAssert.Contains(ex.Message, "El salario no puede ser inferior al salario mínimo legal vigente");
@@ -29,7 +30,7 @@ namespace Nomina.Test.Pruebas
         {
             var contrato = new ContratoLaboral();
 
-            var ex = Assert.ThrowsException<ArgumentException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarCamposObligatorios(contrato));
 
             Assert.AreEqual("El empleado es obligatorio.", ex.Message);
@@ -44,7 +45,7 @@ namespace Nomina.Test.Pruebas
                 ContratoFechaFin = DateTime.Today
             };
 
-            var ex = Assert.ThrowsException<ArgumentException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarFechas(contrato));
 
             Assert.AreEqual("La fecha de fin debe ser mayor que la fecha de inicio.", ex.Message);
@@ -58,7 +59,7 @@ namespace Nomina.Test.Pruebas
                 ContratoFechaInicio = DateTime.Today.AddDays(-1)
             };
 
-            var ex = Assert.ThrowsException<ArgumentException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarFechaInicio(contrato));
 
             Assert.AreEqual("La fecha de inicio del contrato no puede ser anterior a la fecha actual.", ex.Message);
@@ -67,7 +68,7 @@ namespace Nomina.Test.Pruebas
         [TestMethod]
         public void TestValidarContratoDuplicado_ExisteContratoVigente()
         {
-            var ex = Assert.ThrowsException<InvalidOperationException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarContratoDuplicado(true));
 
             Assert.AreEqual("El empleado ya posee un contrato vigente.", ex.Message);
@@ -76,7 +77,7 @@ namespace Nomina.Test.Pruebas
         [TestMethod]
         public void TestValidarMotivoHistorial_MotivoVacio()
         {
-            var ex = Assert.ThrowsException<ArgumentException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarMotivoHistorial(""));
 
             Assert.AreEqual("Debe ingresar un motivo para la modificación o suspensión.", ex.Message);
@@ -85,7 +86,7 @@ namespace Nomina.Test.Pruebas
         [TestMethod]
         public void TestValidarEdicionPorEstado_EstadoInactivo()
         {
-            var ex = Assert.ThrowsException<InvalidOperationException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarEdicionPorEstado("I"));
 
             Assert.AreEqual("Solo se pueden editar contratos vigentes.", ex.Message);
@@ -94,7 +95,7 @@ namespace Nomina.Test.Pruebas
         [TestMethod]
         public void TestValidarReactivacion_CambioNoPermitido()
         {
-            var ex = Assert.ThrowsException<InvalidOperationException>(() =>
+            var ex = Assert.ThrowsException<BusinessException>(() =>
                 ContratoLaboralRules.ValidarReactivacion("A", "A"));
 
             Assert.AreEqual("Cambio de estado no permitido.", ex.Message);
@@ -130,7 +131,7 @@ namespace Nomina.Test.Pruebas
         public void TestValidarSalarioMinimo_SalarioValido()
         {
             decimal salario = 1500m;
-            decimal minimo = 1030m;
+            decimal minimo = 1130m;
 
             try
             {

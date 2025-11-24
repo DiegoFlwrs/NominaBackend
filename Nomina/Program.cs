@@ -75,7 +75,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAnyOrigin");
-app.UseExceptionHandler("/error");
+//app.UseExceptionHandler("/error");
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();

@@ -44,66 +44,105 @@ namespace Nomina.Infrastructure.Repositories
                 throw new Exception("APP_ERROR: " + ex.Message);
             }
         }
-
         public async Task InsertarContrato(ContratoLaboral contrato)
         {
-            ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
-            ContratoLaboralRules.ValidarFechaInicio(contrato);
-            bool existeContratoVigente = await _context.ContratosLaborales
-            .AnyAsync(c => c.EmpleadoCodigo == contrato.EmpleadoCodigo && c.ContratoEstado.Trim() == "A");
-            ContratoLaboralRules.ValidarContratoDuplicado(existeContratoVigente);
-
-            var parametros = new[]
+            try
             {
-                new SqlParameter("@ContratoCodigo", contrato.ContratoCodigo),
-                new SqlParameter("@EmpleadoCodigo", contrato.EmpleadoCodigo),
-                new SqlParameter("@TipoContratoCodigo", contrato.TipoContratoCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@ModalidadCodigo", contrato.ModalidadCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@JornadaCodigo", contrato.JornadaCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@UsuarioCodigo", contrato.UsuarioCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@ContratoFechaInicio", contrato.ContratoFechaInicio ?? DateTime.Now),
-                new SqlParameter("@ContratoFechaFin", contrato.ContratoFechaFin ?? (object)DBNull.Value),
-                new SqlParameter("@ContratoSalario", contrato.ContratoSalario),
-                new SqlParameter("@ContratoBonificacion", contrato.ContratoBonificacion ?? 0),
-                new SqlParameter("@ContratoDescuento", contrato.ContratoDescuento ?? 0)
-            };
+                contrato.ContratoCodigo = await GenerarCodigoContrato();
+                var parametros = new[]
+                {
+                    new SqlParameter("@ContratoCodigo", contrato.ContratoCodigo),
+                    new SqlParameter("@EmpleadoCodigo", contrato.EmpleadoCodigo),
+                    new SqlParameter("@TipoContratoCodigo", contrato.TipoContratoCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ModalidadCodigo", contrato.ModalidadCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@JornadaCodigo", contrato.JornadaCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@UsuarioCodigo", contrato.UsuarioCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoFechaInicio", contrato.ContratoFechaInicio ?? DateTime.Now),
+                    new SqlParameter("@ContratoFechaFin", contrato.ContratoFechaFin ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoSalario", contrato.ContratoSalario)
+                };
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC dbo.InsertarContratoLaboral @ContratoCodigo, @EmpleadoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo, @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario, @ContratoBonificacion, @ContratoDescuento",
-                parametros
-            );
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC dbo.InsertarContratoLaboral @ContratoCodigo, @EmpleadoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo, @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario",
+                    parametros
+                );
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al insertar el contrato laboral: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al insertar el contrato laboral: {ex.Message}", ex);
+            }
         }
-
-        public async Task ModificarContrato(ContratoLaboral contrato)
+        public async Task ModificarContrato(ContratoLaboral contrato, string motivo)
         {
-            ContratoLaboralRules.ValidarEdicionPorEstado(contrato.ContratoEstado);
-            ContratoLaboralRules.ValidarCoherenciaGeneral(contrato);
-            ContratoLaboralRules.ContratoProximoAVencer(contrato);
-            var parametros = new[]
+            try
             {
-                new SqlParameter("@ContratoCodigo", contrato.ContratoCodigo),
-                new SqlParameter("@TipoContratoCodigo", contrato.TipoContratoCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@ModalidadCodigo", contrato.ModalidadCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@JornadaCodigo", contrato.JornadaCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@UsuarioCodigo", contrato.UsuarioCodigo ?? (object)DBNull.Value),
-                new SqlParameter("@ContratoFechaInicio", contrato.ContratoFechaInicio ?? DateTime.Now),
-                new SqlParameter("@ContratoFechaFin", contrato.ContratoFechaFin ?? (object)DBNull.Value),
-                new SqlParameter("@ContratoSalario", contrato.ContratoSalario),
-                new SqlParameter("@ContratoBonificacion", contrato.ContratoBonificacion ?? 0),
-                new SqlParameter("@ContratoDescuento", contrato.ContratoDescuento ?? 0),
-                new SqlParameter("@ContratoEstado", contrato.ContratoEstado ?? (object)DBNull.Value)
-            };
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC dbo.ModificarContratoLaboral @ContratoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo, @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario, @ContratoBonificacion, @ContratoDescuento, @ContratoEstado",
-                parametros);
+                var parametros = new[]
+                {
+                    new SqlParameter("@ContratoCodigo", contrato.ContratoCodigo),
+                    new SqlParameter("@TipoContratoCodigo", contrato.TipoContratoCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ModalidadCodigo", contrato.ModalidadCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@JornadaCodigo", contrato.JornadaCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@UsuarioCodigo", contrato.UsuarioCodigo ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoFechaInicio", contrato.ContratoFechaInicio ?? DateTime.Now),
+                    new SqlParameter("@ContratoFechaFin", contrato.ContratoFechaFin ?? (object)DBNull.Value),
+                    new SqlParameter("@ContratoSalario", contrato.ContratoSalario),
+                    new SqlParameter("@ContratoEstado", contrato.ContratoEstado ?? (object)DBNull.Value)
+                };
+
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC dbo.ModificarContratoLaboral @ContratoCodigo, @TipoContratoCodigo, @ModalidadCodigo, @JornadaCodigo, @UsuarioCodigo, @ContratoFechaInicio, @ContratoFechaFin, @ContratoSalario, @ContratoEstado",
+                    parametros);
+
+                var ultimoHistorial = await _context.Set<HistorialContrato>()
+                    .OrderByDescending(h => h.HistorialCodigo)
+                    .FirstOrDefaultAsync();
+                int nuevoNumero = 1;
+                if (ultimoHistorial != null && int.TryParse(ultimoHistorial.HistorialCodigo, out int ultimoNumero))
+                    nuevoNumero = ultimoNumero + 1;
+                string nuevoHistorialCodigo = nuevoNumero.ToString("D5");
+
+                var historial = new HistorialContrato
+                {
+                    HistorialCodigo = nuevoHistorialCodigo,
+                    ContratoCodigo = contrato.ContratoCodigo,
+                    EventoCodigo = "0004",
+                    HistorialMotivo = motivo,
+                    HistorialDetalle = "Contrato modificado por usuario",
+                    HistorialFecha = DateTime.Now
+                };
+
+                await RegistrarHistorial(historial);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al modificar el contrato laboral: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al modificar el contrato laboral: {ex.Message}", ex);
+            }
         }
 
         public async Task EliminarContrato(string contratoCodigo)
         {
-            var parametro = new SqlParameter("@ContratoCodigo", contratoCodigo);
-            await _context.Database.ExecuteSqlRawAsync("EXEC dbo.EliminarContratoLaboral @ContratoCodigo", parametro);
+            try
+            {
+                var parametro = new SqlParameter("@ContratoCodigo", contratoCodigo);
+                await _context.Database.ExecuteSqlRawAsync("EXEC dbo.EliminarContratoLaboral @ContratoCodigo", parametro);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al eliminar el contrato laboral: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al eliminar el contrato laboral: {ex.Message}", ex);
+            }
         }
-
         public async Task<bool> ExisteContratoVigente(string empleadoCodigo)
         {
             return await _context.ContratosLaborales
@@ -141,7 +180,26 @@ namespace Nomina.Infrastructure.Repositories
                 parametros
             );
         }
+        public async Task<string> GenerarCodigoContrato()
+        {
+            var ultimoCodigo = await _context.ContratosLaborales
+                .Where(c => c.ContratoCodigo.StartsWith("CON"))
+                .OrderByDescending(c => c.ContratoCodigo)
+                .Select(c => c.ContratoCodigo)
+                .FirstOrDefaultAsync();
 
+            if (string.IsNullOrEmpty(ultimoCodigo))
+            {
+                return "CON01";
+            }
+            else
+            {
+                string numeroStr = ultimoCodigo.Substring(3, 2);
+                int numeroActual = int.Parse(numeroStr);
+                numeroActual++;
+                return $"CON{numeroActual:D2}";
+            }
+        }
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorTipo()
         {
             return await _context.TiposContrato
@@ -214,17 +272,6 @@ namespace Nomina.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ResumenEmpleado>> ListarEmpleadosCodigo()
-        {
-            return await _context.Empleados
-                .Select(e => new ResumenEmpleado
-                {
-                    Codigo = e.EmpleadoCodigo.Trim(),
-                    EmpleadoNombre = e.EmpleadoNombre + " " + e.EmpleadoApellido
-                })
-                .ToListAsync();
-        }
-
         public async Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo)
         {
             var contrato = await _context.ContratosLaborales
@@ -270,10 +317,30 @@ namespace Nomina.Infrastructure.Repositories
             new SqlParameter("@ContratoCodigo", contratoCodigo),
             new SqlParameter("@NuevoEstado", nuevoEstado.Trim())
             };
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC SuspenderContratoLaboral @ContratoCodigo, @NuevoEstado",
-                    parameters
-                );
-            }
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC SuspenderContratoLaboral @ContratoCodigo, @NuevoEstado",
+                parameters
+            );
+        }
+        public async Task<IEnumerable<object>> ListarEmpleadosSinContrato()
+        {
+            var empleados = await _context.Empleados
+                .AsNoTracking()
+                .Where(e =>
+                    !_context.ContratosLaborales
+                        .AsNoTracking()
+                        .Any(c =>
+                            c.EmpleadoCodigo.Trim() == e.EmpleadoCodigo.Trim() &&
+                            (c.ContratoEstado.Trim() == "A" || c.ContratoEstado.Trim() == "S")) 
+                )
+                .Select(e => new
+                {
+                    EmpleadoCodigo = e.EmpleadoCodigo.Trim(),
+                    EmpleadoNombre = (e.EmpleadoNombre + " " + e.EmpleadoApellido).Trim()
+                })
+                .ToListAsync();
+
+            return empleados;
+        }
     }
 }

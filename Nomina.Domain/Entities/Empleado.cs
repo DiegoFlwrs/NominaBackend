@@ -15,7 +15,7 @@ namespace Nomina.Domain.Entities
         public DateTime? FechaIngreso { get; set; }
         public string DepartamentoCodigo { get; set; } = null!;
         public string? CargoCodigo { get; set; }
-        public string? EmpleadoEstado { get; set; }
+        public string EmpleadoEstado { get; set; }
         public bool? EmpleadoTieneHijos { get; set; }
         public string? EmpleadoTipoPension { get; set; }
         public string? EmpleadoAFP { get; set; }
