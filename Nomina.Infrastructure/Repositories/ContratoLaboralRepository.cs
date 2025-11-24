@@ -111,7 +111,7 @@ namespace Nomina.Infrastructure.Repositories
                     ContratoCodigo = contrato.ContratoCodigo,
                     EventoCodigo = "0004",
                     HistorialMotivo = motivo,
-                    HistorialDetalle = "Contrato modificado por usuario",
+                    HistorialDetalle = "Modificacion de contrato",
                     HistorialFecha = DateTime.Now
                 };
 
@@ -264,9 +264,9 @@ namespace Nomina.Infrastructure.Repositories
                 .OrderByDescending(h => h.HistorialFecha)
                 .Select(h => new HistorialDetalle
                 {
-                    HistorialCodigo = (h.HistorialCodigo ?? string.Empty).Trim(),
                     ContratoCodigo = (h.ContratoCodigo ?? string.Empty).Trim(),
-                    Detalle = (h.HistorialMotivo ?? string.Empty).Trim(),
+                    Detalle = (h.HistorialDetalle ?? string.Empty).Trim(),
+                    Motivo = (h.HistorialMotivo ?? string.Empty).Trim(),
                     HistorialFecha = h.HistorialFecha
                 })
                 .ToListAsync();
@@ -284,12 +284,12 @@ namespace Nomina.Infrastructure.Repositories
             if (contrato.ContratoEstado.Trim() == "S" && nuevoEstado.Trim() == "A")
             {
                 eventoCodigo = "0002";
-                detalle = "Contrato reactivado por usuario";
+                detalle = "Reactivacion de contrato";
             }
             else if (contrato.ContratoEstado.Trim() == "A" && nuevoEstado.Trim() == "S")
             {
                 eventoCodigo = "0003";
-                detalle = "Contrato suspendido por usuario";
+                detalle = "Suspension de contrato";
             }
             else
             {
