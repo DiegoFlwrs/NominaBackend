@@ -10,7 +10,7 @@ namespace Nomina.Application.DTOs
     {
         public string ContratoCodigo { get; set; } = "";
         public string PeriodoCodigo { get; set; } = "";
-        public int HorasExtras { get; set; }
+        public decimal nominaMontoHorasExtras { get; set; }
         public decimal Bonificaciones { get; set; }
         public decimal TotalIngresos { get; set; }
         public decimal TotalDescuentos { get; set; }

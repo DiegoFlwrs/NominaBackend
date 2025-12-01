@@ -33,7 +33,8 @@ namespace Nomina.Application.Helpers
             return estado switch
             {
                 "A" => "ACTIVO",
-                _ => "INACTIVO"
+                "I" => "INACTIVO",
+                "P" => "PROCESADO"
             };
         }
 

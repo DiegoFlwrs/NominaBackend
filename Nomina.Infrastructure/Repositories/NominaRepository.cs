@@ -106,7 +106,7 @@ namespace Nomina.Infrastructure.Repositories
         }
 
 
-        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
+        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, decimal nominaMontoHorasExtras, decimal nominaBonificacion,
             decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
         {
             try
@@ -118,7 +118,7 @@ namespace Nomina.Infrastructure.Repositories
                         NominaCodigo = nominaCodigo,
                         PeriodoCodigo = periodoCodigo,
                         ContratoCodigo = contratoCodigo,
-                        NominaHorasExtras = nominaHorasExtras,
+                        NominaMontoHorasExtras = nominaMontoHorasExtras,
                         NominaBonificacion = nominaBonificacion,
                         NominaDescuentos = nominaDescuentos,
                         NominaTotalIngresos = nominaTotalIngresos,

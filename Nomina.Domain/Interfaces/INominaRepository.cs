@@ -17,7 +17,7 @@ namespace Nomina.Domain.Interfaces
         Task<IEnumerable<Departamento>> ObtenerDepartamentosAsync();
         Task<IEnumerable<ContratoLaboral>> ObtenerContratoAsync();
 
-        Task InsertarNominaAsync(string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
+        Task InsertarNominaAsync(string nominaCodigo, string periodoCodigo, string contratoCodigo, decimal nominaMontoHorasExtras, decimal nominaBonificacion,
             decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
         Task<ContratoLaboral?> ObtenerContratoConEmpleadoAsync(string contratoCodigo);
 

@@ -11,7 +11,7 @@ namespace Nomina.Domain.Entities
         public string NominaCodigo { get; set; } = null!;
         public string? PeriodoCodigo { get; set; }
         public string? ContratoCodigo { get; set; }
-        public int? NominaHorasExtras { get; set; } = 0;
+        public int? NominaMontoHorasExtras { get; set; } = 0;
         public decimal? NominaBonificacion { get; set; } = 0;
         public decimal? NominaDescuentos { get; set; } = 0;
         public decimal? NominaTotalIngresos { get; set; }
