@@ -25,23 +25,9 @@ namespace Nomina.Application.Services
             _repository = repository;
         }
 
-        public async Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ProcesarNominaAsync(NominaFiltroRequest request)
+        public async Task<IEnumerable<NominaView>> ProcesarNominaAsync(NominaFiltroRequest request)
         {
-            if (request.PageSize <= 0) request.PageSize = 10;
-            if (request.PageNumber <= 0) request.PageNumber = 1;
-
-            var (nominas, totalRows) = await _repository.ConsultarNominasAsync(
-                request.PeriodoAnio,
-                request.PeriodoMes,
-                request.NominaEstado,
-                request.EmpleadoNombre,
-                request.EmpleadoApellido,
-                request.DepartamentoCodigo,
-                request.PageNumber,
-                request.PageSize
-            );
-
-            return (nominas, totalRows);
+            return await _repository.ConsultarNominasAsync(request.CodigoPeriodo);
         }
 
         public async Task<IEnumerable<int>> ObtenerAniosAsync()
@@ -224,8 +210,14 @@ namespace Nomina.Application.Services
                 {
                     ContratoCodigo = contrato.ContratoCodigo,
                     PeriodoCodigo = request.PeriodoCodigo,
+                    nominaHorasExtras = horasExtras,
                     nominaMontoHorasExtras = pagoHorasExtras,
                     Bonificaciones = bonificaciones,
+                    nominaAsignacionFamiliar = asignacionFamiliar,
+                    nominaDescuentoPension = descuentoPension,
+                    nominaDescuentoIR5ta= rentaQuinta,
+                    nominaAporteEssalud= descuentoEssalud,
+                    nominaOtrosDescuentos= descuentosAdicionales,
                     TotalIngresos = totalIngresos,
                     TotalDescuentos = totalDescuentos,
                     SueldoNeto = sueldoNeto
@@ -244,9 +236,14 @@ namespace Nomina.Application.Services
                     nominaCodigo: nuevoCodigo,
                     periodoCodigo: nomina.PeriodoCodigo,
                     contratoCodigo: nomina.ContratoCodigo,
+                    nominaHorasExtras: nomina.nominaHorasExtras,
                     nominaMontoHorasExtras: nomina.nominaMontoHorasExtras,
                     nominaBonificacion: nomina.Bonificaciones,
-                    nominaDescuentos: nomina.TotalDescuentos,
+                    nominaAsignacionFamiliar: nomina.nominaAsignacionFamiliar,
+                    nominaDescuentoPension: nomina.nominaDescuentoPension,
+                    nominaDescuentoIR5ta: nomina.nominaDescuentoIR5ta,
+                    nominaAporteEssalud: nomina.nominaAporteEssalud,
+                    nominaOtrosDescuentos: nomina.nominaOtrosDescuentos,
                     nominaTotalIngresos: nomina.TotalIngresos,
                     nominaTotalDescuentos: nomina.TotalDescuentos,
                     nominaSueldoNeto: nomina.SueldoNeto

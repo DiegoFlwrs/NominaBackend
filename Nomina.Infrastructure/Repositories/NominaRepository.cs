@@ -26,8 +26,7 @@ namespace Nomina.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ConsultarNominasAsync(int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
-            string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize)
+        public async Task<IEnumerable<NominaView>> ConsultarNominasAsync(string codigoPeriodo)
         {
             try
             {
@@ -35,27 +34,20 @@ namespace Nomina.Infrastructure.Repositories
                 {
                     var parameters = new
                     {
-                        PeriodoAnio = periodoAnio,
-                        PeriodoMes = periodoMes,
-                        NominaEstado = nominaEstado,
-                        EmpleadoNombre = empleadoNombre,
-                        EmpleadoApellido = empleadoApellido,
-                        DepartamentoCodigo = departamentoCodigo,
-                        PageNumber = pageNumber,
-                        PageSize = pageSize
+                        CodigoPeriodo = codigoPeriodo
                     };
 
-                    using var multi = await con.QueryMultipleAsync("ConsultarNominas", parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    var nominas = await con.QueryAsync<NominaView>(
+                        "ConsultarNominas",
+                        parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
 
-                    var nominas = await multi.ReadAsync<NominaView>();
-                    var totalRows = await multi.ReadFirstAsync<int>();
-
-                    return (nominas, totalRows);
+                    return nominas;
                 }
             }
             catch (SqlException ex)
             {
-
                 throw new DatabaseException($"Error en la base de datos: {ex.Message}");
             }
             catch (Exception ex)
@@ -63,6 +55,7 @@ namespace Nomina.Infrastructure.Repositories
                 throw new Exception("APP_ERROR: " + ex.Message);
             }
         }
+
 
         public async Task<IEnumerable<PeriodoNomina>> ObtenerPeriodosAsync()
         {
@@ -106,8 +99,9 @@ namespace Nomina.Infrastructure.Repositories
         }
 
 
-        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, decimal nominaMontoHorasExtras, decimal nominaBonificacion,
-            decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
+        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaMontoHorasExtras, decimal nominaBonificacion,
+            decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, decimal nominaAsignacionFamiliar, decimal nominaDescuentoPension, 
+            decimal nominaDescuentoIR5ta, decimal nominaAporteEssalud, decimal nominaOtrosDescuentos, char nominaEstado = 'A')
         {
             try
             {
@@ -118,10 +112,15 @@ namespace Nomina.Infrastructure.Repositories
                         NominaCodigo = nominaCodigo,
                         PeriodoCodigo = periodoCodigo,
                         ContratoCodigo = contratoCodigo,
+                        NominaHorasExtras = nominaHorasExtras,
                         NominaMontoHorasExtras = nominaMontoHorasExtras,
                         NominaBonificacion = nominaBonificacion,
-                        NominaDescuentos = nominaDescuentos,
+                        NominaAsignacionFamiliar = nominaAsignacionFamiliar,
                         NominaTotalIngresos = nominaTotalIngresos,
+                        NominaDescuentoPension = nominaDescuentoPension,
+                        NominaDescuentoIR5ta = nominaDescuentoIR5ta,
+                        NominaAporteEssalud = nominaAporteEssalud,
+                        NominaOtrosDescuentos = nominaOtrosDescuentos,
                         NominaTotalDescuentos = nominaTotalDescuentos,
                         NominaSueldoNeto = nominaSueldoNeto,
                         NominaEstado = nominaEstado
