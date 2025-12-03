@@ -26,7 +26,7 @@ namespace Nomina.Infrastructure.Repositories
             string? tipoContratoCodigo = null
         )
         {
-            const string spName = "[dbo].[GenerarReporteNominaPorPeriodo]";
+            const string spName = "[dbo].[GenerarReporteNominaPorPeriodo2]";
 
             var parameters = new DynamicParameters();
 

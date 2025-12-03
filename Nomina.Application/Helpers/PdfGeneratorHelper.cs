@@ -17,7 +17,7 @@ namespace Nomina.Application.Helpers
             {
                 container.Page(page =>
                 {
-                    page.Size(PageSizes.A4);
+                    page.Size(PageSizes.A4.Landscape());
                     page.Margin(36);
                     page.DefaultTextStyle(x => x.FontSize(10));
                     page.Header()
@@ -41,33 +41,55 @@ namespace Nomina.Application.Helpers
                                 columns.RelativeColumn(1);
                                 columns.RelativeColumn(1);
                                 columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1);
                             });
 
                             table.Header(header =>
                             {
                                 TextStyle headerStyle = TextStyle.Default.Bold().BackgroundColor(Colors.Grey.Lighten3);
 
-                                header.Cell().BorderBottom(1).Padding(5).Text("Nombre Completo").Style(headerStyle);
-                                header.Cell().BorderBottom(1).Padding(5).Text("Cargo").Style(headerStyle);
-                                header.Cell().BorderBottom(1).Padding(5).Text("Fecha Ingreso").Style(headerStyle);
-                                header.Cell().BorderBottom(1).Padding(5).Text("Sueldo Base").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Código").Style(headerStyle);
+                                header.Cell().BorderBottom(1).Padding(5).Text("Empleado").Style(headerStyle);
+                                header.Cell().BorderBottom(1).Padding(5).Text("Salario Base").Style(headerStyle);
+                                header.Cell().BorderBottom(1).Padding(5).Text("Horas Extras").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Monto Horas Extras").Style(headerStyle).AlignRight();
                                 header.Cell().BorderBottom(1).Padding(5).Text("Bonificación").Style(headerStyle).AlignRight();
-                                header.Cell().BorderBottom(1).Padding(5).Text("Descuentos").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Asignación Familiar").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Total Ingresos").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Desc. Pensión").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("IR 5ta").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Essalud").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Otros Desc.").Style(headerStyle).AlignRight();
+                                header.Cell().BorderBottom(1).Padding(5).Text("Total Descuentos").Style(headerStyle).AlignRight();
                                 header.Cell().BorderBottom(1).Padding(5).Text("Sueldo Neto").Style(headerStyle).AlignRight();
                             });
 
                             foreach (var item in data)
                             {
-                                string fechaIngresoFormato = item.FechaIngreso.ToString("dd/MM/yyyy");
+                                string fechaIngresoFormato = item.fechaIngreso.ToString("dd/MM/yyyy");
                                 string formatoMoneda = "N2";
 
-                                table.Cell().BorderBottom(1).Padding(5).Text(item.NombreCompleto);
-                                table.Cell().BorderBottom(1).Padding(5).Text(item.CargoNombre);
-                                table.Cell().BorderBottom(1).Padding(5).Text(fechaIngresoFormato);
-                                table.Cell().BorderBottom(1).Padding(5).Text(item.SueldoBase.ToString(formatoMoneda)).AlignRight();
-                                table.Cell().BorderBottom(1).Padding(5).Text(item.NominaBonificacion.ToString(formatoMoneda)).AlignRight();
-                                table.Cell().BorderBottom(1).Padding(5).Text(item.NominaDescuentos.ToString(formatoMoneda)).AlignRight();
-                                table.Cell().BorderBottom(1).Padding(5).Text(item.NominaSueldoNeto.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.Codigo);
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.Empleado);
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.SalarioBase.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.HorasExtras.ToString()).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.MontoHorasExtras.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.Bonificacion.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.AsignacionFamiliar.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.TotalIngresos.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.DescPension.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.IR5ta.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.Essalud.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.OtrosDesc.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.TotalDescuentos.ToString(formatoMoneda)).AlignRight();
+                                table.Cell().BorderBottom(1).Padding(5).Text(item.SueldoNeto.ToString(formatoMoneda)).AlignRight();
+
                             }
                         });
 
