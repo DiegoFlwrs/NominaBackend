@@ -8,7 +8,7 @@ namespace Nomina.Application.DTOs.NominaPeriodo
 {
     public class ContratoDTO
     {
-        public string ContratoCodigo { get; set; }
-        public string EmpleadoDescripcion{ get; set; }
+        public string ContratoCodigo { get; set; } = null!;
+        public string EmpleadoDescripcion{ get; set; } = null!;
     }
 }

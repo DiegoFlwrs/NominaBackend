@@ -70,8 +70,6 @@ public class ReportesController : ControllerBase
                 cargoCodigo,
                 tipoContratoCodigo
             );
-
-            //string nombreArchivo = $"Reporte Nomina {fechaInicio:dd-MM-yy}_{fechaFin:dd-MM-yy}.pdf";
             string nombreArchivo = $"Reporte Nomina {DateTime.Now:dd-MM-yy}.pdf";
 
             return File(pdfBytes, "application/pdf", nombreArchivo);

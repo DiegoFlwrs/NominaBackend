@@ -8,8 +8,8 @@ namespace Nomina.Domain.Entities
 {
     public class Departamento
     {
-        public string DepartamentoCodigo { set; get; }
-        public string DepartamentoNombre { set; get; }
+        public string DepartamentoCodigo { set; get; } = null!;
+        public string DepartamentoNombre { set; get; } = null!;
         // Relaciones
         public ICollection<Empleado>? Empleados { get; set; }
     }

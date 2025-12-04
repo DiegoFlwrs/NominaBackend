@@ -8,21 +8,21 @@ namespace Nomina.Domain.ReadModels
 {
     public class ContratoView
     {
-        public string? ContratoCodigo { get; set; }
-        public string? EmpleadoCodigo { get; set; }
-        public string? EmpleadoNombre { get; set; }
-        public string? EmpleadoApellido { get; set; }
-        public string? TipoContratoCodigo { get; set; }
-        public string? ModalidadCodigo { get; set; }
-        public string? JornadaCodigo { get; set; }
-        public string? UsuarioCodigo { get; set; }
-        public string? TipoContratoDescripcion { get; set; }
-        public string? ModalidadDescripcion { get; set; }
+        public string? ContratoCodigo { get; set; } = null!;
+        public string? EmpleadoCodigo { get; set; } = null!;
+        public string? EmpleadoNombre { get; set; } = null!;
+        public string? EmpleadoApellido { get; set; } = null!;
+        public string? TipoContratoCodigo { get; set; } = null!;
+        public string? ModalidadCodigo { get; set; } = null!;
+        public string? JornadaCodigo { get; set; } = null!;
+        public string? UsuarioCodigo { get; set; } = null!;
+        public string? TipoContratoDescripcion { get; set; } = null!;
+        public string? ModalidadDescripcion { get; set; } = null!;
         public string? JornadaDescripcion { get; set; }
         public DateTime ContratoFechaInicio { get; set; }
         public DateTime? ContratoFechaFin { get; set; } 
         public decimal ContratoSalario { get; set; }
-        public string? ContratoEstado { get; set; }
+        public string? ContratoEstado { get; set; } = null!;
         public DateTime ContratoFechaRegistro { get; set; }
         public DateTime? ContratoFechaModificacion { get; set; }
     }

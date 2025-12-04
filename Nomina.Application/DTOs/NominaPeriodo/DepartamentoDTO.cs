@@ -8,7 +8,7 @@ namespace Nomina.Application.DTOs.NominaPeriodo
 {
     public class DepartamentoDTO
     {
-        public string DepartamentoCodigo { get; set; }
-        public string DepartamentoNombre { get; set; }
+        public string DepartamentoCodigo { get; set; } = null!;
+        public string DepartamentoNombre { get; set; } = null!;
     }
 }

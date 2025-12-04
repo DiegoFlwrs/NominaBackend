@@ -26,6 +26,6 @@ namespace Nomina.Domain.Entities
         public ModalidadPago? Modalidad { get; set; }
         public JornadaLaboral? Jornada { get; set; }
         public Usuario? Usuario { get; set; }
-        public ICollection<Nominas> Nominas { get; set; }
+        public ICollection<Nominas> Nominas { get; set; } = null!;
     }
 }

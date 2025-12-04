@@ -10,7 +10,7 @@ namespace Nomina.Application.DTOs
     public class ReporteNominaRequest
     {
         [Required]
-        public string PeriodoCodigo { get; set; }
+        public string PeriodoCodigo { get; set; } = null!;
         public string? DepartamentoCodigo { get; set; }
         public string? CargoCodigo { get; set; }
         public string? TipoContratoCodigo { get; set; }
