@@ -1,0 +1,1 @@
+nRXC:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina\Nomina.API.csproj¢net8.0òCSharp12

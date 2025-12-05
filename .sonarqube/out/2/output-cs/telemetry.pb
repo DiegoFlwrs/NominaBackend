@@ -1,0 +1,1 @@
+tR^C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Test\Nomina.Test.csproj¢net8.0òCSharp12

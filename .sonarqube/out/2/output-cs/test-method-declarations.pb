@@ -1,0 +1,37 @@
+Â
+
+hC:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Test\Pruebas\ReglasNominaTests.csNomina.TestO
+%Nomina.Test.Pruebas.ReglasNominaTests&TestCalcularAsignacionFamiliarConHijosO
+%Nomina.Test.Pruebas.ReglasNominaTests&TestCalcularAsignacionFamiliarSinHijosL
+%Nomina.Test.Pruebas.ReglasNominaTests#TestCalcularPagoHorasExtrasDosHorasN
+%Nomina.Test.Pruebas.ReglasNominaTests%TestCalcularPagoHorasExtrasCincoHorasM
+%Nomina.Test.Pruebas.ReglasNominaTests$TestCalcularPagoHorasExtrasCeroHoras@
+%Nomina.Test.Pruebas.ReglasNominaTestsTestCalcularSueldoBruto<
+%Nomina.Test.Pruebas.ReglasNominaTestsTestCalcularEssaludH
+%Nomina.Test.Pruebas.ReglasNominaTestsTestCalcularDescuentoPensionONPH
+%Nomina.Test.Pruebas.ReglasNominaTestsTestCalcularDescuentoPensionAFPQ
+%Nomina.Test.Pruebas.ReglasNominaTests(TestCalcularDescuentoPensionTipoInvalidoJ
+%Nomina.Test.Pruebas.ReglasNominaTests!TestCalcularRentaQuintaSueldoBajoJ
+%Nomina.Test.Pruebas.ReglasNominaTests!TestCalcularRentaQuintaSueldoAltoO
+%Nomina.Test.Pruebas.ReglasNominaTests&TestCalcularTotalDescuentosAdicionales?
+%Nomina.Test.Pruebas.ReglasNominaTestsTestCalcularSueldoNetoV
+%Nomina.Test.Pruebas.ReglasNominaTests-TestValidarSueldoMinimoMayorIgualRemuneracionQ
+%Nomina.Test.Pruebas.ReglasNominaTests(TestValidarSueldoMinimoMenorRemuneracionµ
+pC:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Test\Pruebas\ContratoLaboralRulesTests.csNomina.TestY
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests(TestValidarSalarioMinimo_SalarioInferior[
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests*TestValidarCamposObligatorios_CamposVaciosY
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests(TestValidarFechas_FechaFinMenorQueInicioY
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests(TestValidarFechaInicio_FechaInicioPasadac
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests2TestValidarContratoDuplicado_ExisteContratoVigenteW
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests&TestValidarMotivoHistorial_MotivoVacio[
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests*TestValidarEdicionPorEstado_EstadoInactivoZ
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests)TestValidarReactivacion_CambioNoPermitidod
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests3TestContratoProximoAVencer_ContratoConMenosDe15Diasb
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests1TestContratoProximoAVencer_ContratoConMasDe15DiasW
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests&TestValidarSalarioMinimo_SalarioValidoY
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests(TestValidarFechas_FechaFinMayorQueInicio[
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests*TestValidarFechaInicio_FechaInicioCorrectae
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests4TestValidarContratoDuplicado_NoExisteContratoVigenteX
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests'TestValidarMotivoHistorial_MotivoValidoY
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests(TestValidarEdicionPorEstado_EstadoActivoX
+-Nomina.Test.Pruebas.ContratoLaboralRulesTests'TestValidarReactivacion_CambioPermitido

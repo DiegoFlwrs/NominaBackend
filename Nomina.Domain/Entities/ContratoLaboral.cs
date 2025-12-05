@@ -10,10 +10,10 @@ namespace Nomina.Domain.Entities
     {
         public string ContratoCodigo { get; set; } = null!;
         public string EmpleadoCodigo { get; set; } = null!;
-        public string? TipoContratoCodigo { get; set; }
-        public string? ModalidadCodigo { get; set; }
-        public string? JornadaCodigo { get; set; }
-        public string? UsuarioCodigo { get; set; }
+        public string TipoContratoCodigo { get; set; } = null!;
+        public string ModalidadCodigo { get; set; } = null!;
+        public string JornadaCodigo { get; set; } = null!;
+        public string UsuarioCodigo { get; set; } = null!;
         public DateTime? ContratoFechaInicio { get; set; }
         public DateTime? ContratoFechaFin { get; set; }
         public decimal ContratoSalario { get; set; }

@@ -1,0 +1,1 @@
+ˆRrC:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Infrastructure\Nomina.Infrastructure.csproj¢net8.0òCSharp12

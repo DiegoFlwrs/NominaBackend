@@ -1,0 +1,39 @@
+﻿C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\ApiResponse.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\ContratoLaboralDTO.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\NominaPeriodo\ContratoDTO.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\NominaPeriodo\DepartamentoDTO.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\NominaPeriodo\NominaFiltroRequest.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\NominaPeriodo\NominaRequest.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\NominaPeriodo\PeriodoDTO.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\nuevaNominadto.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\ProcesarNominaRequest.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\registroContratoDTO.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\ReporteNominaRequest.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\DTOs\ReporteNominaResponse.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\Helpers\Helper.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\Helpers\PdfGeneratorHelper.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\interfaces\IContratoLaboralService.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\interfaces\INominaService.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\interfaces\IReporteNominaService.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\Services\ContratoLaboralService.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\Services\NominaService.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Application\Services\ReporteNominaService.cs
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Black.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-BlackItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Bold.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-BoldItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-ExtraBold.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-ExtraLight.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-ExtraLightItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Italic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Light.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-LightItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Medium.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-MediumItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Regular.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-SemiBold.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-SemiBoldItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-Thin.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\Lato-ThinItalic.ttf
+C:\Users\ACER NITRO 5\.nuget\packages\questpdf\2025.7.3\LatoFont\OFL.txt
