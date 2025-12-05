@@ -112,7 +112,6 @@ namespace Nomina.Application.Services
                 throw new BusinessException("El periodo aun no se puede procesar.");
             }
 
-            //OBTENGO PARAMETROS DEL SISTEMA
 
             var parametrosSistema = await _repository.ObtenerParametrosSistemaAsync();
             if (parametrosSistema == null)
