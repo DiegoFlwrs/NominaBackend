@@ -38,5 +38,6 @@ namespace Nomina.Domain.ReadModels
         public decimal SueldoNeto { get; set; }           // NominaSueldoNeto
         public string PeriodoInicio { get; set; }         // CONVERT(VARCHAR(10), P.PeriodoInicio, 103)
         public string PeriodoFin { get; set; }            // CONVERT(VARCHAR(10), P.PeriodoFin, 103)
+        public string PeriodoEstado { get; set; }
     }
 }
