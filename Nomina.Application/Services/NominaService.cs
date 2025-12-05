@@ -126,7 +126,6 @@ namespace Nomina.Application.Services
 
             var contratos = await _repository.ObtenerContratoAsync();
 
-            //TRAER CONTRATOS ACTIVOS Y VIGENTES
 
             var contratosVigentes = contratos.Where(c =>
                 c.ContratoEstado.Trim() == "A" &&
