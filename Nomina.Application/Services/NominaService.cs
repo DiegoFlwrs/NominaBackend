@@ -193,7 +193,6 @@ namespace Nomina.Application.Services
                 // RN11 -   calcualr Sueldo Neto
                 decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
 
-                //  RN12    -   
                 if (!ReglasNomina.ValidarSueldoMinimo(sueldoNeto, RMV))
                 {
                     throw new BusinessException(
