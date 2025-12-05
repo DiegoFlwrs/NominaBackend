@@ -6,27 +6,26 @@ using System.Threading.Tasks;
 
 namespace Nomina.Application.DTOs
 {
-    // View Model utilizado para enviar los datos de la nómina al Front-End (RN-02)
+    
     public class ReporteNominaResponse
     {
-        public string NominaCodigo { get; set; } = null!;
-        public string EmpleadoApellido { get; set; } = null!;
-        public string EmpleadoNombre { get; set; } = null!;
-        public string DepartamentoNombre { get; set; } = null!;
-        public string CargoNombre { get; set; } = null!;
-
-        public int PeriodoAnio { get; set; }
-        public int PeriodoMes { get; set; }
-
-        public decimal ContratoSalario { get; set; }
-        public decimal NominaHorasExtras { get; set; }
-        public decimal NominaBonificacion { get; set; }
-        public decimal NominaDescuentos { get; set; }
-
-        // RN-12: Sueldo Neto (puede ser decimal o string)
-        public decimal NominaSueldoNeto { get; set; }
-
-        public string NominaEstado { get; set; } = null!;
-        public DateTime NominaFechaProcesamiento { get; set; }
+        public string Codigo { get; set; }                // ContratoCodigo
+        public string Empleado { get; set; }              // Nombre completo
+        public DateTime fechaIngreso { get; set; }
+        public decimal SalarioBase { get; set; }          // ContratoSalario
+        public int HorasExtras { get; set; }              // NominaHorasExtras
+        public decimal MontoHorasExtras { get; set; }     // NominaMontoHorasExtras
+        public decimal Bonificacion { get; set; }         // NominaBonificacion
+        public decimal AsignacionFamiliar { get; set; }   // NominaAsignacionFamiliar
+        public decimal TotalIngresos { get; set; }        // NominaTotalIngresos
+        public decimal DescPension { get; set; }          // NominaDescuentoPension
+        public decimal IR5ta { get; set; }                // NominaDescuentoIR5ta
+        public decimal Essalud { get; set; }              // NominaAporteEssalud
+        public decimal OtrosDesc { get; set; }            // NominaOtrosDescuentos
+        public decimal TotalDescuentos { get; set; }      // NominaTotalDescuentos
+        public decimal SueldoNeto { get; set; }           // NominaSueldoNeto
+        public string PeriodoInicio { get; set; }         // CONVERT(VARCHAR(10), P.PeriodoInicio, 103)
+        public string PeriodoFin { get; set; }            // CONVERT(VARCHAR(10), P.PeriodoFin, 103)
+        public string PeriodoEstado { get; set; }
     }
 }
