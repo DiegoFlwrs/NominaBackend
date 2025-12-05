@@ -7,6 +7,7 @@ using Nomina.API.Exceptions;
 using Nomina.Domain.Constants;
 using Nomina.Application.DTOs.NominaPeriodo;
 using Nomina.Domain.ReadModels;
+using Nomina.Application.Helpers;
 
 namespace Nomina.Application.Services
 {
@@ -25,7 +26,7 @@ namespace Nomina.Application.Services
             return contrato;
         }
 
-        public async Task<string> RegistrarContrato(registroContratoDTO dto)
+        public async Task<string> RegistrarContrato(RegistroContratoDto dto)
         {
             var contrato = new ContratoLaboral
             {
@@ -52,7 +53,7 @@ namespace Nomina.Application.Services
             return "Contrato registrado exitosamente.";
         }
 
-        public async Task ModificarContrato(ContratoLaboralDTO dto)
+        public async Task ModificarContrato(ContratoLaboralDto dto)
         {
             var contrato = await _contratoRepository.ObtenerContrato(dto.ContratoCodigo);
             if (contrato == null)
@@ -94,7 +95,15 @@ namespace Nomina.Application.Services
             => await _contratoRepository.ListarContratosPorJornada();
 
         public async Task<IEnumerable<ContratoResumen>> ListarContratosPorEstado()
-            => await _contratoRepository.ListarContratosPorEstado();
+        {
+            var contratos = await _contratoRepository.ListarContratosPorEstado();
+
+            return contratos.Select(c => new ContratoResumen
+            {
+                Codigo = c.Codigo,
+                Descripcion = Helper.ObtenerDescripcionEstado(c.Descripcion) 
+            });
+        }
 
         public async Task RegistrarHistorial(HistorialContrato historial)
         {

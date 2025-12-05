@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nomina.Application.DTOs
 {
-    public class nuevaNominadto
+    public class NuevaNominaDto
     {
         public string ContratoCodigo { get; set; } = "";
         public string PeriodoCodigo { get; set; } = "";

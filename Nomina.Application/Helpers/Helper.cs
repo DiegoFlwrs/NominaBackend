@@ -8,7 +8,7 @@ namespace Nomina.Application.Helpers
 {
     public class Helper
     {
-        public string ObtenerNombreMes(int mes)
+        public static string ObtenerNombreMes(int mes)
         {
             return mes switch
             {
@@ -28,15 +28,24 @@ namespace Nomina.Application.Helpers
             };
         }
 
-        public string ObtenerNombreEstado(String estado)
+        public static string ObtenerNombreEstado(String estado)
         {
             return estado switch
             {
                 "A" => "ACTIVO",
-                "I" => "INACTIVO",
-                "P" => "PROCESADO"
+                "P" => "PROCESADO",
+                _ => "INACTIVO"
             };
         }
+
+        public static string ObtenerDescripcionEstado(string? estado) =>
+        estado switch
+        {
+            "A" => "Activo",
+            "I" => "Inactivo",
+            "S" => "Suspendido",
+            _ => "Finalizado"
+        };
 
     }
 }

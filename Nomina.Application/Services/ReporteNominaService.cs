@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nomina.Application.Helpers;
 using Nomina.API.Exceptions;
+using System.Globalization;
 
 namespace Nomina.Application.Services
 {
@@ -48,15 +49,15 @@ namespace Nomina.Application.Services
             );
 
 
-            if (reporteData == null || !reporteData.Any())
+            if (reporteData == null || reporteData.Count == 0)
             {
                 throw new BusinessException("No hay datos disponibles para generar el reporte PDF en el rango seleccionado.");
             }
 
-            var fechas = reporteData.FirstOrDefault();
+            var fechas = reporteData.First();
 
-            var fechaInicio = DateTime.ParseExact(fechas.PeriodoInicio, "dd/MM/yyyy", null);
-            var fechaFin = DateTime.ParseExact(fechas.PeriodoFin, "dd/MM/yyyy", null);
+            var fechaInicio = DateTime.ParseExact(fechas.PeriodoInicio,"dd/MM/yyyy",CultureInfo.InvariantCulture);
+            var fechaFin = DateTime.ParseExact(fechas.PeriodoFin, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
 
             return PdfGeneratorHelper.GenerarNominaPdf(reporteData.ToList(), fechaInicio, fechaFin);

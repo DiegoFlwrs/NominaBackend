@@ -2,7 +2,7 @@ using System;
 
 namespace Nomina.Application.DTOs
 {
-    public class ContratoLaboralDTO
+    public class ContratoLaboralDto
     {
         public string ContratoCodigo { get; set; } = string.Empty;
         public string EmpleadoCodigo { get; set; } = string.Empty;
@@ -14,6 +14,6 @@ namespace Nomina.Application.DTOs
         public DateTime? ContratoFechaFin { get; set; }
         public decimal ContratoSalario { get; set; }
         public string ContratoEstado { get; set; } = "A";
-        public string? Motivo { get; set; }
+        public string Motivo { get; set; } = null!;
     }
 }

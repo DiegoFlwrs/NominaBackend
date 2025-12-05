@@ -8,6 +8,6 @@ namespace Nomina.Application.DTOs.NominaPeriodo
 {
     public class NominaFiltroRequest
     {
-        public string CodigoPeriodo { get; set; }
+        public string? CodigoPeriodo { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace Nomina.Application.Services
     public class NominaService : INominaService
     {
         private readonly INominaRepository _repository;
-        public Helper helper = new Helper();
 
         public NominaService(INominaRepository repository)
         {
@@ -54,11 +53,11 @@ namespace Nomina.Application.Services
             return mesesDistintos;
         }
 
-        public async Task<IEnumerable<DepartamentoDTO>> ObtenerDepartamentosAsync()
+        public async Task<IEnumerable<DepartamentoDto>> ObtenerDepartamentosAsync()
         {
             var departamentos = await _repository.ObtenerDepartamentosAsync();
 
-            var resultado = departamentos.Select(t => new DepartamentoDTO
+            var resultado = departamentos.Select(t => new DepartamentoDto
             {
                 DepartamentoCodigo = t.DepartamentoCodigo,
                 DepartamentoNombre = t.DepartamentoNombre
@@ -67,28 +66,28 @@ namespace Nomina.Application.Services
             return resultado;
         }
 
-        public async Task<IEnumerable<PeriodoDTO>> ObtenerPeriodoAsync()
+        public async Task<IEnumerable<PeriodoDto>> ObtenerPeriodoAsync()
         {
             var periodos = await _repository.ObtenerPeriodosAsync();
 
-            var resultado = periodos.Select(t => new PeriodoDTO
+            var resultado = periodos.Select(t => new PeriodoDto
             {
-                PeriodoCodigo = t.PeriodoCodigo.Trim(),
-                PeriodoDescripcion = t.PeriodoAnio + " - " + helper.ObtenerNombreMes(t.PeriodoMes) + " (" + helper.ObtenerNombreEstado(t.PeriodoEstado) + ") ",
-                PeriodoEstado = t.PeriodoEstado
+                PeriodoCodigo = t.PeriodoCodigo!.Trim(),
+                PeriodoDescripcion = t.PeriodoAnio + " - " + Helper.ObtenerNombreMes(t.PeriodoMes) + " (" + Helper.ObtenerNombreEstado(t.PeriodoEstado!) + ") ",
+                PeriodoEstado = t.PeriodoEstado!
             });
 
             return resultado;
         }
 
-        public async Task<IEnumerable<ContratoDTO>> ObtenerContratoAsync()
+        public async Task<IEnumerable<ContratoDto>> ObtenerContratoAsync()
         {
             var contratos = await _repository.ObtenerContratoAsync();
 
-            var resultado = contratos.Select(t => new ContratoDTO
+            var resultado = contratos.Select(t => new ContratoDto
             {
                 ContratoCodigo = t.ContratoCodigo.Trim(),
-                EmpleadoDescripcion = t.ContratoCodigo.Trim() + " - " + t.Empleado.EmpleadoNombre + " " + t.Empleado.EmpleadoApellido
+                EmpleadoDescripcion = t.ContratoCodigo.Trim() + " - " + t.Empleado!.EmpleadoNombre + " " + t.Empleado.EmpleadoApellido
             });
 
             return resultado;
@@ -99,7 +98,7 @@ namespace Nomina.Application.Services
         {
             //VALIDACION DE PERIODOS
             var periodos = await _repository.ObtenerPeriodosAsync();
-            var periodo = periodos.FirstOrDefault(p => p.PeriodoCodigo.Trim() == request.PeriodoCodigo);
+            var periodo = periodos.FirstOrDefault(p => p.PeriodoCodigo!.Trim() == request.PeriodoCodigo);
             var hoy = DateTime.Now.Date;
 
             if (periodo == null)
@@ -139,12 +138,12 @@ namespace Nomina.Application.Services
                 c.ContratoFechaFin.Value >= hoy
             ).ToList();
 
-            if (!contratosVigentes.Any())
+            if (contratosVigentes.Count == 0)
             {
                 throw new BusinessException("No se encontraron contratos vigentes para generar la nómina.");
             }
 
-            var nominasGeneradas = new List<nuevaNominadto>(); 
+            var nominasGeneradas = new List<NuevaNominaDto>(); 
 
             foreach (var contrato in contratosVigentes)
             {
@@ -153,7 +152,7 @@ namespace Nomina.Application.Services
                 //RN01  -   obtener sueldo basico segun su contrato
 
                 //RN02  -   Asginacion Familiar
-                decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(empleado.EmpleadoTieneHijos ?? false, RMV);
+                decimal asignacionFamiliar = ReglasNomina.CalcularAsignacionFamiliar(empleado!.EmpleadoTieneHijos ?? false, RMV);
 
                 var conceptos = await _repository.ObtenerConceptosPorContratoYPeriodoAsync(
                     contrato.ContratoCodigo, request.PeriodoCodigo);
@@ -194,8 +193,6 @@ namespace Nomina.Application.Services
                 // RN10 -   Descuento Adicionales
                 decimal totalDescuentos = ReglasNomina.CalcularTotalDescuentosAdicionales(descuentoEssalud, descuentoPension, rentaQuinta, descuentosAdicionales);
 
-                //decimal totalDescuentos = descuentoPension + rentaQuinta + otrosDescuentos;
-
                 // RN11 -   calcualr Sueldo Neto
                 decimal sueldoNeto = ReglasNomina.CalcularSueldoNeto(totalIngresos, totalDescuentos);
 
@@ -206,7 +203,7 @@ namespace Nomina.Application.Services
                         $"El sueldo neto de {empleado.EmpleadoNombre} es menor a la remuneración mínima vital vigente.");
                 }
 
-                nominasGeneradas.Add(new nuevaNominadto
+                nominasGeneradas.Add(new NuevaNominaDto
                 {
                     ContratoCodigo = contrato.ContratoCodigo,
                     PeriodoCodigo = request.PeriodoCodigo,

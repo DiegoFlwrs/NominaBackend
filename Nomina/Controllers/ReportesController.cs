@@ -7,84 +7,88 @@ using System.Threading.Tasks;
 using System.Linq;
 using Nomina.Application.DTOs;
 
-[Route("api/[controller]")]
-[ApiController]
-public class ReportesController : ControllerBase
+namespace Nomina.API.Controllers
 {
-    private readonly IReporteNominaService _reporteService;
 
-    public ReportesController(IReporteNominaService reporteService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ReportesController : ControllerBase
     {
-        _reporteService = reporteService;
-    }
+        private readonly IReporteNominaService _reporteService;
 
-    [HttpGet("nomina")]
-    [ProducesResponseType(typeof(List<ReporteNominaView>), 200)]
-    public async Task<IActionResult> GenerarReporteNomina(
-        [FromQuery] string? PeriodoCodigo,
-        [FromQuery] string? departamentoCodigo,
-        [FromQuery] string? cargoCodigo,
-        [FromQuery] string? tipoContratoCodigo)
-    {
-        try
+        public ReportesController(IReporteNominaService reporteService)
         {
-            var reporte = await _reporteService.GenerarReporteAsync(
-                PeriodoCodigo,
-                departamentoCodigo,
-                cargoCodigo,
-                tipoContratoCodigo
-            );
-
-            return Ok(reporte);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { success = false, message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { success = false, message = $"Error al obtener el reporte: {ex.Message}" });
-        }
-    }
-
-    [HttpPost("nomina/pdf")]
-    [ProducesResponseType(typeof(FileResult), 200)]
-    public async Task<IActionResult> GenerarReporteNominaPdf(
-        [FromBody] ReporteNominaRequest request)
-    {
-        var PeriodoCodigo = request.PeriodoCodigo;
-        var departamentoCodigo = request.DepartamentoCodigo;
-        var cargoCodigo = request.CargoCodigo;
-        var tipoContratoCodigo = request.TipoContratoCodigo;
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
+            _reporteService = reporteService;
         }
 
-        try
+        [HttpGet("nomina")]
+        [ProducesResponseType(typeof(List<ReporteNominaView>), 200)]
+        public async Task<IActionResult> GenerarReporteNomina(
+            [FromQuery] string? PeriodoCodigo,
+            [FromQuery] string? departamentoCodigo,
+            [FromQuery] string? cargoCodigo,
+            [FromQuery] string? tipoContratoCodigo)
         {
-            byte[] pdfBytes = await _reporteService.GenerarReportePdfAsync(
-                PeriodoCodigo,
-                departamentoCodigo,
-                cargoCodigo,
-                tipoContratoCodigo
-            );
-            string nombreArchivo = $"Reporte Nomina {DateTime.Now:dd-MM-yy}.pdf";
+            try
+            {
+                var reporte = await _reporteService.GenerarReporteAsync(
+                    PeriodoCodigo,
+                    departamentoCodigo,
+                    cargoCodigo,
+                    tipoContratoCodigo
+                );
 
-            return File(pdfBytes, "application/pdf", nombreArchivo);
+                return Ok(reporte);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = $"Error al obtener el reporte: {ex.Message}" });
+            }
         }
-        catch (ArgumentException ex)
+
+        [HttpPost("nomina/pdf")]
+        [ProducesResponseType(typeof(FileResult), 200)]
+        public async Task<IActionResult> GenerarReporteNominaPdf(
+            [FromBody] ReporteNominaRequest request)
         {
-            return BadRequest(new { success = false, message = ex.Message });
-        }
-        catch (InvalidOperationException ex)
-        {
-            return NotFound(new { success = false, message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { success = false, message = $"Error al generar el PDF: {ex.Message}" });
+            var PeriodoCodigo = request.PeriodoCodigo;
+            var departamentoCodigo = request.DepartamentoCodigo;
+            var cargoCodigo = request.CargoCodigo;
+            var tipoContratoCodigo = request.TipoContratoCodigo;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                byte[] pdfBytes = await _reporteService.GenerarReportePdfAsync(
+                    PeriodoCodigo,
+                    departamentoCodigo,
+                    cargoCodigo,
+                    tipoContratoCodigo
+                );
+                string nombreArchivo = $"Reporte Nomina {DateTime.Now:dd-MM-yy}.pdf";
+
+                return File(pdfBytes, "application/pdf", nombreArchivo);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = $"Error al generar el PDF: {ex.Message}" });
+            }
         }
     }
 }

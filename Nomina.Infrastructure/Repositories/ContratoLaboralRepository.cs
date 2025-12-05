@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Nomina.API.Exceptions;
 using Nomina.Domain.Entities;
+using Nomina.Domain.Exceptions;
 using Nomina.Domain.Interfaces;
 using Nomina.Domain.ReadModels;
 using Nomina.Domain.Rules;
@@ -41,7 +42,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
         public async Task InsertarContrato(ContratoLaboral contrato)
@@ -69,11 +70,11 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                throw new Exception($"Error al insertar el contrato laboral: {ex.Message}", ex);
+                throw new DatabaseException($"Error al insertar el contrato laboral: {ex.Message}");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error inesperado al insertar el contrato laboral: {ex.Message}", ex);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
         public async Task ModificarContrato(ContratoLaboral contrato, string motivo)
@@ -119,11 +120,11 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                throw new Exception($"Error al modificar el contrato laboral: {ex.Message}", ex);
+                throw new DatabaseException($"Error al modificar el contrato laboral: {ex.Message}");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error inesperado al modificar el contrato laboral: {ex.Message}", ex);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -136,11 +137,11 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (SqlException ex)
             {
-                throw new Exception($"Error al eliminar el contrato laboral: {ex.Message}", ex);
+                throw new DatabaseException($"Error al eliminar el contrato laboral: {ex.Message}");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error inesperado al eliminar el contrato laboral: {ex.Message}", ex);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
         public async Task<bool> ExisteContratoVigente(string empleadoCodigo)
@@ -247,11 +248,7 @@ namespace Nomina.Infrastructure.Repositories
                 .Select(c => new ContratoResumen
                 {
                     Codigo = (c.ContratoEstado ?? string.Empty).Trim(),
-                    Descripcion =
-                        c.ContratoEstado == "A" ? "Activo" :
-                        c.ContratoEstado == "I" ? "Inactivo" :
-                        c.ContratoEstado == "S" ? "Suspendido" :
-                        "Finalizado"
+                    Descripcion = c.ContratoEstado
                 })
                 .Distinct()
                 .OrderBy(cr => cr.Descripcion)

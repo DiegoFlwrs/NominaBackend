@@ -72,7 +72,6 @@ namespace Nomina.Application.Helpers
 
                             foreach (var item in data)
                             {
-                                string fechaIngresoFormato = item.fechaIngreso.ToString("dd/MM/yyyy");
                                 string formatoMoneda = "N2";
 
                                 table.Cell().BorderBottom(1).Padding(5).Text(item.Codigo);

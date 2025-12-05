@@ -11,60 +11,81 @@ namespace Nomina.API.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.Result is ObjectResult objectResult &&
-                objectResult.StatusCode >= 200 && objectResult.StatusCode < 300)
+            if (!IsSuccessResponse(context.Result))
+                return;
+
+            var objectResult = (ObjectResult)context.Result!;
+
+            if (objectResult.Value is ApiResponse<object>)
+                return;
+
+            var (data, totalRows) = ExtractDataAndTotalRows(objectResult.Value);
+
+            var response = BuildResponse(
+                statusCode: objectResult.StatusCode ?? 200,
+                message: data is string messageStr ? messageStr : "Operación exitosa",
+                data: data,
+                totalRows: totalRows
+            );
+
+            context.Result = new ContentResult
             {
-                // Evitar procesar respuestas ya formateadas
-                if (objectResult.Value is ApiResponse<object>)
-                    return;
+                StatusCode = objectResult.StatusCode,
+                ContentType = "application/json",
+                Content = JsonSerializer.Serialize(response)
+            };
+        }
 
-                object? data = objectResult.Value;
-                int totalRows = 0;
+        private static bool IsSuccessResponse(object? result)
+        {
+            return result is ObjectResult obj &&
+                   obj.StatusCode is >= 200 and < 300;
+        }
 
-                // Determinar el mensaje base
-                string message = data is string strMessage
-                    ? strMessage
-                    : "Operación exitosa";
+        private static (object? Data, int TotalRows) ExtractDataAndTotalRows(object? value)
+        {
+            if (value is null or string)
+                return (value, 0);
 
-                // Si el objeto tiene propiedades tipo "data" y "totalRows"
-                if (data is not null && data.GetType() != typeof(string))
-                {
-                    var tipo = data.GetType();
-                    var totalRowsProp = tipo.GetProperty("totalRows", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-                    if (totalRowsProp != null)
-                    {
-                        totalRows = (int)(totalRowsProp.GetValue(data) ?? 0);
-                        var dataProp = tipo.GetProperty("data", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-                        if (dataProp != null)
-                        {
-                            data = dataProp.GetValue(data);
-                        }
-                    }
-                }
+            var type = value.GetType();
 
-                // Construir la respuesta base
-                var responseDict = new Dictionary<string, object?>
-                {
-                    ["statusCode"] = objectResult.StatusCode ?? 200,
-                    ["success"] = true,
-                    ["message"] = message
-                };
+            var totalProp = type.GetProperty("totalRows",
+                System.Reflection.BindingFlags.IgnoreCase |
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance);
 
-                // Agregar data solo si no es texto
-                if (data is not null && data.GetType() != typeof(string))
-                {
-                    responseDict["data"] = data;
-                    responseDict["TotalRows"] = totalRows;
-                }
+            int totalRows = totalProp?.GetValue(value) as int? ?? 0;
 
-                // Devolver el resultado final formateado
-                context.Result = new ContentResult
-                {
-                    StatusCode = objectResult.StatusCode,
-                    ContentType = "application/json",
-                    Content = JsonSerializer.Serialize(responseDict)
-                };
+            var dataProp = type.GetProperty("data",
+                System.Reflection.BindingFlags.IgnoreCase |
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance);
+
+            var data = dataProp?.GetValue(value) ?? value;
+
+            return (data, totalRows);
+        }
+
+        private static Dictionary<string, object?> BuildResponse(
+            int statusCode,
+            string message,
+            object? data,
+            int totalRows)
+        {
+            var response = new Dictionary<string, object?>
+            {
+                ["statusCode"] = statusCode,
+                ["success"] = true,
+                ["message"] = message
+            };
+
+            if (data is not null and not string)
+            {
+                response["data"] = data;
+                response["TotalRows"] = totalRows;
             }
+
+            return response;
         }
     }
 }

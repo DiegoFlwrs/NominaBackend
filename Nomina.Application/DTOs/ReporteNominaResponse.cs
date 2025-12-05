@@ -9,11 +9,11 @@ namespace Nomina.Application.DTOs
     // View Model utilizado para enviar los datos de la nómina al Front-End (RN-02)
     public class ReporteNominaResponse
     {
-        public string NominaCodigo { get; set; } = string.Empty;
-        public string EmpleadoApellido { get; set; } = string.Empty;
-        public string EmpleadoNombre { get; set; } = string.Empty;
-        public string DepartamentoNombre { get; set; } = string.Empty;
-        public string CargoNombre { get; set; } = string.Empty;
+        public string NominaCodigo { get; set; } = null!;
+        public string EmpleadoApellido { get; set; } = null!;
+        public string EmpleadoNombre { get; set; } = null!;
+        public string DepartamentoNombre { get; set; } = null!;
+        public string CargoNombre { get; set; } = null!;
 
         public int PeriodoAnio { get; set; }
         public int PeriodoMes { get; set; }
@@ -26,7 +26,7 @@ namespace Nomina.Application.DTOs
         // RN-12: Sueldo Neto (puede ser decimal o string)
         public decimal NominaSueldoNeto { get; set; }
 
-        public string NominaEstado { get; set; } = string.Empty;
+        public string NominaEstado { get; set; } = null!;
         public DateTime NominaFechaProcesamiento { get; set; }
     }
 }

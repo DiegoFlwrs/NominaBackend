@@ -24,13 +24,13 @@ namespace Nomina.API.Controllers
             return Ok(contratos);
         }
         [HttpPost("Registrar")]
-        public async Task<IActionResult> Registrar([FromBody] registroContratoDTO request)
+        public async Task<IActionResult> Registrar([FromBody] RegistroContratoDto request)
         {
             var resultado = await _contratoService.RegistrarContrato(request);
             return Ok(resultado);
         }
         [HttpPut("Actualizar")]
-        public async Task<IActionResult> PutContrato(string contratoCodigo, [FromBody] ContratoLaboralDTO dto)
+        public async Task<IActionResult> PutContrato(string contratoCodigo, [FromBody] ContratoLaboralDto dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(contratoCodigo))
                 return BadRequest("Datos inválidos.");

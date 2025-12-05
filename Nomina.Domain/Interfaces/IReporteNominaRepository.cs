@@ -12,9 +12,9 @@ namespace Nomina.Domain.Interfaces
         
         Task<List<ReporteNominaView>> ObtenerReporteNominaAsync(
             string? PeriodoCodigo = null,
-            string departamentoCodigo = null, 
-            string cargoCodigo = null,       
-            string tipoContratoCodigo = null 
+            string? departamentoCodigo = null, 
+            string? cargoCodigo = null,       
+            string? tipoContratoCodigo = null 
         );
     }
 }

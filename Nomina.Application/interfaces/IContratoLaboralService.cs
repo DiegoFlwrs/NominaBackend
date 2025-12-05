@@ -10,8 +10,8 @@ namespace Nomina.Application.Interfaces
     {
         Task<IEnumerable<ContratoView>> ConsultarContratos();
         Task<ContratoLaboral> ObtenerContrato(string codigo);
-        Task<string> RegistrarContrato(registroContratoDTO dto);
-        Task ModificarContrato(ContratoLaboralDTO dto);
+        Task<string> RegistrarContrato(RegistroContratoDto dto);
+        Task ModificarContrato(ContratoLaboralDto dto);
         Task EliminarContrato(string contratoCodigo);
         Task RegistrarHistorial(HistorialContrato historial);
         Task SuspenderContrato(string contratoCodigo, string nuevoEstado, string motivo);

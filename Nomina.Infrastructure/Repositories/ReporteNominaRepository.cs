@@ -31,9 +31,9 @@ namespace Nomina.Infrastructure.Repositories
             var parameters = new DynamicParameters();
 
             parameters.Add("@PeriodoCodigo", PeriodoCodigo);
-            parameters.Add("@DepartamentoCodigo", (object)departamentoCodigo ?? DBNull.Value, DbType.String, size: 10);
-            parameters.Add("@CargoCodigo", (object)cargoCodigo ?? DBNull.Value, DbType.String, size: 10);
-            parameters.Add("@TipoContratoCodigo", (object)tipoContratoCodigo ?? DBNull.Value, DbType.String, size: 10);
+            parameters.Add("@DepartamentoCodigo", departamentoCodigo);
+            parameters.Add("@CargoCodigo", cargoCodigo);
+            parameters.Add("@TipoContratoCodigo", tipoContratoCodigo);
 
             using (var connection = new SqlConnection(_connectionString))
             {
