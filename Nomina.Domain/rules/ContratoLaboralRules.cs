@@ -80,10 +80,11 @@ namespace Nomina.Domain.Rules
 
         public static void ValidarFechas(ContratoLaboral contrato)
         {
-            if (contrato.ContratoFechaInicio.HasValue && contrato.ContratoFechaFin.HasValue)
+            if (contrato.ContratoFechaInicio.HasValue &&
+                contrato.ContratoFechaFin.HasValue &&
+                contrato.ContratoFechaFin <= contrato.ContratoFechaInicio) 
             {
-                if (contrato.ContratoFechaFin <= contrato.ContratoFechaInicio)
-                    throw new BusinessException("La fecha de fin debe ser mayor que la fecha de inicio.");
+                throw new BusinessException("La fecha de fin debe ser mayor que la fecha de inicio.");
             }
         }
 

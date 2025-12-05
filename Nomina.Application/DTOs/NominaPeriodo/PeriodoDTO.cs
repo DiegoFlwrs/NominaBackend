@@ -8,8 +8,8 @@ namespace Nomina.Application.DTOs.NominaPeriodo
 {
     public class PeriodoDTO
     {
-        public string PeriodoCodigo { get; set; }
-        public string PeriodoDescripcion { get; set; }
-        public string PeriodoEstado{ get; set; }
+        public string PeriodoCodigo { get; set; } = null!;
+        public string PeriodoDescripcion { get; set; } = null!;
+        public string PeriodoEstado{ get; set; } = null!;
     }
 }

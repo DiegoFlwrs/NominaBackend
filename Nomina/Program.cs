@@ -33,8 +33,6 @@ if (string.IsNullOrWhiteSpace(connectionString))
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
-
-builder.Services.AddScoped<iTrabajadorRepository>(sp => new TrabajadorRepository(connectionString));
 builder.Services.AddScoped<IReporteNominaRepository, ReporteNominaRepository>(provider =>
     new ReporteNominaRepository(connectionString));
 builder.Services.AddScoped<INominaRepository>(sp =>
@@ -49,10 +47,8 @@ builder.Services.AddScoped<IContratoLaboralRepository>(sp =>
     return new ContratoLaboralRepository(context, connectionString);
 });
 
-//builder.Services.AddScoped<IContratoLaboralRepository, ContratoLaboralRepository>();
 builder.Services.AddScoped<IContratoLaboralService, ContratoLaboralService>(); 
 
-builder.Services.AddScoped<ITrabajadorService, TrabajadorService>();
 builder.Services.AddScoped<INominaService, NominaService>();
 builder.Services.AddScoped<IReporteNominaService, ReporteNominaService>();
 
@@ -75,7 +71,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAnyOrigin");
-//app.UseExceptionHandler("/error");
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
