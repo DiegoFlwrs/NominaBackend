@@ -22,7 +22,6 @@ namespace Nomina.Infrastructure.Repositories
             _context = context;
             _connectionString = connectionString;
         }
-
         public async Task<IEnumerable<ContratoView>> ConsultarContratosAsync()
         {
             try
