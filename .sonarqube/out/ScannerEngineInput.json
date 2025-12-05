@@ -1,0 +1,260 @@
+{
+  "scannerProperties": [
+    {
+      "key": "sonar.scanner.app",
+      "value": "ScannerMSBuild"
+    },
+    {
+      "key": "sonar.scanner.appVersion",
+      "value": "11.0"
+    },
+    {
+      "key": "sonar.scanner.bootstrapStartTime",
+      "value": "1764913829000"
+    },
+    {
+      "key": "sonar.projectKey",
+      "value": "Version02"
+    },
+    {
+      "key": "sonar.working.directory",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\.sonar"
+    },
+    {
+      "key": "sonar.projectBaseDir",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend"
+    },
+    {
+      "key": "sonar.pullrequest.cache.basepath",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend"
+    },
+    {
+      "key": "sonar.sources",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.vs\\Nomina\\config\\applicationhost.config,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.vs\\Nomina\\v17\\DocumentLayout.backup.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.vs\\Nomina\\v17\\DocumentLayout.json"
+    },
+    {
+      "key": "sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "sonar.modules",
+      "value": "CAC552E8-AE90-402E-87DC-4B98266C0957,3D9CD1A4-02A8-4160-95BF-DDD8B20B662D,3A862E2D-C9A2-456E-BDAB-DEA409C12AB8,79370A87-5760-4338-8EAC-367594E26F39,E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.projectKey",
+      "value": "Version02:CAC552E8-AE90-402E-87DC-4B98266C0957"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.projectName",
+      "value": "Nomina.Domain"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.projectBaseDir",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.working.directory",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\.sonar\\mod0"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.sources",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Constants\\ValidacionesContrato.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\Cargo.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\ConceptoNomina.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\ContratoLaboral.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\ContratoResumen.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\Departamento.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\DescuentoAdicional.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\Empleado.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\EventoContrato.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\HistorialContrato.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\HistorialDetalle.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\JornadaLaboral.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\ModalidadPago.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\Nominas.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\ParametroSistema.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\PeriodoNomina.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\ResumenEmpleado.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\TipoContrato.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Entities\\Usuario.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Exceptions\\AppException.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Exceptions\\BusinessException.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Exceptions\\DatabaseException.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Exceptions\\NotFoundException.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Interfaces\\IContratoLaboralRepository.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Interfaces\\INominaRepository.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\Interfaces\\IReporteNominaRepository.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\ReadModels\\ContratoView.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\ReadModels\\NominaView.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\ReadModels\\ReporteNominaView.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\rules\\ContratoLaboralRules.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\rules\\ReglasNomina.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\obj\\Nomina.Domain.csproj.nuget.dgspec.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\obj\\project.assets.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\bin\\Debug\\net8.0\\Nomina.Domain.deps.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Domain\\obj\\Debug\\net8.0\\Nomina.Domain.sourcelink.json"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\0,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\5"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\0\\Issues.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\5\\Issues.json"
+    },
+    {
+      "key": "CAC552E8-AE90-402E-87DC-4B98266C0957.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\0\\Telemetry.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\5\\Telemetry.json"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.projectKey",
+      "value": "Version02:3D9CD1A4-02A8-4160-95BF-DDD8B20B662D"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.projectName",
+      "value": "Nomina.Application"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.projectBaseDir",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.working.directory",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\.sonar\\mod1"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.sources",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\obj\\Nomina.Application.csproj.nuget.dgspec.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\obj\\project.assets.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\bin\\Debug\\net8.0\\Nomina.Application.deps.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\obj\\Debug\\net8.0\\Nomina.Application.sourcelink.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\ApiResponse.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\ContratoLaboralDTO.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\NominaPeriodo\\ContratoDTO.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\NominaPeriodo\\DepartamentoDTO.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\NominaPeriodo\\NominaFiltroRequest.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\NominaPeriodo\\NominaRequest.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\NominaPeriodo\\PeriodoDTO.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\nuevaNominadto.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\ProcesarNominaRequest.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\registroContratoDTO.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\ReporteNominaRequest.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\DTOs\\ReporteNominaResponse.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\Helpers\\Helper.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\Helpers\\PdfGeneratorHelper.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\interfaces\\IContratoLaboralService.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\interfaces\\INominaService.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\interfaces\\IReporteNominaService.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\Services\\ContratoLaboralService.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\Services\\NominaService.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Application\\Services\\ReporteNominaService.cs"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\1"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\1\\Issues.json"
+    },
+    {
+      "key": "3D9CD1A4-02A8-4160-95BF-DDD8B20B662D.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\1\\Telemetry.json"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.projectKey",
+      "value": "Version02:3A862E2D-C9A2-456E-BDAB-DEA409C12AB8"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.projectName",
+      "value": "Nomina.Test"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.projectBaseDir",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.working.directory",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\.sonar\\mod2"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.sources",
+      "value": ""
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.tests",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\obj\\Nomina.Test.csproj.nuget.dgspec.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\obj\\project.assets.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\bin\\Debug\\net8.0\\Nomina.Test.deps.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\bin\\Debug\\net8.0\\Nomina.Test.runtimeconfig.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\obj\\Debug\\net8.0\\Nomina.Test.sourcelink.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\Properties\\AssemblyInfo.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\Pruebas\\ContratoLaboralRulesTests.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Test\\Pruebas\\ReglasNominaTests.cs"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\2,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\6"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\2\\Issues.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\6\\Issues.json"
+    },
+    {
+      "key": "3A862E2D-C9A2-456E-BDAB-DEA409C12AB8.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\2\\Telemetry.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\6\\Telemetry.json"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.projectKey",
+      "value": "Version02:79370A87-5760-4338-8EAC-367594E26F39"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.projectName",
+      "value": "Nomina.Infrastructure"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.projectBaseDir",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.working.directory",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\.sonar\\mod3"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.sources",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\obj\\Nomina.Infrastructure.csproj.nuget.dgspec.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\obj\\project.assets.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\bin\\Debug\\net8.0\\Nomina.Infrastructure.deps.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\obj\\Debug\\net8.0\\Nomina.Infrastructure.sourcelink.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\Persistence\\AppDbContext.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\Repositories\\ContratoLaboralRepository.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\Repositories\\NominaRepository.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina.Infrastructure\\Repositories\\ReporteNominaRepository.cs"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\3"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\3\\Issues.json"
+    },
+    {
+      "key": "79370A87-5760-4338-8EAC-367594E26F39.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\3\\Telemetry.json"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.projectKey",
+      "value": "Version02:E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.projectName",
+      "value": "Nomina.API"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.projectBaseDir",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.working.directory",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\.sonar\\mod4"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.sources",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\appsettings.Development.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\appsettings.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Nomina.API.csproj.nuget.dgspec.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\project.assets.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Properties\\launchSettings.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\bin\\Debug\\net8.0\\appsettings.Development.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\bin\\Debug\\net8.0\\appsettings.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\bin\\Debug\\net8.0\\Nomina.API.deps.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\bin\\Debug\\net8.0\\Nomina.API.runtimeconfig.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\bin\\Debug\\net8.0\\Nomina.API.staticwebassets.endpoints.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\ApiEndpoints.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\Nomina.API.sourcelink.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\rjsmcshtml.dswa.cache.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\rjsmrazor.dswa.cache.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\rpswa.dswa.cache.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\staticwebassets.build.endpoints.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\staticwebassets.build.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\EndpointInfo\\Nomina.API.json,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Controllers\\ContratosLaboralesController.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Controllers\\NominaController.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Controllers\\ReportesController.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Filters\\ApiResponseFilter.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Middleware\\ErrorHandlerMiddleware.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\Program.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\Nomina.API.GlobalUsings.g.cs,\"C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs\",C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\Nomina.API.AssemblyInfo.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\obj\\Debug\\net8.0\\Nomina.API.MvcApplicationPartsAssemblyInfo.cs,C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\Nomina\\git"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.cs.analyzer.projectOutPaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\4"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.cs.roslyn.reportFilePaths",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\4\\Issues.json"
+    },
+    {
+      "key": "E2E6E6E9-D101-4C5D-AA00-2EF6E5D47BDB.sonar.cs.scanner.telemetry",
+      "value": "C:\\Users\\ACER NITRO 5\\Desktop\\Calidad de Software\\NominaBackend\\.sonarqube\\out\\4\\Telemetry.json"
+    },
+    {
+      "key": "sonar.token",
+      "value": "***"
+    },
+    {
+      "key": "sonar.host.url",
+      "value": "http://localhost:9000"
+    },
+    {
+      "key": "sonar.coverage.exclusions",
+      "value": "**/Nomina.Domain/**,**/Nomina.Infrastructure/Persistence/**"
+    },
+    {
+      "key": "sonar.visualstudio.enable",
+      "value": "false"
+    }
+  ]
+}

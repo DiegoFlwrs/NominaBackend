@@ -1,0 +1,932 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Compilador de Microsoft (R) Visual C#",
+        "version": "4.14.0.0",
+        "fileVersion": "4.14.0-3.25465.8 (b0a9adbf)",
+        "semanticVersion": "4.14.0",
+        "language": "es-ES"
+      },
+      "results": [
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Cargos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 29,
+                  "endLine": 14,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Departamentos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 36,
+                  "endLine": 15,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Empleados\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 32,
+                  "endLine": 16,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"JornadasLaborales\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 38,
+                  "endLine": 17,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ModalidadesPago\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 37,
+                  "endLine": 18,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"TiposContrato\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 36,
+                  "endLine": 19,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Usuarios\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 31,
+                  "endLine": 20,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ContratosLaborales\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 39,
+                  "endLine": 21,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"EventosContrato\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 22,
+                  "startColumn": 38,
+                  "endLine": 22,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"HistorialContratos\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 41,
+                  "endLine": 23,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"PeriodosNomina\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 37,
+                  "endLine": 24,
+                  "endColumn": 51
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"Nominas\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 31,
+                  "endLine": 25,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"DescuentosAdicionales\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 42,
+                  "endLine": 26,
+                  "endColumn": 63
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ParametrosSistema\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 40,
+                  "endLine": 27,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ConceptosNomina\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 38,
+                  "endLine": 28,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "El elemento propiedad \"ContratosResumen\" que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required'\"o declarar el propiedad como un valor que acepta valores NULL.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 16,
+                  "endLine": 8,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Persistence/AppDbContext.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 40,
+                  "endLine": 29,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'APP_ERROR: ' 12 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 40,
+                  "endLine": 51,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 67,
+                  "startColumn": 40,
+                  "endLine": 67,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 79,
+                  "startColumn": 40,
+                  "endLine": 79,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 40,
+                  "endLine": 93,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 138,
+                  "startColumn": 40,
+                  "endLine": 138,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 153,
+                  "startColumn": 40,
+                  "endLine": 153,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 172,
+                  "startColumn": 40,
+                  "endLine": 172,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 185,
+                  "startColumn": 40,
+                  "endLine": 185,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 202,
+                  "startColumn": 40,
+                  "endLine": 202,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 216,
+                  "startColumn": 40,
+                  "endLine": 216,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 229,
+                  "startColumn": 40,
+                  "endLine": 229,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/NominaRepository.cs",
+                "region": {
+                  "startLine": 241,
+                  "startColumn": 40,
+                  "endLine": 241,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "10": null,
+              "2": null,
+              "3": null,
+              "4": null,
+              "5": null,
+              "6": null,
+              "7": null,
+              "8": null,
+              "9": null
+            }
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'APP_ERROR: ' 4 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 40,
+                  "endLine": 45,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 40,
+                  "endLine": 77,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 127,
+                  "startColumn": 40,
+                  "endLine": 127,
+                  "endColumn": 53
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 144,
+                  "startColumn": 40,
+                  "endLine": 144,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null
+            }
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal '@ContratoCodigo' 5 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 38,
+                  "endLine": 55,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 86,
+                  "startColumn": 38,
+                  "endLine": 86,
+                  "endColumn": 55
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 135,
+                  "startColumn": 50,
+                  "endLine": 135,
+                  "endColumn": 67
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 172,
+                  "startColumn": 34,
+                  "endLine": 172,
+                  "endColumn": 51
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/ACER%20NITRO%205/Desktop/Calidad%20de%20Software/NominaBackend/Nomina.Infrastructure/Repositories/ContratoLaboralRepository.cs",
+                "region": {
+                  "startLine": 314,
+                  "startColumn": 30,
+                  "endLine": 314,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null,
+              "3": null
+            }
+          }
+        }
+      ],
+      "rules": {
+        "CS8618": {
+          "id": "CS8618",
+          "shortDescription": "Un campo que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de agregar el modificador \"required\" o declararlo como un valor que acepta valores NULL.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8618)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "S1192": {
+          "id": "S1192",
+          "shortDescription": "String literals should not be duplicated",
+          "fullDescription": "Duplicated string literals make the process of refactoring complex and error-prone, as any change would need to be propagated on all occurrences.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1192",
+          "properties": {
+            "category": "Minor Code Smell",
+            "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

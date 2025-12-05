@@ -1,0 +1,15 @@
+﻿C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Test\Properties\AssemblyInfo.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Test\Pruebas\ContratoLaboralRulesTests.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Test\Pruebas\ReglasNominaTests.cs
+C:\Users\ACER NITRO 5\.nuget\packages\microsoft.net.test.sdk\16.11.0\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.Program.cs
+C:\Users\ACER NITRO 5\.nuget\packages\microsoft.testplatform.testhost\16.11.0\build\netcoreapp2.1\x64\testhost.exe
+C:\Users\ACER NITRO 5\.nuget\packages\microsoft.testplatform.testhost\16.11.0\build\netcoreapp2.1\x64\testhost.dll
+C:\Users\ACER NITRO 5\.nuget\packages\microsoft.testplatform.testhost\16.11.0\build\netcoreapp2.1\x64\Microsoft.TestPlatform.PlatformAbstractions.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\_common\es\Microsoft.TestPlatform.AdapterUtilities.resources.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\_common\es\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\_common\es\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\_common\es\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\net5.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\ACER NITRO 5\.nuget\packages\mstest.testadapter\2.2.10\build\net5.0\Microsoft.TestPlatform.AdapterUtilities.dll

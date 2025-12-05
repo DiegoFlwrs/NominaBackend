@@ -1,0 +1,4 @@
+﻿C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Infrastructure\Persistence\AppDbContext.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Infrastructure\Repositories\ContratoLaboralRepository.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Infrastructure\Repositories\NominaRepository.cs
+C:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Infrastructure\Repositories\ReporteNominaRepository.cs

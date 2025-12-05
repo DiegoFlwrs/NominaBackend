@@ -1,0 +1,1 @@
+xRbC:\Users\ACER NITRO 5\Desktop\Calidad de Software\NominaBackend\Nomina.Domain\Nomina.Domain.csproj¢net8.0òCSharp12
