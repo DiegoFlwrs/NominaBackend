@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nomina.API.Exceptions;
 using Nomina.Domain.Interfaces;
 using Nomina.Domain.ReadModels;
@@ -12,6 +7,7 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Nomina.Domain.Entities;
 using Nomina.Infrastructure.Persistence;
+using Nomina.Domain.Exceptions;
 
 namespace Nomina.Infrastructure.Repositories
 {
@@ -52,7 +48,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -68,7 +64,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -80,7 +76,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -94,7 +90,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -139,7 +135,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -154,7 +150,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -173,7 +169,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -186,7 +182,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -203,7 +199,7 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
@@ -217,19 +213,33 @@ namespace Nomina.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception("APP_ERROR: " + ex.Message);
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
             }
         }
 
         public async Task ActualizarPeriodoAsync(PeriodoNomina periodo)
         {
-            _context.PeriodosNomina.Update(periodo);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.PeriodosNomina.Update(periodo);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
+            }
         }
 
         public async Task SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("APP_ERROR: " + ex.Message, ex);
+            }
         }
 
     }
