@@ -10,9 +10,7 @@ namespace Nomina.Application.DTOs
     public class ReporteNominaRequest
     {
         [Required]
-        public DateTime FechaInicio { get; set; }
-        [Required]
-        public DateTime FechaFin { get; set; }
+        public string PeriodoCodigo { get; set; }
         public string? DepartamentoCodigo { get; set; }
         public string? CargoCodigo { get; set; }
         public string? TipoContratoCodigo { get; set; }

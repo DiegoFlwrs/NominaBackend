@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Nomina.Application.DTOs;
 using Nomina.Application.Interfaces;
+using Nomina.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
 namespace Nomina.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ContratoLaboralController : ControllerBase
     {
         private readonly IContratoLaboralService _contratoService;
@@ -16,29 +17,19 @@ namespace Nomina.API.Controllers
         {
             _contratoService = contratoService;
         }
-        [HttpGet]
+        [HttpGet("Mostrar")]
         public async Task<IActionResult> GetContratos()
         {
             var contratos = await _contratoService.ConsultarContratos();
             return Ok(contratos);
         }
-        [HttpPost]
-        public async Task<IActionResult> PostContrato([FromBody] ContratoLaboralDTO dto)
+        [HttpPost("Registrar")]
+        public async Task<IActionResult> Registrar([FromBody] registroContratoDTO request)
         {
-            if (dto == null)
-                return BadRequest("Los datos del contrato son obligatorios.");
-
-            try
-            {
-                await _contratoService.RegistrarContrato(dto);
-                return Ok("Contrato registrado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            var resultado = await _contratoService.RegistrarContrato(request);
+            return Ok(resultado);
         }
-        [HttpPut("{contratoCodigo}")]
+        [HttpPut("Actualizar")]
         public async Task<IActionResult> PutContrato(string contratoCodigo, [FromBody] ContratoLaboralDTO dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(contratoCodigo))
@@ -55,7 +46,7 @@ namespace Nomina.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        [HttpDelete("{contratoCodigo}")]
+        [HttpDelete("Eliminar")]
         public async Task<IActionResult> DeleteContrato(string contratoCodigo)
         {
             if (string.IsNullOrWhiteSpace(contratoCodigo))
@@ -70,6 +61,54 @@ namespace Nomina.API.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+        [HttpGet("TipoContrato")]
+        public async Task<IActionResult> ListadoPorTipo()
+        {
+            var data = await _contratoService.ListarContratosPorTipo();
+            return Ok(data);
+        }
+
+        [HttpGet("Modalidad")]
+        public async Task<IActionResult> ListadoPorModalidad()
+        {
+            var data = await _contratoService.ListarContratosPorModalidad();
+            return Ok(data);
+        }
+
+        [HttpGet("Jornada")]
+        public async Task<IActionResult> ListadoPorJornada()
+        {
+            var data = await _contratoService.ListarContratosPorJornada();
+            return Ok(data);
+        }
+
+        [HttpGet("Estado")]
+        public async Task<IActionResult> ListadoPorEstado()
+        {
+            var data = await _contratoService.ListarContratosPorEstado();
+            return Ok(data);
+        }
+        [HttpGet("DetallesHistorial")]
+        public async Task<IActionResult> GetHistorialDetalles()
+        {
+            var result = await _contratoService.ListarHistorialDetalles();
+            return Ok(result);
+        }
+        [HttpGet("EmpleadosSinContrato")]
+        public async Task<IActionResult> GetEmpleadosSinContrato()
+        {
+            var result = await _contratoService.ListarEmpleadosSinContrato();
+            return Ok(result);
+        }
+        [HttpPut("CambiarEstado")]
+        public async Task<IActionResult> CambiarEstadoContrato(string codigo, [FromQuery] string nuevoEstado, [FromQuery] string motivo)
+        {
+            if (string.IsNullOrWhiteSpace(motivo))
+                return BadRequest("Debe ingresar un motivo para este cambio de estado.");
+
+            await _contratoService.SuspenderContrato(codigo, nuevoEstado, motivo);
+            return Ok(new { mensaje = $"Contrato {codigo} actualizado a estado {nuevoEstado}" });
         }
     }
 }

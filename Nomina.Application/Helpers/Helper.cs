@@ -28,5 +28,15 @@ namespace Nomina.Application.Helpers
             };
         }
 
+        public string ObtenerNombreEstado(String estado)
+        {
+            return estado switch
+            {
+                "A" => "ACTIVO",
+                "I" => "INACTIVO",
+                "P" => "PROCESADO"
+            };
+        }
+
     }
 }

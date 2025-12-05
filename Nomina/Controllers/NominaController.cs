@@ -20,15 +20,9 @@ namespace Nomina.API.Controllers
         [HttpPost("listar")]
         public async Task<IActionResult> ProcesarNomina([FromBody] NominaFiltroRequest request)
         {
-            var (nominas, totalRows) = await _service.ProcesarNominaAsync(request);
+            var nominas = await _service.ProcesarNominaAsync(request);
 
-            var response = new
-            {
-                data = nominas,
-                totalRows
-            };
-
-            return Ok(response);
+            return Ok(nominas);
         }
 
         [HttpGet("periodo/anios")]
@@ -72,13 +66,6 @@ namespace Nomina.API.Controllers
         {
             await _service.CrearNominaAsync(request);
             return Ok("La nómina fue insertada correctamente");
-        }
-
-        [HttpPut("actualizar")]
-        public async Task<IActionResult> ActualizarNomina([FromBody] NominaRequest request)
-        {
-            await _service.ActualizarNominaAsync(request);
-            return Ok("La nómina fue actualizada correctamente");
         }
 
     }

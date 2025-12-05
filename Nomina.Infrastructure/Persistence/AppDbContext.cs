@@ -25,6 +25,10 @@ namespace Nomina.Infrastructure.Persistence
         public DbSet<Nominas> Nominas { get; set; }
         public DbSet<DescuentoAdicional> DescuentosAdicionales { get; set; }
         public DbSet<ParametroSistema> ParametrosSistema { get; set; }
+        public DbSet<ConceptoNomina> ConceptosNomina { get; set; }
+         public DbSet<ContratoResumen> ContratosResumen { get; set; }
+        public DbSet<ResumenEmpleado> ResumenEmpleados { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -168,6 +172,36 @@ namespace Nomina.Infrastructure.Persistence
                 entity.Property(e => e.HistorialCodigo).HasMaxLength(5);
                 entity.ToTable("HistorialContratos");
             });
+
+            modelBuilder.Entity<ConceptoNomina>(entity =>
+            {
+                entity.HasOne(c => c.Contrato)
+                .WithMany()
+                .HasForeignKey(c => c.ContratoCodigo)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<ConceptoNomina>(entity =>
+            {
+                entity.HasOne(c => c.Periodo)
+                .WithMany()
+                .HasForeignKey(c => c.PeriodoCodigo)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<ContratoResumen>(entity =>
+            {
+                entity.HasNoKey();
+            });
+            modelBuilder.Entity<HistorialDetalle>(entity =>
+            {
+                entity.HasNoKey();
+            });
+            modelBuilder.Entity<ResumenEmpleado>(entity =>
+            {
+                entity.HasNoKey();
+            });
         }
+
     }
 }

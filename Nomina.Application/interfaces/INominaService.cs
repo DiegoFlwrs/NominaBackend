@@ -12,14 +12,12 @@ namespace Nomina.Application.interfaces
 {
     public interface INominaService
     {
-        Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ProcesarNominaAsync(NominaFiltroRequest request);
+        Task<IEnumerable<NominaView>> ProcesarNominaAsync(NominaFiltroRequest request);
         Task<IEnumerable<int>> ObtenerAniosAsync();
         Task<IEnumerable<int>> ObtenerMesesAsync();
         Task<IEnumerable<PeriodoDTO>> ObtenerPeriodoAsync();
         Task<IEnumerable<DepartamentoDTO>> ObtenerDepartamentosAsync();
         Task<IEnumerable<ContratoDTO>> ObtenerContratoAsync();
         Task CrearNominaAsync(NominaRequest request);
-
-        Task ActualizarNominaAsync(NominaRequest request);
     }
 }

@@ -10,5 +10,6 @@ namespace Nomina.Application.DTOs.NominaPeriodo
     {
         public string PeriodoCodigo { get; set; }
         public string PeriodoDescripcion { get; set; }
+        public string PeriodoEstado{ get; set; }
     }
 }

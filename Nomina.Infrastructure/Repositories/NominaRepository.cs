@@ -26,8 +26,7 @@ namespace Nomina.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ConsultarNominasAsync(int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
-            string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize)
+        public async Task<IEnumerable<NominaView>> ConsultarNominasAsync(string codigoPeriodo)
         {
             try
             {
@@ -35,27 +34,20 @@ namespace Nomina.Infrastructure.Repositories
                 {
                     var parameters = new
                     {
-                        PeriodoAnio = periodoAnio,
-                        PeriodoMes = periodoMes,
-                        NominaEstado = nominaEstado,
-                        EmpleadoNombre = empleadoNombre,
-                        EmpleadoApellido = empleadoApellido,
-                        DepartamentoCodigo = departamentoCodigo,
-                        PageNumber = pageNumber,
-                        PageSize = pageSize
+                        CodigoPeriodo = codigoPeriodo
                     };
 
-                    using var multi = await con.QueryMultipleAsync("ConsultarNominas", parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    var nominas = await con.QueryAsync<NominaView>(
+                        "ConsultarNominas",
+                        parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
 
-                    var nominas = await multi.ReadAsync<NominaView>();
-                    var totalRows = await multi.ReadFirstAsync<int>();
-
-                    return (nominas, totalRows);
+                    return nominas;
                 }
             }
             catch (SqlException ex)
             {
-
                 throw new DatabaseException($"Error en la base de datos: {ex.Message}");
             }
             catch (Exception ex)
@@ -63,6 +55,7 @@ namespace Nomina.Infrastructure.Repositories
                 throw new Exception("APP_ERROR: " + ex.Message);
             }
         }
+
 
         public async Task<IEnumerable<PeriodoNomina>> ObtenerPeriodosAsync()
         {
@@ -106,8 +99,9 @@ namespace Nomina.Infrastructure.Repositories
         }
 
 
-        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
-            decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
+        public async Task InsertarNominaAsync( string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaMontoHorasExtras, decimal nominaBonificacion,
+            decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, decimal nominaAsignacionFamiliar, decimal nominaDescuentoPension, 
+            decimal nominaDescuentoIR5ta, decimal nominaAporteEssalud, decimal nominaOtrosDescuentos, char nominaEstado = 'A')
         {
             try
             {
@@ -119,9 +113,14 @@ namespace Nomina.Infrastructure.Repositories
                         PeriodoCodigo = periodoCodigo,
                         ContratoCodigo = contratoCodigo,
                         NominaHorasExtras = nominaHorasExtras,
+                        NominaMontoHorasExtras = nominaMontoHorasExtras,
                         NominaBonificacion = nominaBonificacion,
-                        NominaDescuentos = nominaDescuentos,
+                        NominaAsignacionFamiliar = nominaAsignacionFamiliar,
                         NominaTotalIngresos = nominaTotalIngresos,
+                        NominaDescuentoPension = nominaDescuentoPension,
+                        NominaDescuentoIR5ta = nominaDescuentoIR5ta,
+                        NominaAporteEssalud = nominaAporteEssalud,
+                        NominaOtrosDescuentos = nominaOtrosDescuentos,
                         NominaTotalDescuentos = nominaTotalDescuentos,
                         NominaSueldoNeto = nominaSueldoNeto,
                         NominaEstado = nominaEstado
@@ -129,42 +128,6 @@ namespace Nomina.Infrastructure.Repositories
 
                     await con.ExecuteAsync(
                         "InsertarNomina",
-                        parameters,
-                        commandType: System.Data.CommandType.StoredProcedure
-                    );
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw new DatabaseException($"Error en la base de datos: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("APP_ERROR: " + ex.Message);
-            }
-        }
-
-        public async Task ActualizarNominaAsync( string nominaCodigo, int nominaHorasExtras, decimal nominaBonificacion, decimal nominaDescuentos, decimal nominaTotalIngresos,
-        decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A')
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                {
-                    var parameters = new
-                    {
-                        NominaCodigo = nominaCodigo,
-                        NominaHorasExtras = nominaHorasExtras,
-                        NominaBonificacion = nominaBonificacion,
-                        NominaDescuentos = nominaDescuentos,
-                        NominaTotalIngresos = nominaTotalIngresos,
-                        NominaTotalDescuentos = nominaTotalDescuentos,
-                        NominaSueldoNeto = nominaSueldoNeto,
-                        NominaEstado = nominaEstado
-                    };
-
-                    await con.ExecuteAsync(
-                        "ModificarNomina",
                         parameters,
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -193,6 +156,80 @@ namespace Nomina.Infrastructure.Repositories
             {
                 throw new Exception("APP_ERROR: " + ex.Message);
             }
+        }
+
+        public async Task<ContratoLaboral?> ObtenerContratosAsync()
+        {
+            try
+            {
+                var hoy = DateTime.Now.Date;
+
+                return await _context.ContratosLaborales
+                    .Include(c => c.Empleado)
+                    .FirstOrDefaultAsync(c => c.ContratoEstado == "A" &&
+                        c.ContratoFechaInicio <= hoy &&
+                        c.ContratoFechaFin >= hoy
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ParametroSistema>> ObtenerParametrosSistemaAsync()
+        {
+            try
+            {
+                return await _context.ParametrosSistema
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<string?> ObtenerUltimoCodigoNominaAsync()
+        {
+            try
+            {
+                var ultimo = await _context.Nominas
+                    .OrderByDescending(n => n.NominaCodigo)
+                    .Select(n => n.NominaCodigo)
+                    .FirstOrDefaultAsync();
+
+                return ultimo;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ConceptoNomina>> ObtenerConceptosPorContratoYPeriodoAsync(string contratoCodigo, string periodoCodigo)
+        {
+            try
+            {
+                return await _context.ConceptosNomina
+                    .Where(c => c.ContratoCodigo == contratoCodigo && c.PeriodoCodigo == periodoCodigo)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("APP_ERROR: " + ex.Message);
+            }
+        }
+
+        public async Task ActualizarPeriodoAsync(PeriodoNomina periodo)
+        {
+            _context.PeriodosNomina.Update(periodo);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
     }

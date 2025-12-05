@@ -10,17 +10,21 @@ namespace Nomina.Domain.Interfaces
 {
     public interface INominaRepository
     {
-        Task<(IEnumerable<NominaView> Nominas, int TotalRows)> ConsultarNominasAsync( int? periodoAnio, int? periodoMes, string nominaEstado, string? empleadoNombre,
-            string? empleadoApellido, string? departamentoCodigo, int pageNumber, int pageSize);
+        Task<IEnumerable<NominaView>> ConsultarNominasAsync(string codigoPeriodo);
 
         Task<IEnumerable<PeriodoNomina>> ObtenerPeriodosAsync();
         Task<IEnumerable<Departamento>> ObtenerDepartamentosAsync();
         Task<IEnumerable<ContratoLaboral>> ObtenerContratoAsync();
 
-        Task InsertarNominaAsync(string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaBonificacion,
-            decimal nominaDescuentos, decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
+        Task InsertarNominaAsync(string nominaCodigo, string periodoCodigo, string contratoCodigo, int nominaHorasExtras, decimal nominaMontoHorasExtras, decimal nominaBonificacion,
+            decimal nominaTotalIngresos, decimal nominaTotalDescuentos, decimal nominaSueldoNeto, decimal nominaAsignacionFamiliar, decimal nominaDescuentoPension,
+            decimal nominaDescuentoIR5ta, decimal nominaAporteEssalud, decimal nominaOtrosDescuentos, char nominaEstado = 'A');
         Task<ContratoLaboral?> ObtenerContratoConEmpleadoAsync(string contratoCodigo);
-        Task ActualizarNominaAsync(string nominaCodigo, int nominaHorasExtras, decimal nominaBonificacion, decimal nominaDescuentos, decimal nominaTotalIngresos,
-        decimal nominaTotalDescuentos, decimal nominaSueldoNeto, char nominaEstado = 'A');
+
+        Task<IEnumerable<ParametroSistema>> ObtenerParametrosSistemaAsync();
+        Task<string?> ObtenerUltimoCodigoNominaAsync();
+        Task<IEnumerable<ConceptoNomina>> ObtenerConceptosPorContratoYPeriodoAsync(string contratoCodigo, string periodoCodigo);
+        Task ActualizarPeriodoAsync(PeriodoNomina periodo);
+        Task SaveChangesAsync();
     }
 }

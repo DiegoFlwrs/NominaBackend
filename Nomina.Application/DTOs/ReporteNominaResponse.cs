@@ -4,26 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nomina.Domain.ReadModels
+namespace Nomina.Application.DTOs
 {
-    public class ReporteNominaView
+    
+    public class ReporteNominaResponse
     {
-        /*public string NombreCompleto { get; set; }
-        public string CargoNombre { get; set; }
-        public string DepartamentoNombre { get; set; }
-        public DateTime FechaIngreso { get; set; }
-        public decimal SueldoBase { get; set; }
-        public decimal NominaBonificacion { get; set; }
-        public decimal NominaDescuentos { get; set; }
-        public decimal NominaSueldoNeto { get; set; }*/
-        //public string PeriodoInicio { get; set; }
-        //public string PeriodoFin { get; set; }
-        /// <summary>
-        /// //////////////
-        /// </summary>
         public string Codigo { get; set; }                // ContratoCodigo
         public string Empleado { get; set; }              // Nombre completo
-        public DateTime fechaIngreso { get; set; }         
+        public DateTime fechaIngreso { get; set; }
         public decimal SalarioBase { get; set; }          // ContratoSalario
         public int HorasExtras { get; set; }              // NominaHorasExtras
         public decimal MontoHorasExtras { get; set; }     // NominaMontoHorasExtras
