@@ -96,7 +96,6 @@ namespace Nomina.Application.Services
 
         public async Task CrearNominaAsync(NominaRequest request)
         {
-            //VALIDACION DE PERIODOS
             var periodos = await _repository.ObtenerPeriodosAsync();
             var periodo = periodos.FirstOrDefault(p => p.PeriodoCodigo!.Trim() == request.PeriodoCodigo);
             var hoy = DateTime.Now.Date;
