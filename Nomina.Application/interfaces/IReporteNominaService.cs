@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nomina.Domain.ReadModels;
-
+using Nomina.Application.DTOs;
 namespace Nomina.Application.interfaces
 {
     public interface IReporteNominaService
@@ -22,5 +22,12 @@ namespace Nomina.Application.interfaces
         string? cargoCodigo,
         string? tipoContratoCodigo
     );
+    Task<byte[]> GenerarReporteExcelAsync(
+        string? PeriodoCodigo,
+        string? departamentoCodigo,
+        string? cargoCodigo,
+        string? tipoContratoCodigo
+    );
+    
     }
 }

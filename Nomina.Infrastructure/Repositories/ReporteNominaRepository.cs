@@ -41,7 +41,7 @@ namespace Nomina.Infrastructure.Repositories
                     spName,
                     parameters,
                     commandType: CommandType.StoredProcedure
-                );
+                ); 
 
                 return reporteData.ToList();
             }
