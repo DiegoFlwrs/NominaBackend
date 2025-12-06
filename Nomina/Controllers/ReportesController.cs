@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Nomina.Application.interfaces;
+using Nomina.Application.Services;
 using Nomina.Domain.ReadModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using Nomina.Application.DTOs;
+using Nomina.API.Exceptions;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -71,12 +72,10 @@ public class ReportesController : ControllerBase
                 tipoContratoCodigo
             );
 
-            //string nombreArchivo = $"Reporte Nomina {fechaInicio:dd-MM-yy}_{fechaFin:dd-MM-yy}.pdf";
-            string nombreArchivo = $"Reporte Nomina {DateTime.Now:dd-MM-yy}.pdf";
-
+            string nombreArchivo = $"Reporte_Nomina_{DateTime.Now:ddMMyyyy}.pdf";
             return File(pdfBytes, "application/pdf", nombreArchivo);
         }
-        catch (ArgumentException ex)
+        catch (BusinessException ex)
         {
             return BadRequest(new { success = false, message = ex.Message });
         }
@@ -87,6 +86,60 @@ public class ReportesController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, new { success = false, message = $"Error al generar el PDF: {ex.Message}" });
+        }
+    }
+
+    [HttpPost("nomina/excel")]
+    [ProducesResponseType(typeof(FileResult), 200)]
+    public async Task<IActionResult> GenerarReporteNominaExcel(
+    [FromBody] ReporteNominaRequest request)
+    {
+        var PeriodoCodigo = request.PeriodoCodigo;
+        var departamentoCodigo = request.DepartamentoCodigo;
+        var cargoCodigo = request.CargoCodigo;
+        var tipoContratoCodigo = request.TipoContratoCodigo;
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+
+            byte[] excelBytes = await _reporteService.GenerarReporteExcelAsync(
+                PeriodoCodigo,
+                departamentoCodigo,
+                cargoCodigo,
+                tipoContratoCodigo
+            );
+
+
+            string nombreArchivo;
+            if (!string.IsNullOrEmpty(PeriodoCodigo))
+            {
+                nombreArchivo = $"Reporte_Nomina_{PeriodoCodigo}_{DateTime.Now:ddMMyyyyHHmm}.xlsx";
+            }
+            else
+            {
+                nombreArchivo = $"Reporte_Nomina_{DateTime.Now:ddMMyyyyHHmm}.xlsx";
+            }
+
+            return File(excelBytes,
+                       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                       nombreArchivo);
+        }
+        catch (BusinessException ex)
+        {
+            return BadRequest(new { success = false, message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(new { success = false, message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { success = false, message = $"Error al generar el Excel: {ex.Message}" });
         }
     }
 }
