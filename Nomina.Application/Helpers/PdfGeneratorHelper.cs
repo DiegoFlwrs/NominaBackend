@@ -13,6 +13,10 @@ namespace Nomina.Application.Helpers
     {
         public static byte[] GenerarNominaPdf(List<ReporteNominaView> data, DateTime fechaInicio, DateTime fechaFin)
         {
+            decimal totalIngresos = data.Sum(item => item.TotalIngresos);
+            decimal totalDescuentos = data.Sum(item => item.TotalDescuentos);
+            decimal totalNeto = data.Sum(item => item.SueldoNeto);
+
             var document = Document.Create(container =>
             {
                 container.Page(page =>
@@ -20,11 +24,28 @@ namespace Nomina.Application.Helpers
                     page.Size(PageSizes.A4.Landscape());
                     page.Margin(36);
                     page.DefaultTextStyle(x => x.FontSize(10));
+
                     page.Header()
                         .Column(column =>
                         {
-                            column.Item().Text("Reporte de Nómina por Período").Style(TextStyle.Default.FontSize(16).Bold()).AlignCenter();
-                            column.Item().Text($"Período: {fechaInicio:dd/MM/yyyy} - {fechaFin:dd/MM/yyyy}").AlignCenter();
+                            column.Item().Text("Reporte de Nómina por Período")
+                                   .Style(TextStyle.Default.FontSize(16).Bold())
+                                   .AlignCenter();
+
+                            column.Item().Text($"Período: {fechaInicio:dd/MM/yyyy} - {fechaFin:dd/MM/yyyy}")
+                                   .AlignCenter();
+
+                            column.Item().PaddingTop(5)
+                                   .Row(row =>
+                                   {
+                                       row.RelativeItem().Text($"Total Registros: {data.Count}")
+                                          .Style(TextStyle.Default.FontSize(9).Italic());
+
+                                       row.RelativeItem().Text($"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}")
+                                          .Style(TextStyle.Default.FontSize(9).Italic())
+                                          .AlignRight();
+                                   });
+
                             column.Item().PaddingTop(10);
                         });
 
@@ -34,20 +55,20 @@ namespace Nomina.Application.Helpers
                         {
                             table.ColumnsDefinition(columns =>
                             {
-                                columns.RelativeColumn(1.5f);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
-                                columns.RelativeColumn(1);
+                                columns.RelativeColumn(1.5f);  
+                                columns.RelativeColumn(1);     
+                                columns.RelativeColumn(1);     
+                                columns.RelativeColumn(1);     
+                                columns.RelativeColumn(1);     
+                                columns.RelativeColumn(1);     
+                                columns.RelativeColumn(1);    
+                                columns.RelativeColumn(1);    
+                                columns.RelativeColumn(1);    
+                                columns.RelativeColumn(1);     
+                                columns.RelativeColumn(1);    
+                                columns.RelativeColumn(1);    
+                                columns.RelativeColumn(1);    
+                                columns.RelativeColumn(1);     
                             });
 
                             table.Header(header =>
@@ -72,7 +93,6 @@ namespace Nomina.Application.Helpers
 
                             foreach (var item in data)
                             {
-                                string fechaIngresoFormato = item.fechaIngreso.ToString("dd/MM/yyyy");
                                 string formatoMoneda = "N2";
 
                                 table.Cell().BorderBottom(1).Padding(5).Text(item.Codigo);
@@ -89,7 +109,42 @@ namespace Nomina.Application.Helpers
                                 table.Cell().BorderBottom(1).Padding(5).Text(item.OtrosDesc.ToString(formatoMoneda)).AlignRight();
                                 table.Cell().BorderBottom(1).Padding(5).Text(item.TotalDescuentos.ToString(formatoMoneda)).AlignRight();
                                 table.Cell().BorderBottom(1).Padding(5).Text(item.SueldoNeto.ToString(formatoMoneda)).AlignRight();
+                            }
 
+                            if (data.Any())
+                            {
+                                table.Cell().ColumnSpan(14).PaddingTop(10);
+
+                                table.Cell().ColumnSpan(7)  
+                                       .BorderTop(1)
+                                       .BorderColor(Colors.Grey.Darken2)
+                                       .PaddingVertical(8)
+                                       .Text("TOTALES:")
+                                       .Style(TextStyle.Default.Bold())
+                                       .AlignRight();
+
+                                table.Cell().BorderTop(1)
+                                       .BorderColor(Colors.Grey.Darken2)
+                                       .PaddingVertical(8)
+                                       .Text(totalIngresos.ToString("N2"))
+                                       .Style(TextStyle.Default.Bold().BackgroundColor(Colors.Green.Lighten5))
+                                       .AlignRight();
+
+                                table.Cell().ColumnSpan(4).BorderTop(1).BorderColor(Colors.Grey.Darken2);
+
+                                table.Cell().BorderTop(1)
+                                       .BorderColor(Colors.Grey.Darken2)
+                                       .PaddingVertical(8)
+                                       .Text(totalDescuentos.ToString("N2"))
+                                       .Style(TextStyle.Default.Bold().BackgroundColor(Colors.Green.Lighten5))
+                                       .AlignRight();
+
+                                table.Cell().BorderTop(1)
+                                       .BorderColor(Colors.Grey.Darken2)
+                                       .PaddingVertical(8)
+                                       .Text(totalNeto.ToString("N2"))
+                                       .Style(TextStyle.Default.Bold().BackgroundColor(Colors.Green.Lighten5))
+                                       .AlignRight();
                             }
                         });
 
